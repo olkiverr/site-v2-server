@@ -1,0 +1,312 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Cabin', sans-serif; /* Apply the new font */
+}
+
+body {
+    background-color: #252525;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-bar {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1em;
+}
+
+.search-bar input {
+    width: 100%;
+    height: 30px;
+    max-width: 400px;
+    padding: 0.5em;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    background-color: #444; /* Dark theme background */
+    color: #fff; /* Dark theme text color */
+    outline: none;
+    transition: filter 0.3s ease-in-out;
+}
+
+.search-bar input:focus {
+    filter: drop-shadow(0 0 0.75rem rgb(1, 90, 129));
+}
+
+main {
+    flex: 1; /* Ensure main content takes up remaining space */
+}
+
+.trending-slider-container {
+    padding: 1em;
+    color: #fff;
+    position: relative; /* Position relative for button positioning */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center align the slider */
+    justify-content: center; /* Center align the slider container */
+}
+
+.trending-slider-container p {
+    align-self: flex-start; /* Align the trending text to the top left */
+    margin-bottom: 1em; /* Add space below the trending text */
+    font-size: 1.5em; /* Make the text bigger */
+}
+
+.trending-slider {
+    display: flex;
+    overflow-x: auto; /* Enable scrolling */
+    gap: 1em;
+    padding: 1em 0;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
+    width: 100%; /* Ensure the slider takes full width */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    justify-content: flex-start; /* Align items to the start to ensure all images are visible */
+}
+
+.trending-slider::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+}
+
+.upcoming-item,
+.trending-item {
+    min-width: 200px; /* Increase the minimum width */
+    max-width: 250px; /* Increase the maximum width */
+    background-color: #444;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+}
+.upcoming-item img,
+.trending-item img {
+    width: 100%;
+    height: 250px; /* Keep the height */
+    object-fit: cover; /* Ensure images cover the entire area */
+}
+
+.upcoming-item p,
+.trending-item p {
+    margin: 0.5em 0;
+}
+
+.slider-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 1em; /* Increase padding for bigger buttons */
+    cursor: pointer;
+    z-index: 1;
+    font-size: 1.5em; /* Increase font size for bigger buttons */
+    display: none; /* Hide buttons by default */
+    transition: transform 0.3s ease-in-out, left 0.3s ease-in-out, right 0.3s ease-in-out; /* Add transition for smooth appearance */
+}
+
+.slider-button.left {
+    left: -50px; /* Start from outside the site */
+}
+
+.slider-button.right {
+    right: -50px; /* Start from outside the site */
+}
+
+.trending-slider-container:hover .slider-button {
+    display: block; /* Show buttons when container is hovered */
+}
+
+.trending-slider-container:hover .slider-button.left {
+    left: 10px; /* Move left button into view */
+}
+
+.trending-slider-container:hover .slider-button.right {
+    right: 10px; /* Move right button into view */
+}
+
+.admin-cog {
+    width: 20px;
+    height: 20px;
+    margin-left: 1px;
+    vertical-align: sub;
+    cursor: pointer;
+}
+
+.edit-menu {
+    display: none;
+    background-color: #333;
+    padding: 1em;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.edit-menu form {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-menu label {
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+.edit-menu input[type="text"] {
+    padding: 0.5em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #444;
+    color: #fff;
+}
+
+.edit-menu input[type="file"] {
+    padding: 0.5em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #444;
+    color: #fff;
+}
+
+.edit-menu button {
+    padding: 0.5em;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 0.5em;
+}
+
+.edit-menu button:hover {
+    background-color: #45a049;
+}
+
+.edit-image-cog {
+    cursor: pointer;
+}
+
+.trending-item.selected,
+.upcoming-item.selected {
+    border: 2px solid #4CAF50;
+}
+
+.upcoming-slider-container {
+    padding: 1em;
+    color: #fff;
+    position: relative; /* Position relative for button positioning */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center align the slider */
+    justify-content: center; /* Center align the slider container */
+}
+
+.upcoming-slider-container p {
+    align-self: flex-start; /* Align the upcoming text to the top left */
+    margin-bottom: 1em; /* Add space below the upcoming text */
+    font-size: 1.5em; /* Make the text bigger */
+}
+
+.upcoming-slider {
+    display: flex;
+    overflow-x: auto; /* Enable scrolling */
+    gap: 1em;
+    padding: 1em 0;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
+    width: 100%; /* Ensure the slider takes full width */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    justify-content: flex-start; /* Align items to the start to ensure all images are visible */
+}
+
+.upcoming-slider::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+}
+
+.upcoming-slider .trending-item {
+    min-width: 200px; /* Increase the minimum width */
+    max-width: 250px; /* Increase the maximum width */
+    background-color: #444;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.upcoming-slider .trending-item img {
+    width: 100%;
+    height: 250px; /* Keep the height */
+    object-fit: cover; /* Ensure images cover the entire area */
+}
+
+.upcoming-slider .trending-item p {
+    margin: 0.5em 0;
+}
+
+.upcoming-slider-container .slider-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 1em; /* Increase padding for bigger buttons */
+    cursor: pointer;
+    z-index: 1;
+    font-size: 1.5em; /* Increase font size for bigger buttons */
+    display: none; /* Hide buttons by default */
+    transition: transform 0.3s ease-in-out, left 0.3s ease-in-out, right 0.3s ease-in-out; /* Add transition for smooth appearance */
+}
+
+.upcoming-slider-container .slider-button.left {
+    left: -50px; /* Start from outside the site */
+}
+
+.upcoming-slider-container .slider-button.right {
+    right: -50px; /* Start from outside the site */
+}
+
+.upcoming-slider-container:hover .slider-button {
+    display: block; /* Show buttons when container is hovered */
+}
+
+.upcoming-slider-container:hover .slider-button.left {
+    left: 10px; /* Move left button into view */
+}
+
+.upcoming-slider-container:hover .slider-button.right {
+    right: 10px; /* Move right button into view */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .trending-slider {
+        overflow-x: auto; /* Ensure scrolling is enabled */
+        width: 100%; /* Ensure the slider takes full width */
+        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        justify-content: flex-start; /* Align items to the start to ensure all images are visible */
+    }
+    .slider-button {
+        display: none; /* Hide buttons in responsive mode */
+    }
+    .upcoming-slider {
+        overflow-x: auto; /* Ensure scrolling is enabled */
+        width: 100%; /* Ensure the slider takes full width */
+        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        justify-content: flex-start; /* Align items to the start to ensure all images are visible */
+    }
+    .upcoming-slider-container .slider-button {
+        display: none; /* Hide buttons in responsive mode */
+    }
+}

@@ -1,0 +1,131 @@
+.tac-page h1 {
+    text-align: center;
+    color: #64b5f6; /* Bleu clair */
+    margin-top: 30px;
+}
+
+.tac-page h2 {
+    color: #90caf9; /* Bleu clair */
+    font-size: 1.5em;
+    margin-top: 20px;
+    border-bottom: 2px solid #64b5f6;
+    padding-bottom: 5px;
+}
+
+/* Style pour les sections des conditions */
+.tac-page .terms-section {
+    background-color: #1e1e1e; /* Section sombre */
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Listes à puces */
+.tac-page ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    color: #e0e0e0; /* Texte clair pour la liste */
+}
+
+.tac-page ul li {
+    margin-bottom: 8px;
+}
+
+.tac-page a {
+    color: #64b5f6; /* Lien bleu clair */
+    text-decoration: none;
+}
+
+.tac-page a:hover {
+    text-decoration: underline;
+}
+
+/* Style pour les paragraphes dans les sections */
+.tac-page p {
+    line-height: 1.6;
+    font-size: 16px;
+    color: #e0e0e0; /* Texte clair */
+}
+
+/* Espace énorme entre les sections pour cacher des blagues */
+.tac-page div {
+    height: 800px;
+}
+
+/* Style de la conclusion */
+.tac-page .conclusion {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 16px;
+    color: #e0e0e0;
+}
+
+.tac-page .conclusion a {
+    color: #64b5f6;
+}
+
+.tac-page .conclusion a:hover {
+    text-decoration: underline;
+}
+
+/* Style pour les liens dans les sections de texte */
+.tac-page .terms-section a {
+    color: #90caf9; /* Bleu clair */
+    text-decoration: none;
+}
+
+.tac-page .terms-section a:hover {
+    text-decoration: underline;
+}
+
+/* Ajout de marges entre chaque section pour espacement */
+.tac-page .terms-section + .terms-section {
+    margin-top: 40px;
+}
+
+/* Responsivité : Adaptation pour les écrans plus petits */
+@media (max-width: 768px) {
+    .tac-page h1 {
+        font-size: 1.8em; /* Taille de titre plus petite sur mobile */
+    }
+
+    .tac-page h2 {
+        font-size: 1.3em; /* Réduction de la taille du sous-titre */
+    }
+
+    .tac-page .terms-section {
+        padding: 15px; /* Moins de padding pour les écrans mobiles */
+        margin: 15px 0; /* Réduction de l'espacement */
+    }
+
+    .tac-page p {
+        font-size: 14px; /* Réduction de la taille des paragraphes */
+    }
+
+    .tac-page .conclusion {
+        font-size: 14px; /* Réduction de la taille de texte pour la conclusion */
+    }
+}
+
+@media (max-width: 480px) {
+    .tac-page h1 {
+        font-size: 1.5em; /* Taille de titre encore plus petite */
+    }
+
+    .tac-page h2 {
+        font-size: 1.2em; /* Réduction plus importante du sous-titre */
+    }
+
+    .tac-page .terms-section {
+        padding: 10px; /* Moins de padding sur très petit écran */
+    }
+
+    .tac-page p {
+        font-size: 13px; /* Texte encore plus petit sur mobile */
+    }
+
+    .tac-page .conclusion {
+        font-size: 13px; /* Réduction du texte de la conclusion */
+    }
+}

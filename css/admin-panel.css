@@ -1,0 +1,249 @@
+.admin-panel {
+    font-family: 'Cabin', sans-serif;
+    color: #ffffff;
+    background-color: #252525;
+    padding: 1em;
+}
+
+.admin-panel .tabs {
+    display: flex;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.admin-panel .tab {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #444;
+    border-bottom: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.admin-panel .tab.active-tab {
+    background-color: #fff;
+    color: #333;
+    border-bottom: 1px solid #fff;
+}
+
+.admin-panel .tab-content {
+    display: none;
+    padding: 20px;
+    border: 1px solid #444;
+    background-color: #333;
+    border-radius: 8px;
+}
+
+.admin-panel .tab-content.active-tab {
+    display: block;
+}
+
+.admin-panel table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #444;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.admin-panel table, 
+.admin-panel th, 
+.admin-panel td {
+    border: 1px solid #000000;
+}
+
+.admin-panel th, 
+.admin-panel td {
+    padding: 12px;
+    text-align: left;
+}
+
+.admin-panel th {
+    background-color: #595959;
+}
+
+.admin-panel td {
+    background-color: #737373;
+}
+
+.admin-panel input[type="text"], 
+.admin-panel input[type="email"], 
+.admin-panel input[type="password"], 
+.admin-panel input[type="checkbox"] {
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #444;
+    color: #fff;
+}
+
+.admin-panel button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.admin-panel button:hover {
+    background-color: #45a049;
+}
+
+.admin-panel a.button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.admin-panel a.button:hover {
+    background-color: #45a049;
+}
+
+.admin-panel form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.admin-panel form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.admin-panel form input[type="checkbox"] {
+    width: auto;
+}
+
+.admin-panel h2, 
+.admin-panel h3 {
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.admin-panel p {
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.dashboard-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.small-box {
+    flex: 0 0 200px;
+}
+
+.info-box {
+    background-color: #444;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.info-box h4 {
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.info-box p {
+    font-size: 1.5em;
+    color: #fff;
+}
+
+.info-box ul {
+    list-style: none;
+    padding: 0;
+    color: #fff;
+}
+
+.info-box ul li {
+    margin-bottom: 10px;
+}
+
+.info-box canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+.large-chart {
+    flex: 1 1 100%;
+    max-width: 800px;
+    margin: 40px auto 0;
+}
+
+.small-chart {
+    flex: 1 1 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .admin-panel .tabs {
+        flex-direction: column;
+        overflow-x: auto;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .admin-panel .tab {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .admin-panel .tab-content {
+        padding: 10px;
+    }
+
+    .admin-panel table {
+        display: block;
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    .admin-panel th, 
+    .admin-panel td {
+        white-space: nowrap;
+    }
+
+    .admin-panel input[type="text"], 
+    .admin-panel input[type="email"], 
+    .admin-panel input[type="password"], 
+    .admin-panel input[type="checkbox"] {
+        width: 100%;
+    }
+
+    .admin-panel button, 
+    .admin-panel a.button {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .admin-panel form {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .admin-panel h2, 
+    .admin-panel h3 {
+        text-align: center;
+    }
+
+    .admin-panel p {
+        text-align: center;
+    }
+}

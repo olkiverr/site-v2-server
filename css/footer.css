@@ -1,0 +1,16 @@
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1em 0;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}
+
+@media (max-width: 768px) {
+    footer {
+        position: relative;
+        bottom: 0;
+    }
+}
