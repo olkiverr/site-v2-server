@@ -8,8 +8,8 @@ include 'php/db.php';
 $trending_images = [];
 $upcoming_images = [];
 
-// Adjust column names as per your database schema
-$sql = "SELECT id, url, name FROM images WHERE category = 'trending'";
+// Requête pour récupérer les données de la table 'pages' pour le slider Trending
+$sql = "SELECT id, title, img FROM pages WHERE category = 'trending'";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
@@ -17,7 +17,8 @@ if ($result->num_rows > 0) {
     }
 }
 
-$sql = "SELECT id, url, name FROM images WHERE category = 'upcoming'";
+// Requête pour récupérer les données de la table 'pages' pour le slider Upcoming
+$sql = "SELECT id, title, img FROM pages WHERE category = 'upcoming'";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
@@ -45,63 +46,49 @@ $conn->close();
     <?php include 'partials/header.php'; ?> <!-- Include header partial -->
     <main>
         <div class="trending-slider-container">
-        <?php if ($is_admin): ?>
-            <p>Trending 🔥<span><img src="img/cog.png" alt="cog" class="admin-cog" onclick="toggleEditMenu('trending')"></span></p>
-            <div id="trending-edit-menu" class="edit-menu">
-                <form id="trending-edit-form" enctype="multipart/form-data">
-                    <label for="trending-image">Image URL:</label>
-                    <input type="text" id="trending-image" name="image">
-                    <label for="trending-title">Title:</label>
-                    <input type="text" id="trending-title" name="title">
-                    <button type="button" onclick="addImage('trending')">Add</button>
-                    <button type="button" onclick="deleteImage('trending')">Delete</button>
-                    <button type="button" onclick="location.reload()">Update</button>
-                </form>
-            </div>
-        <?php else: ?>
             <p>Trending 🔥</p>
-        <?php endif; ?>
             <div class="trending-slider">
                 <button class="slider-button left">&#9664;</button>
                 <?php foreach ($trending_images as $image): ?>
                     <div class="trending-item" data-id="<?php echo $image['id']; ?>">
-                        <img src="<?php echo $image['url']; ?>" alt="<?php echo $image['name']; ?>">
-                        <p><?php echo $image['name']; ?></p>
+                        <img src="<?php echo $image['img']; ?>" alt="<?php echo $image['title']; ?>">
+                        <p><?php echo $image['title']; ?></p>
                     </div>
                 <?php endforeach; ?>
                 <button class="slider-button right">&#9654;</button>
             </div>
         </div>
+
         <div class="upcoming-slider-container">
-        <?php if ($is_admin): ?>
-            <p>Upcoming ⌛<span><img src="img/cog.png" alt="cog" class="admin-cog" onclick="toggleEditMenu('upcoming')"></span></p>
-            <div id="upcoming-edit-menu" class="edit-menu">
-                <form id="upcoming-edit-form" enctype="multipart/form-data">
-                    <label for="upcoming-image">Image URL:</label>
-                    <input type="text" id="upcoming-image" name="image">
-                    <label for="upcoming-title">Title:</label>
-                    <input type="text" id="upcoming-title" name="title">
-                    <button type="button" onclick="addImage('upcoming')">Add</button>
-                    <button type="button" onclick="deleteImage('upcoming')">Delete</button>
-                    <button type="button" onclick="location.reload()">Update</button>
-                </form>
-            </div>
-        <?php else: ?>
             <p>Upcoming ⌛</p>
-        <?php endif; ?>
             <div class="upcoming-slider">
                 <button class="slider-button left">&#9664;</button>
                 <?php foreach ($upcoming_images as $image): ?>
                     <div class="upcoming-item" data-id="<?php echo $image['id']; ?>">
-                        <img src="<?php echo $image['url']; ?>" alt="<?php echo $image['name']; ?>">
-                        <p><?php echo $image['name']; ?></p>
+                        <img src="<?php echo $image['img']; ?>" alt="<?php echo $image['title']; ?>">
+                        <p><?php echo $image['title']; ?></p>
                     </div>
                 <?php endforeach; ?>
                 <button class="slider-button right">&#9654;</button>
             </div>
         </div>
     </main>
-    <?php include 'partials/footer.php'; ?> <!-- Include footer partial -->
+    <footer>
+        <p><span><a href="pages/42.php" style="text-decoration: none; color: white; cursor: default;">&copy;</a></span> 2025 Mangamuse by Zielinski Olivier</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const trendingItems = document.querySelectorAll('.trending-item, .upcoming-item');
+
+            trendingItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const id = item.getAttribute('data-id');
+                    console.log(id);
+                    window.location.href = "pages/view_anime.php?id=" + id;
+                });
+            });
+        });
+    </script>
     <script src="js/scripts.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>

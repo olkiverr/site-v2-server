@@ -5,7 +5,7 @@ include '../php/db.php';
 if (isset($_SESSION['user'])) {
     $current_user = $_SESSION['user'];
 
-    $sql = "SEL ECT * FROM users WHERE username = ?";
+    $sql = "SELECT * FROM users WHERE username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $current_user);
     $stmt->execute();

@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $row = $result->fetch_assoc();
         if (password_verify($password, $row['password'])) {
             $_SESSION['user'] = $username;
+            $_SESSION['email'] = $row['email'];
             $_SESSION['is_admin'] = $row['is_admin'];
             $response['status'] = 'success';
             $response['message'] = 'Login successful';

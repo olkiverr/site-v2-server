@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
-    header('Location: /site-v2/index.php');
+    header('Location: /4TTJ/Zielinski%20Olivier/Site/site-v2/index.php');
     exit();
 }
 ?>
@@ -27,6 +27,7 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
         <div class="tabs">
             <div class="tab active-tab" data-tab="dashboard">Dashboard</div>
             <div class="tab" data-tab="users">Users</div>
+            <div class="tab" data-tab="pages">Pages</div>
             <div class="tab" data-tab="settings">Settings</div>
         </div>
         <div class="tab-content active-tab" id="dashboard">
@@ -106,6 +107,35 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
             }
             ?>
         </div>
+        <div class="tab-content" id="pages">
+            <h3>Pages</h3>
+            <button onclick="location.href='add_page.php'" class="add-button">Add New Page</button>
+            <?php
+            include '../php/db.php';
+            $sql = "SELECT * FROM pages";
+            $result = $conn->query($sql);
+            ?>
+
+            <div class="tabs-pages">
+                <?php 
+                while ($row = $result->fetch_assoc()): ?>
+                    <?php
+                    if (is_array($row['title'])): 
+                        foreach($row['title'] as $title): ?>
+                            <div class="tab-page" data-tab="<?php echo $row['id']; ?>">
+                                <img src="<?php echo htmlspecialchars($row['img']); ?>" alt="<?php echo htmlspecialchars($title); ?>" class="anime-thumbnail">
+                                <?php echo htmlspecialchars($title); ?>
+                            </div>
+                        <?php endforeach; 
+                    else: ?>
+                        <div class="tab-page" data-tab="<?php echo $row['id']; ?>">
+                            <img src="<?php echo htmlspecialchars($row['img']); ?>" alt="<?php echo htmlspecialchars($row['title']); ?>" class="anime-thumbnail">
+                            <?php echo htmlspecialchars($row['title']); ?>
+                        </div>
+                    <?php endif; ?>
+                <?php endwhile; ?>
+            </div>
+        </div>
         <div class="tab-content" id="settings">
             <h3>Site Settings</h3>
             <form>
@@ -133,7 +163,20 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
                 });
             });
         });
-    </script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab-page');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const id = tab.getAttribute('data-tab');
+                    console.log(id);
+                    window.location.href = "edit_page.php?id=" + id;
+
+                });
+            });
+        });
+xx    </script>
     <script src="../js/admin-panel.js"></script>
 </body>
 </html>
