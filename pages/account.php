@@ -51,7 +51,7 @@ if (isset($_SESSION['user'])) {
         </form>
         <button class="edit-info" id="edit-info" onclick="toggleEdit()">Edit User Infos</button>
     </div>
-    <?php include '../partials/footer.php'; ?>
     <script src="../js/account.js"></script>
+    <?php include '../partials/footer.php' ?>
 </body>
 </html>

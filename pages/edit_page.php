@@ -19,8 +19,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = mysqli_real_escape_string($conn, $_POST['description']);
     $img = mysqli_real_escape_string($conn, $_POST['img']);
     $category = mysqli_real_escape_string($conn, $_POST['category']);
-    
-    // Build the CSS style string
+
+    // Récupérer les couleurs
+    $background_color = mysqli_real_escape_string($conn, $_POST['background_color']);
+    $border_color = mysqli_real_escape_string($conn, $_POST['border_color']);
+    $title_color = mysqli_real_escape_string($conn, $_POST['title_color']);
+    $label_color = mysqli_real_escape_string($conn, $_POST['label_color']);
+    $text_color = mysqli_real_escape_string($conn, $_POST['text_color']);
+
+    // Construire la chaîne de style
     $style = "
 .img-infos {
     display: flex;
@@ -28,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     height: 40%;
     width: 100%;
     padding: 10px 0;
-    background-color: " . $_POST['background_color'] . ";
+    background-color: $background_color;
 }
 
 .img {
@@ -46,36 +53,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 .infos {
     width: 70%;
     height: 100%;
-    border-left: 1px solid " . $_POST['border_color'] . ";
+    border-left: 1px solid $border_color;
     padding-left: 10px;
 }
 
 .infos h2 {
-    color: " . $_POST['title_color'] . ";
+    color: $title_color;
 }
 
 .infos strong {
-    color: " . $_POST['label_color'] . ";
+    color: $label_color;
 }
 
 .infos li {
-    color: " . $_POST['text_color'] . ";
+    color: $text_color;
 }
 
 .description {
-    color: " . $_POST['text_color'] . ";
+    color: $text_color;
     height: 60%;
     width: 100%;
     padding: 10px 0;
-    background-color: " . $_POST['background_color'] . ";
+    background-color: $background_color;
 }";
 
-    $style = mysqli_real_escape_string($conn, $style);
-    
+    // Mettre à jour les valeurs dans la base de données
     $sql = "UPDATE pages SET title='$title', creator='$creator', broadcast='$broadcast', 
             genres='$genres', episodes='$episodes', studio='$studio', 
-            description='$description', img='$img', category='$category', style='$style' WHERE id='$id'";
-    
+            description='$description', img='$img', category='$category', 
+            style='$style', background_color='$background_color', border_color='$border_color',
+            title_color='$title_color', label_color='$label_color', text_color='$text_color' 
+            WHERE id='$id'";
+
     if (mysqli_query($conn, $sql)) {
         $success = true;
     }
@@ -86,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title><?php echo $title; ?> - Admin Panel</title>
     <link rel="stylesheet" href="../css/edit-page.css">
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
@@ -107,18 +116,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
 
-    // Extract colors from style
-    preg_match('/title_color: ([^;]+)/', $row['style'], $title_color);
-    preg_match('/label_color: ([^;]+)/', $row['style'], $label_color);
-    preg_match('/text_color: ([^;]+)/', $row['style'], $text_color);
-    preg_match('/border_color: ([^;]+)/', $row['style'], $border_color);
-    preg_match('/background-color: ([^;]+)/', $row['style'], $background_color);
-
-    $title_color = isset($title_color[1]) ? $title_color[1] : '#FFFFFF';
-    $label_color = isset($label_color[1]) ? $label_color[1] : '#FFFFFF';
-    $text_color = isset($text_color[1]) ? $text_color[1] : '#FFFFFF';
-    $border_color = isset($border_color[1]) ? $border_color[1] : '#9E9E9E';
-    $background_color = isset($background_color[1]) ? $background_color[1] : '#000000';
+    // Récupérer les couleurs de la base de données
+    $title_color = $row['title_color'] ?? '#FFFFFF';
+    $label_color = $row['label_color'] ?? '#FFFFFF';
+    $text_color = $row['text_color'] ?? '#FFFFFF';
+    $border_color = $row['border_color'] ?? '#9E9E9E';
+    $background_color = $row['background_color'] ?? '#000000';
     ?>
     <style><?php echo htmlspecialchars($row['style']); ?></style>
 

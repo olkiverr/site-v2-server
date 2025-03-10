@@ -12,6 +12,13 @@ $description = mysqli_real_escape_string($conn, $_POST['description']);
 $img = mysqli_real_escape_string($conn, $_POST['img']);
 $category = mysqli_real_escape_string($conn, $_POST['category']);
 
+// Récupérer les couleurs depuis le formulaire
+$title_color = mysqli_real_escape_string($conn, $_POST['title_color']);
+$label_color = mysqli_real_escape_string($conn, $_POST['label_color']);
+$text_color = mysqli_real_escape_string($conn, $_POST['text_color']);
+$border_color = mysqli_real_escape_string($conn, $_POST['border_color']);
+$background_color = mysqli_real_escape_string($conn, $_POST['background_color']);
+
 // Build the CSS style string
 $style = "
 .img-infos {
@@ -20,7 +27,7 @@ $style = "
     height: 40%;
     width: 100%;
     padding: 10px 0;
-    background-color: " . $_POST['background_color'] . ";
+    background-color: $background_color;
 }
 
 .img {
@@ -38,33 +45,35 @@ $style = "
 .infos {
     width: 70%;
     height: 100%;
-    border-left: 1px solid " . $_POST['border_color'] . ";
+    border-left: 1px solid $border_color;
     padding-left: 10px;
 }
 
 .infos h2 {
-    color: " . $_POST['title_color'] . ";
+    color: $title_color;
 }
 
 .infos strong {
-    color: " . $_POST['label_color'] . ";
+    color: $label_color;
 }
 
 .infos li {
-    color: " . $_POST['text_color'] . ";
+    color: $text_color;
 }
 
 .description {
-    color: " . $_POST['text_color'] . ";
+    color: $text_color;
     height: 60%;
     width: 100%;
     padding: 10px 0;
-    background-color: " . $_POST['background_color'] . ";
+    background-color: $background_color;
 }";
 
 // Insert into database
-$sql = "INSERT INTO pages (title, creator, broadcast, genres, episodes, studio, description, img, category, style) 
-        VALUES ('$title', '$creator', '$broadcast', '$genres', '$episodes', '$studio', '$description', '$img', '$category', '$style')";
+$sql = "INSERT INTO pages (title, creator, broadcast, genres, episodes, studio, description, img, category, style, 
+        title_color, label_color, text_color, border_color, background_color) 
+        VALUES ('$title', '$creator', '$broadcast', '$genres', '$episodes', '$studio', '$description', '$img', 
+                '$category', '$style', '$title_color', '$label_color', '$text_color', '$border_color', '$background_color')";
 
 if ($conn->query($sql) === TRUE) {
     header("Location: ../pages/admin_panel.php?tab=pages");
@@ -73,4 +82,4 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $conn->close();
-?> 
+?>

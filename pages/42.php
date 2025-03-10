@@ -1,5 +1,12 @@
 <?php
 session_start();
+
+if (!isset($_SERVER['HTTP_REFERER']) || !strpos($_SERVER['HTTP_REFERER'], 'contact.php')) {
+    header('Location: index.php');
+    exit();
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

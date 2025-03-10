@@ -107,12 +107,12 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
                 
                 <div class="form-group">
                     <label for="border_color">Border Color:</label>
-                    <input type="color" id="border_color" name="border_color" value="#444444">
+                    <input type="color" id="border_color" name="border_color" value="#333333">
                 </div>
                 
                 <div class="form-group">
                     <label for="background_color">Background Color:</label>
-                    <input type="color" id="background_color" name="background_color" value="#333333">
+                    <input type="color" id="background_color" name="background_color" value="#252525">
                 </div>
             </div>
             

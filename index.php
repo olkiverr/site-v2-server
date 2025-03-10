@@ -59,23 +59,24 @@ $conn->close();
             </div>
         </div>
 
-        <div class="upcoming-slider-container">
-            <p>Upcoming ⌛</p>
-            <div class="upcoming-slider">
-                <button class="slider-button left">&#9664;</button>
-                <?php foreach ($upcoming_images as $image): ?>
-                    <div class="upcoming-item" data-id="<?php echo $image['id']; ?>">
-                        <img src="<?php echo $image['img']; ?>" alt="<?php echo $image['title']; ?>">
-                        <p><?php echo $image['title']; ?></p>
-                    </div>
-                <?php endforeach; ?>
-                <button class="slider-button right">&#9654;</button>
+        <!-- Vérification si la liste des upcoming images est vide -->
+        <?php if (!empty($upcoming_images)): ?>
+            <div class="upcoming-slider-container">
+                <p>Upcoming ⌛</p>
+                <div class="upcoming-slider">
+                    <button class="slider-button left">&#9664;</button>
+                    <?php foreach ($upcoming_images as $image): ?>
+                        <div class="upcoming-item" data-id="<?php echo $image['id']; ?>">
+                            <img src="<?php echo $image['img']; ?>" alt="<?php echo $image['title']; ?>">
+                            <p><?php echo $image['title']; ?></p>
+                        </div>
+                    <?php endforeach; ?>
+                    <button class="slider-button right">&#9654;</button>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
     </main>
-    <footer>
-        <p><span><a href="pages/42.php" style="text-decoration: none; color: white; cursor: default;">&copy;</a></span> 2025 Mangamuse by Zielinski Olivier</p>
-    </footer>
+    <?php include 'partials/footer.php'; ?>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const trendingItems = document.querySelectorAll('.trending-item, .upcoming-item');

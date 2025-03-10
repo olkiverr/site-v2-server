@@ -36,6 +36,12 @@ if (isset($_SESSION['user'])) {
             <button type="submit">Send</button>
         </form>
     </main>
-    <?php include '../partials/footer.php' ?>
+    <?php if ($is_connected): ?>
+        <footer>
+            <p><span><a href="42.php" style="text-decoration: none; color: white; cursor: text;">&copy;</a></span> 2025 Mangamuse by Zielinski Olivier</p>
+        </footer>
+    <?php else: ?>
+        <?php include '../partials/footer.php' ?>
+    <?php endif;?>
 </body>
 </html>
