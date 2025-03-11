@@ -387,3 +387,102 @@ main {
 .grid-container > * {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Styles pour la section "All Animés" */
+.all {
+    padding: 1em;
+    color: #fff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.all p {
+    align-self: flex-start;
+    margin-bottom: 1em;
+    font-size: 1.5em;
+}
+
+.anime-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Augmenter min-width */
+    gap: 1em;
+    padding: 1em 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.anime-item {
+    min-width: 220px; /* Augmenter min-width */
+    max-width: 270px; /* Augmenter max-width */
+    background-color: #444;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    cursor: pointer;
+    width: 100%;
+}
+
+.anime-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.anime-item img {
+    width: 100%;
+    height: 270px; /* Augmenter la hauteur */
+    object-fit: cover;
+    animation: imageFadeIn 0.5s ease-out;
+}
+
+.anime-item p {
+    margin: 0.5em 0;
+    font-size: 1em;
+    align-self: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .all {
+        padding: 1em;
+    }
+    
+    .anime-list {
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); /* Augmenter min-width */
+        gap: 1em;
+    }
+    
+    .anime-item {
+        min-width: 170px; /* Augmenter min-width */
+    }
+    
+    .anime-item img {
+        height: 220px; /* Augmenter la hauteur */
+    }
+}
+
+@media (max-width: 480px) {
+    .all p {
+        font-size: 1.2em;
+    }
+    
+    .anime-list {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Augmenter min-width */
+    }
+    
+    .anime-item {
+        min-width: 140px; /* Augmenter min-width */
+    }
+    
+    .anime-item img {
+        height: 200px; /* Augmenter la hauteur */
+    }
+    
+    .anime-item p {
+        font-size: 0.9em;
+        margin: 0.5em;
+    }
+}

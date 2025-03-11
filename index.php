@@ -5,24 +5,23 @@ $is_admin = isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1;
 
 include 'php/db.php';
 
-$trending_images = [];
-$upcoming_images = [];
+$categories = ['trending', 'upcoming']; // Catégories pour les sliders
+$all_animes = []; // Tableau pour tous les animés
+$category_images = [
+    'trending' => [],
+    'upcoming' => []
+];
 
-// Requête pour récupérer les données de la table 'pages' pour le slider Trending
-$sql = "SELECT id, title, img FROM pages WHERE category = 'trending'";
+// Récupérer les images des catégories et tous les animés
+$sql = "SELECT id, title, img, category FROM pages";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $trending_images[] = $row;
-    }
-}
-
-// Requête pour récupérer les données de la table 'pages' pour le slider Upcoming
-$sql = "SELECT id, title, img FROM pages WHERE category = 'upcoming'";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $upcoming_images[] = $row;
+    // Parcourir les résultats et les classer par catégorie
+    while ($row = $result->fetch_assoc()) {
+        if (in_array($row['category'], $categories)) {
+            $category_images[$row['category']][] = $row;
+        }
+        $all_animes[] = $row; // Ajouter tous les animés
     }
 }
 
@@ -45,46 +44,49 @@ $conn->close();
 <body class="<?php echo $is_admin ? 'admin' : ''; ?>">
     <?php include 'partials/header.php'; ?> <!-- Include header partial -->
     <main>
-        <div class="trending-slider-container">
-            <p>Trending 🔥</p>
-            <div class="trending-slider">
-                <button class="slider-button left">&#9664;</button>
-                <?php foreach ($trending_images as $image): ?>
-                    <div class="trending-item" data-id="<?php echo $image['id']; ?>">
-                        <img src="<?php echo $image['img']; ?>" alt="<?php echo $image['title']; ?>">
-                        <p><?php echo $image['title']; ?></p>
+        <?php foreach ($categories as $category): ?>
+            <?php if (!empty($category_images[$category])): ?>
+                <div class="<?php echo $category; ?>-slider-container">
+                    <p><?php echo ucfirst($category); ?> <?php echo $category === 'trending' ? '🔥' : '⌛'; ?></p>
+                    <div class="<?php echo $category; ?>-slider">
+                        <button class="slider-button left">&#9664;</button>
+                        <?php foreach ($category_images[$category] as $image): ?>
+                            <div class="<?php echo $category; ?>-item" data-id="<?php echo $image['id']; ?>">
+                                <img src="<?php echo $image['img']; ?>" alt="<?php echo $image['title']; ?>">
+                                <p><?php echo $image['title']; ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                        <button class="slider-button right">&#9654;</button>
                     </div>
-                <?php endforeach; ?>
-                <button class="slider-button right">&#9654;</button>
-            </div>
-        </div>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
 
-        <!-- Vérification si la liste des upcoming images est vide -->
-        <?php if (!empty($upcoming_images)): ?>
-            <div class="upcoming-slider-container">
-                <p>Upcoming ⌛</p>
-                <div class="upcoming-slider">
-                    <button class="slider-button left">&#9664;</button>
-                    <?php foreach ($upcoming_images as $image): ?>
-                        <div class="upcoming-item" data-id="<?php echo $image['id']; ?>">
-                            <img src="<?php echo $image['img']; ?>" alt="<?php echo $image['title']; ?>">
-                            <p><?php echo $image['title']; ?></p>
+        <div class="all">
+            <?php if (!empty($all_animes)): ?>
+                <p>All Animes</p>
+                <div class="anime-list">
+                    <?php foreach ($all_animes as $anime): ?>
+                        <div class="anime-item" data-id="<?php echo $anime['id']; ?>">
+                            <img src="<?php echo $anime['img']; ?>" alt="<?php echo $anime['title']; ?>">
+                            <p><?php echo $anime['title']; ?></p>
                         </div>
                     <?php endforeach; ?>
-                    <button class="slider-button right">&#9654;</button>
                 </div>
-            </div>
-        <?php endif; ?>
+            <?php else: ?>
+                <p>No animés found.</p>
+            <?php endif; ?>
+        </div>
+
     </main>
     <?php include 'partials/footer.php'; ?>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const trendingItems = document.querySelectorAll('.trending-item, .upcoming-item');
+            const animeItems = document.querySelectorAll('.anime-item, .trending-item, .upcoming-item');
 
-            trendingItems.forEach(item => {
+            animeItems.forEach(item => {
                 item.addEventListener('click', function() {
                     const id = item.getAttribute('data-id');
-                    console.log(id);
                     window.location.href = "pages/view_anime.php?id=" + id;
                 });
             });

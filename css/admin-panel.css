@@ -1,3 +1,27 @@
+/* Styles pour la section "Pages" */
+.tab-page {
+    border: white 1px solid;
+    width: 10%;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.anime-thumbnail {
+    width: 50px; /* Augmenter la largeur */
+    height: 50px; /* Augmenter la hauteur */
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.tabs-pages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
 /* General Admin Panel Styles */
 .admin-panel {
     font-family: 'Cabin', sans-serif;
@@ -138,8 +162,8 @@
 }
 
 .anime-thumbnail {
-    width: 30px;
-    height: 30px;
+    width: 50px; /* Augmenter la largeur */
+    height: 50px; /* Augmenter la hauteur */
     object-fit: cover;
     border-radius: 4px;
 }
