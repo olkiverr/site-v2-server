@@ -1,92 +1,242 @@
-h1 {
+/* Styles de base pour les éléments de texte */
+h1, h3 {
     color: white;
+    margin-bottom: 1.2rem;
+    font-weight: 600;
 }
-h3 {
-    color: white;
+
+h1 {
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 0.5rem;
+    margin-top: 1.5rem;
 }
 
 main {
-    width: 100%; 
-    height: 100%;
+    width: 95%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #1E1E1E;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .page-prev {
-    width: 100%; 
+    width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
+/* Amélioration des labels */
 label {
-    color: white;
+    color: #E0E0E0;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 1rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
 }
 
-/* Add styles for inputs */
+/* Styles améliorés pour les inputs */
 input[type="text"],
 select {
-    background-color: #333333;
+    background-color: #2A2A2A;
     color: white;
-    border: 1px solid #666666;
-    padding: 5px;
+    border: 1px solid #555;
+    padding: 8px 12px;
     border-radius: 4px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%;
+    max-width: 300px;
+}
+
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
 }
 
 textarea {
-    background-color: #333333;
+    background-color: #2A2A2A;
     color: white;
-    border: 1px solid #666666;
-    padding: 5px;
-    border-radius: 4px;
+    border: 1px solid #555;
+    padding: 12px;
+    border-radius: 6px;
     width: 100%;
+    min-height: 150px;
+    font-family: 'Cabin', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    resize: vertical;
     box-sizing: border-box;
 }
 
-/* Style the color inputs differently since they need a different background */
+/* Style amélioré pour les inputs de couleur */
 input[type="color"] {
-    background-color: #333333;
-    border: 1px solid #666666;
-    padding: 2px;
+    background-color: #2A2A2A;
+    border: 1px solid #555;
+    padding: 0;
     border-radius: 4px;
+    width: 50px;
+    height: 25px;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-left: 8px;
 }
 
-/* Update the image container styles */
+/* Amélioration du conteneur d'image */
+.img-infos {
+    display: flex;
+    flex-direction: row;
+    min-height: 350px;
+    width: 100%;
+    padding: 15px;
+    background-color: var(--background-color, #000000);
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
 .img {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
     width: 30%;
-    height: 100%;
     padding: 10px;
     box-sizing: border-box;
 }
 
-/* Update the image styles */
+/* Style amélioré pour l'affichage de l'image */
 .img > img {
-    max-height: 300px; /* Set a maximum height */
-    width: auto; /* Maintain aspect ratio */
-    height: auto; /* Maintain aspect ratio */
-    object-fit: contain; /* Ensure the image fits within its container */
-    border-radius: 10px;
+    max-height: 280px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 15px;
 }
 
-/* Update the input styling to match the container */
+/* Amélioration pour l'URL de l'image */
 .img input[type="text"] {
-    height: 25px;
     width: 90%;
     margin-top: 10px;
 }
 
+/* Style amélioré pour la section d'infos */
+.infos {
+    width: 70%;
+    height: 100%;
+    border-left: 1px solid var(--border-color, #9E9E9E);
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.infos input[type="text"] {
+    margin-bottom: 8px;
+}
+
+.infos ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.infos li {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.infos strong {
+    color: var(--label-color, #FFFFFF);
+    min-width: 90px;
+    display: inline-block;
+    font-weight: 600;
+}
+
+/* Style amélioré pour la description */
+.description {
+    color: var(--text-color, #FFFFFF);
+    width: 100%;
+    padding: 15px;
+    background-color: var(--background-color, #000000);
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+/* Style amélioré pour les options de style */
+.style-options {
+    margin-top: 25px;
+    background-color: #2A2A2A;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.style-options h3 {
+    width: 100%;
+    margin-top: 0;
+    color: #4CAF50;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+}
+
+/* Style amélioré pour le bouton de soumission */
 button[type="submit"] {
     background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
+    padding: 12px 25px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    margin-top: 20px;
-    transition: background-color 0.3s;
+    margin-top: 25px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    display: block;
+    width: 200px;
+    text-align: center;
 }
 
 button[type="submit"]:hover {
     background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .img-infos {
+        flex-direction: column;
+    }
+    
+    .img, .infos {
+        width: 100%;
+    }
+    
+    .infos {
+        border-left: none;
+        border-top: 1px solid var(--border-color, #9E9E9E);
+        padding-left: 0;
+        padding-top: 15px;
+        margin-top: 15px;
+    }
+    
+    input[type="text"], select {
+        max-width: 100%;
+    }
 }

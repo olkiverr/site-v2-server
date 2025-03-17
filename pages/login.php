@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['user'] = $username;
             $_SESSION['is_admin'] = $row['is_admin'];
             error_log("User is admin: " . $_SESSION['is_admin']); // Debugging line
-            header("Location: /4TTJ/Zielinski%20Olivier/Site/site-v2/index.php");
+            // header("Location: /4TTJ/Zielinski%20Olivier/Site/site-v2/index.php");
         } else {
             echo "Invalid password.";
         }
