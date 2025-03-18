@@ -53,6 +53,15 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
                         echo $row['total_admins'];
                     ?></p>
                 </div>
+                <div class="info-box small-box">
+                    <h4>Total Animes</h4>
+                    <p><?php
+                        $sql = "SELECT COUNT(*) as total_pages FROM pages";
+                        $result = $conn->query($sql);
+                        $row = $result->fetch_assoc();
+                        echo $row['total_pages'];
+                    ?></p>
+                </div>
             </div>
             <div class="info-box large-chart">
                 <h4>Connections Over Time</h4>
@@ -66,7 +75,7 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
                                 labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                                 datasets: [{
                                     label: 'Connections',
-                                    data: [65, 59, 80, 81, 56, 55, 40, 45, 60, 70, 75, 90],
+                                    data: [100, 20, 20, 50, 50, 90, 90, 50, 50, 20, 20, 100],
                                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                                     borderColor: 'rgba(75, 192, 192, 1)',
                                     borderWidth: 1
