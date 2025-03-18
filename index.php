@@ -12,8 +12,11 @@ $category_images = [
     'upcoming' => []
 ];
 
-// Récupérer les images des catégories et tous les animés
-$sql = "SELECT id, title, img, category FROM pages";
+// Récupérer les images des catégories et tous les animés en excluant les contenus interdits
+$sql = "SELECT id, title, img, category, genres FROM pages 
+        WHERE genres NOT LIKE '%Ecchi%' 
+        AND genres NOT LIKE '%Erotica%' 
+        AND genres NOT LIKE '%Hentai%'";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // Parcourir les résultats et les classer par catégorie

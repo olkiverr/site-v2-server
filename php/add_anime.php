@@ -31,7 +31,7 @@ function insertAnime($url, $category, $conn) {
             // Process the anime data
             foreach ($data["data"] as $anime) {
                 $id = $anime["mal_id"];
-                $title = $anime["title"];
+                $title = $anime["title_english"] ?? $anime["title"]; 
                 $broadcast = $anime["broadcast"]["string"] ?? "Unknown";
                 $episodes = $anime["episodes"] ?? 0;
                 $img = $anime["images"]["jpg"]["image_url"] ?? "";
