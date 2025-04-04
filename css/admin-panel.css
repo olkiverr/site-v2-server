@@ -22,6 +22,82 @@
     margin-top: 20px;
 }
 
+/* Styles pour la barre de recherche et le filtre par genre */
+.search-filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0;
+    align-items: center;
+}
+
+.search-container {
+    flex: 1;
+    min-width: 250px;
+}
+
+.filter-container {
+    flex: 0 0 200px;
+}
+
+/* Style pour l'indicateur de résultats */
+.search-results-info {
+    margin: 15px 0;
+    padding: 8px 12px;
+    background-color: #444;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+#results-count {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Style pour le bouton "Tout sélectionner" */
+.select-all-container {
+    flex: 0 0 auto;
+}
+
+#select-all-btn {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+}
+
+#select-all-btn:hover {
+    background-color: #45a049;
+}
+
+#pageSearch {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #444;
+    color: #fff;
+}
+
+#genreFilter {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #444;
+    color: #fff;
+}
+
 /* General Admin Panel Styles */
 .admin-panel {
     font-family: 'Cabin', sans-serif;
@@ -385,4 +461,193 @@
 .image-preview img {
     border-radius: 4px;
     border: 1px solid #444;
+}
+
+.delete-button {
+    color: rgb(105, 105, 105);
+    font-size: 20px; /* Set the size of the icon */
+    text-decoration: none; /* Remove underline */
+    padding: 5px;
+    margin-left: 10px; /* Space between the title and the delete button */
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for color and transform */
+}
+
+.delete-button:hover {
+    color: rgb(182, 0, 0); /* Darker red color on hover */
+    transform: scale(1.2) rotate(10deg); /* Enlarge the icon slightly and rotate it */
+    animation: shake 0.5s ease-in-out; /* Shake effect */
+}
+
+.delete-button:focus,
+.delete-button:active {
+    outline: none; /* Remove the focus outline */
+}
+
+@keyframes shake {
+    0% {
+        transform: scale(1) rotate(0deg); /* Initial state: no scaling and no rotation */
+    }
+    25% {
+        transform: scale(1.2) rotate(-10deg); /* Slight enlargement and rotation to the left */
+    }
+    50% {
+        transform: scale(1.2) rotate(10deg); /* Slight enlargement and rotation to the right */
+    }
+    75% {
+        transform: scale(1.2) rotate(-10deg); /* Rotate back to the left */
+    }
+    100% {
+        transform: scale(1.2) rotate(0deg); /* Final state: return to original rotation */
+    }
+}
+
+.anime-title {
+    margin: 0.5em 0;
+    font-size: 1em; /* Taille de police ajustable */
+    align-self: center;
+    max-height: 2.4em; /* Hauteur maximale pour 2 lignes */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box; /* Utilisation de flexbox pour gérer les lignes */
+    -webkit-line-clamp: 3; /* Limite à 2 lignes */
+    -webkit-box-orient: vertical; /* Orientation verticale du texte */
+    padding: 0 0.5em; /* Padding horizontal */
+}
+
+/* Styles pour la sélection d'animés et le bouton de suppression */
+.select-checkbox {
+    cursor: pointer;
+    font-size: 20px;
+    color: #999;
+    transition: color 0.3s ease;
+}
+
+.select-checkbox:hover {
+    color: #fff;
+}
+
+.select-checkbox.selected i {
+    color: #4CAF50;
+}
+
+.tab-page.selected {
+    background-color: rgba(76, 175, 80, 0.2);
+    border-color: #4CAF50;
+}
+
+/* Styles pour le bouton de suppression fixe */
+#delete-selection-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+#delete-selection-btn {
+    padding: 12px 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+#delete-selection-btn:hover {
+    background-color: #d32f2f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Styles pour la modal de confirmation */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+
+.modal-content h4 {
+    margin-top: 0;
+    color: #fff;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#confirm-delete {
+    background-color: #f44336;
+    color: white;
+}
+
+#confirm-delete:hover {
+    background-color: #d32f2f;
+}
+
+#cancel-delete {
+    background-color: #555;
+    color: white;
+}
+
+#cancel-delete:hover {
+    background-color: #444;
+}
+
+/* Si sélectionné, changement de style pour la case à cocher */
+.select-checkbox.selected .fa-square {
+    display: none;
+}
+
+.select-checkbox.selected .fa-check-square {
+    display: inline;
+}
+
+.select-checkbox .fa-check-square {
+    display: none;
+}
+
+/* Ajustement pour les appareils mobiles */
+@media (max-width: 768px) {
+    #delete-selection-container {
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    #delete-selection-btn {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
 }

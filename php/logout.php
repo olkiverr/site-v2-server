@@ -1,6 +1,11 @@
 <?php
 session_start();
+// Vider toutes les variables de session
+$_SESSION = array();
+// Détruire la session
 session_destroy();
-header("Location: /4TTJ/Zielinski%20Olivier/Site/site-v2/pages/login.php");
-exit();
+session_write_close();
+// Rediriger avec un paramètre pour forcer le rechargement
+header('Location: ../index.php');
+exit;
 ?>

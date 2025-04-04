@@ -103,15 +103,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $confirmMail->send();
 
-        // Redirection vers la page d'accueil
-        header('Location: ../index.php');
+        // Redirection vers la page de contact avec message de succès
+        header('Location: ../pages/contact.php?success=1');
         exit;
 
     } catch (Exception $e) {
-        header('Location: ../contact.php?error=');
+        // Redirection vers la page de contact avec message d'erreur
+        header('Location: ../pages/contact.php?error=1');
         exit;
     }
 } else {
-    echo 'Méthode de requête non valide.';
+    // Redirection vers la page de contact avec message d'erreur
+    header('Location: ../pages/contact.php?error=1');
+    exit;
 }
 ?>

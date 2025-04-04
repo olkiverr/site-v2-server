@@ -1,107 +1,238 @@
+body {
+    background-color: #252525;
+    color: #ffffff;
+    font-family: 'Cabin', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 main {
-    height: 100%;
-    width: 100%;
+    flex: 1;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+    padding: 3rem 1rem;
+}
+
+.contact-container {
+    width: 90%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+.contact-container h1 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #fff;
+    font-size: 2rem;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.contact-container h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 50px;
+    height: 3px;
+    background: #4CAF50;
+    transform: translateX(-50%);
+}
+
+.contact-container h1 i {
+    color: #4CAF50;
+    margin-right: 10px;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    background-color: #353535;
-    height: 70%;
-    width: 50%;
+    background-color: #333;
+    width: 100%;
     align-items: center;
-    padding: 20px;
-    border-radius: 10px; /* Assurer des bords arrondis pour l'ensemble du formulaire */
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-form input, textarea, button {
-    margin: 10px 0;
-    border-radius: 10px;
-    width: 100%; /* Pour s'assurer que les inputs prennent toute la largeur du formulaire */
-    max-width: 100%; /* Limiter la largeur au maximum de celle du formulaire */
-    height: 40px;
-    color: aliceblue;
-    font-size: 1.2em;
-    background-color: #707070;
-    border: #1e1d1d 3px solid;
+form:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
-form input:focus, textarea:focus {
-    border: #1e1d1d 3px solid;
+.form-group {
+    width: 100%;
+    margin-bottom: 1.5rem;
 }
 
-form input::placeholder, textarea::placeholder {
-    color: #ffffff;
-    font-size: 1.1em;
-    padding-left: 10px;
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #fff;
 }
 
+form input, 
+form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    border: 1px solid #444;
+    background-color: #444;
+    color: #fff;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+form input:focus, 
+form textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(75, 192, 192, 0.5);
+    border-color: #4CAF50;
+    transform: scale(1.01);
+}
+
+form input::placeholder, 
 form textarea::placeholder {
-    font-size: 1.5em;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
 }
 
 form button {
-    transition: background-color 0.3s;
+    width: auto;
+    min-width: 150px;
+    padding: 12px 24px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 form button:hover {
-    background-color: #525252;
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-form button[type="submit"] {
-    width: 30%;
+form button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+form button i {
+    font-size: 14px;
 }
 
 form textarea {
-    height: 70%;
-    font-size: 1.2em;
-    resize: none;
+    height: 200px;
+    resize: vertical;
+    min-height: 120px;
+    font-family: 'Cabin', sans-serif;
+}
+
+/* Message de confirmation ou d'erreur */
+.message {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.success {
+    background-color: rgba(76, 175, 80, 0.2);
+    border: 1px solid #4CAF50;
+    color: #4CAF50;
+}
+
+.error {
+    background-color: rgba(244, 67, 54, 0.2);
+    border: 1px solid #F44336;
+    color: #F44336;
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    main {
+        padding: 2rem 1rem;
+    }
+    
+    .contact-container h1 {
+        font-size: 1.8rem;
+    }
+    
     form {
-        width: 90%;
-        height: 90%;
-        border-radius: 10px;
+        width: 100%;
+        padding: 1.5rem;
     }
-
-    form input, textarea, button {
-        width: 100%; /* Assurer que les éléments s'adaptent à la largeur du formulaire */
-        height: 50px;
-        font-size: 1em;
+    
+    form input, 
+    form textarea, 
+    form button {
+        font-size: 15px;
+        padding: 10px;
     }
-
-    form button[type="submit"] {
-        width: 50%;
-    }
-
-    form textarea {
-        height: 30%;
+    
+    form button {
+        width: 100%;
+        max-width: 100%;
     }
 }
 
 @media (max-width: 480px) {
+    main {
+        padding: 1.5rem 1rem;
+    }
+    
+    .contact-container h1 {
+        font-size: 1.5rem;
+    }
+    
     form {
-        width: 90%;
-        height: 90%;
-        border-radius: 10px;
+        padding: 1.2rem;
     }
-
-    form input, textarea, button {
-        width: 100%; /* Assurer que les éléments s'adaptent à la largeur du formulaire */
-        height: 45px;
-        font-size: 0.9em;
+    
+    .form-group {
+        margin-bottom: 1rem;
     }
-
-    form button[type="submit"] {
-        width: 60%;
-    }
-
+    
+    form input, 
     form textarea {
-        height: 25%;
+        margin-bottom: 5px;
     }
 }

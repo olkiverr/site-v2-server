@@ -98,7 +98,8 @@ main {
 }
 
 .upcoming-item,
-.trending-item {
+.trending-item,
+.anime-item {
     min-width: 200px; /* Increase the minimum width */
     max-width: 250px; /* Increase the maximum width */
     background-color: #444;
@@ -106,21 +107,34 @@ main {
     overflow: hidden;
     text-align: center;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    position: relative; /* Ajout de position relative pour le positionnement de l'overlay */
 }
+
 .upcoming-item img,
-.trending-item img {
+.trending-item img,
+.anime-item img {
     width: 100%;
     height: 250px; /* Keep the height */
     object-fit: cover; /* Ensure images cover the entire area */
     animation: imageFadeIn 0.5s ease-out;
+    position: relative;
+    z-index: 0;
 }
 
 .upcoming-item p,
-.trending-item p {
+.trending-item p,
+.anime-item p {
     margin: 0.5em 0;
+    max-height: 2.4em; /* Hauteur maximale pour 2 lignes */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limite à 2 lignes */
+    -webkit-box-orient: vertical;
+    padding: 0 0.5em; /* Ajout d'un peu de padding horizontal */
 }
 
-.trending-item:hover, .upcoming-item:hover {
+.trending-item:hover, .upcoming-item:hover, .anime-item:hover {
     transform: translateY(-5px) scale(1.02);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
 }
@@ -234,7 +248,8 @@ main {
 }
 
 .trending-item.selected,
-.upcoming-item.selected {
+.upcoming-item.selected,
+.anime-item.selected {
     border: 2px solid #4CAF50;
 }
 
@@ -442,6 +457,13 @@ main {
     margin: 0.5em 0;
     font-size: 1em;
     align-self: center;
+    max-height: 2.4em; /* Hauteur maximale pour 2 lignes */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limite à 2 lignes */
+    -webkit-box-orient: vertical;
+    padding: 0 0.5em; /* Ajout d'un peu de padding horizontal */
 }
 
 /* Responsive adjustments */
@@ -485,4 +507,137 @@ main {
         font-size: 0.9em;
         margin: 0.5em;
     }
+}
+
+/* Bouton de scroll */
+.scroll-button {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: none;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scroll-button:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+    transform: scale(1.1);
+}
+
+.scroll-button .scroll-up,
+.scroll-button .scroll-down {
+    position: absolute;
+    transition: opacity 0.3s ease;
+}
+
+.scroll-button.show-up .scroll-up {
+    opacity: 1;
+}
+
+.scroll-button.show-up .scroll-down {
+    opacity: 0;
+}
+
+.scroll-button.show-down .scroll-down {
+    opacity: 1;
+}
+
+.scroll-button.show-down .scroll-up {
+    opacity: 0;
+}
+
+/* Style pour le conteneur des icônes */
+.overlay-icons {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    width: 80px;
+    height: 40px;
+    background: linear-gradient(to bottom, 
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.6) 100%
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    gap: 15px;
+    z-index: 2;
+    opacity: 0;
+    transition: all 0.3s ease;
+    border-radius: 0 0 10px 10px;
+}
+
+/* Afficher l'overlay au survol */
+.upcoming-item:hover .overlay-icons,
+.trending-item:hover .overlay-icons,
+.anime-item:hover .overlay-icons {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Style pour les icônes */
+.icon-views,
+.icon-star {
+    font-size: 1.1em;
+    color: white;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+
+/* Effet de gonflement au survol des icônes */
+.icon-views:hover i,
+.icon-star:hover i {
+    transform: scale(1.3);
+    transition: transform 0.2s ease;
+}
+
+/* État actif pour l'œil */
+.icon-views.active i.fa-eye-slash {
+    display: none;
+}
+
+.icon-views.active i.fa-eye {
+    display: inline-block;
+}
+
+/* État actif pour l'étoile */
+.icon-star.active i.far.fa-star {
+    display: none;
+}
+
+.icon-star.active i.fas.fa-star {
+    display: inline-block;
+    color: #ffd700; /* Couleur dorée pour l'étoile pleine */
+}
+
+/* Ajouter la ligne verticale après la première icône */
+.icon-views::after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 15px;
+    width: 2px;
+    background-color: rgba(255, 255, 255, 0.5);
 }

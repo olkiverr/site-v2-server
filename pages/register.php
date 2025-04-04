@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $tokenStmt->execute();
         
         // Mettre à jour la session
+        $_SESSION['id'] = $userId;
         $_SESSION['user'] = $username;
         $_SESSION['email'] = $email;
         $_SESSION['is_admin'] = 0; // Default to non-admin

@@ -17,8 +17,10 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
     <link rel="icon" href="../img/MangaMuse_White-Book.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/admin-panel.js"></script>
 </head>
 <body>
     <?php include '../partials/header.php'; ?> <!-- Include header partial -->
@@ -75,7 +77,7 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
                                 labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                                 datasets: [{
                                     label: 'Connections',
-                                    data: [100, 20, 20, 50, 50, 90, 90, 50, 50, 20, 20, 100],
+                                    data: [90, 50, 20, 100, 20, 50, 50, 90, 20, 100, 50, 50],
                                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                                     borderColor: 'rgba(75, 192, 192, 1)',
                                     borderWidth: 1
@@ -99,7 +101,7 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
             <button onclick="location.href='add_user.php?tab=users'">Add User</button>
             <?php
             // Fetch users from the database
-            include '../php/db.php';
+            include_once '../php/db.php';
             $sql = "SELECT id, username, email, is_admin FROM users";
             $result = $conn->query($sql);
 
@@ -119,30 +121,108 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
         <div class="tab-content" id="pages">
             <h3>Pages</h3>
             <button onclick="location.href='add_page.php'" class="add-button">Add New Page</button>
+            
+            <!-- Ajout de la barre de recherche et du filtre par genre -->
+            <div class="search-filter-container">
+                <div class="search-container">
+                    <input type="text" id="pageSearch" placeholder="Search for anime..." onkeyup="searchAnime()">
+                </div>
+                <div class="filter-container">
+                    <select id="genreFilter" onchange="filterByGenre()">
+                        <option value="">All Genres</option>
+                        <?php
+                        // Récupérer tous les genres uniques de la base de données
+                        $genres_query = "SELECT DISTINCT genres FROM pages";
+                        $genres_result = $conn->query($genres_query);
+                        
+                        // Tableau pour stocker tous les genres uniques
+                        $all_genres = array();
+                        
+                        // Parcourir tous les enregistrements
+                        while ($genre_row = $genres_result->fetch_assoc()) {
+                            // Diviser la chaîne de genres en un tableau
+                            $genre_list = explode(', ', $genre_row['genres']);
+                            
+                            // Ajouter chaque genre au tableau global
+                            foreach ($genre_list as $genre) {
+                                $genre = trim($genre);
+                                if (!in_array($genre, $all_genres) && !empty($genre)) {
+                                    $all_genres[] = $genre;
+                                }
+                            }
+                        }
+                        
+                        // Trier les genres par ordre alphabétique
+                        sort($all_genres);
+                        
+                        // Afficher chaque genre comme option dans la liste déroulante
+                        foreach ($all_genres as $genre) {
+                            echo "<option value=\"" . htmlspecialchars($genre) . "\">" . htmlspecialchars($genre) . "</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="select-all-container">
+                    <button id="select-all-btn" onclick="showSelectAllConfirmation()">
+                        <i class="fas fa-check-square"></i> Tout sélectionner
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Ajout de l'indicateur de résultats -->
+            <div class="search-results-info">
+                <span id="results-count">
+                    <?php echo $result->num_rows; ?> animés trouvés
+                </span>
+            </div>
+            
             <?php
-            include '../php/db.php';
+            include_once '../php/db.php';
             $sql = "SELECT * FROM pages";
             $result = $conn->query($sql);
             ?>
-
-            <div class="tabs-pages">
+            <div class="tabs-pages" id="anime-container">
                 <?php 
                 while ($row = $result->fetch_assoc()): ?>
-                    <?php
-                    if (is_array($row['title'])): 
-                        foreach($row['title'] as $title): ?>
-                            <div class="tab-page" data-tab="<?php echo $row['id']; ?>">
-                                <img src="<?php echo htmlspecialchars($row['img']); ?>" alt="<?php echo htmlspecialchars($title); ?>" class="anime-thumbnail">
-                                <?php echo htmlspecialchars($title); ?>
-                            </div>
-                        <?php endforeach; 
-                    else: ?>
-                        <div class="tab-page" data-tab="<?php echo $row['id']; ?>">
-                            <img src="<?php echo htmlspecialchars($row['img']); ?>" alt="<?php echo htmlspecialchars($row['title']); ?>" class="anime-thumbnail">
-                            <?php echo htmlspecialchars($row['title']); ?>
+                    <div class="tab-page" data-tab="<?php echo $row['id']; ?>" data-title="<?php echo htmlspecialchars($row['title']); ?>" data-genres="<?php echo htmlspecialchars($row['genres']); ?>">
+                        <img src="<?php echo htmlspecialchars($row['img']); ?>" alt="<?php echo htmlspecialchars($row['title']); ?>" class="anime-thumbnail">
+                        <div class="anime-title"><?php echo htmlspecialchars($row['title']); ?></div> <!-- Le titre ici -->
+                        <div class="select-checkbox" data-id="<?php echo $row['id']; ?>">
+                            <i class="far fa-square"></i>
                         </div>
-                    <?php endif; ?>
+                    </div>
                 <?php endwhile; ?>
+            </div>
+            
+            <!-- Bouton de suppression de la sélection -->
+            <div id="delete-selection-container">
+                <button id="delete-selection-btn" style="display: none;">
+                    <i class="fas fa-trash-alt"></i> Supprimer la sélection
+                </button>
+            </div>
+            
+            <!-- Modal de confirmation -->
+            <div id="delete-confirm-modal" class="modal">
+                <div class="modal-content">
+                    <h4>Confirmer la suppression</h4>
+                    <p>Êtes-vous sûr de vouloir supprimer les <span id="count-selected">0</span> animés sélectionnés?</p>
+                    <div class="modal-actions">
+                        <button id="confirm-delete">Confirmer</button>
+                        <button id="cancel-delete">Annuler</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal de confirmation pour tout sélectionner -->
+            <div id="select-all-confirm-modal" class="modal">
+                <div class="modal-content">
+                    <h4>Tout sélectionner</h4>
+                    <p>Voulez-vous sélectionner tous les <span id="count-visible">0</span> animés actuellement affichés?</p>
+                    <div class="modal-actions">
+                        <button id="confirm-select-all">Confirmer</button>
+                        <button id="cancel-select-all">Annuler</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="tab-content" id="settings">
@@ -157,35 +237,5 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
         </div>
     </div>
     <?php include '../partials/footer.php'; ?> <!-- Include footer partial -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabs = document.querySelectorAll('.tab');
-            const tabContents = document.querySelectorAll('.tab-content');
-
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    tabs.forEach(t => t.classList.remove('active-tab'));
-                    tabContents.forEach(tc => tc.classList.remove('active-tab'));
-
-                    tab.classList.add('active-tab');
-                    document.getElementById(tab.dataset.tab).classList.add('active-tab');
-                });
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabs = document.querySelectorAll('.tab-page');
-
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const id = tab.getAttribute('data-tab');
-                    console.log(id);
-                    window.location.href = "edit_page.php?id=" + id;
-
-                });
-            });
-        });
-xx    </script>
-    <script src="../js/admin-panel.js"></script>
 </body>
 </html>

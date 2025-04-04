@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->execute();
 
             // Mettre à jour la session pour indiquer que l'utilisateur est connecté
+            $_SESSION['id'] = $row['id'];
             $_SESSION['user'] = $username; // Nom d'utilisateur dans la session
             $_SESSION['email'] = $row['email'];
             $_SESSION['is_admin'] = $row['is_admin'];

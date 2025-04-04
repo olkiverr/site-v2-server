@@ -12,7 +12,7 @@ document.getElementById('register-form').addEventListener('submit', function(eve
         if (data.status === 'success') {
             showSnackbar(data.message, 'success');
             setTimeout(() => {
-                window.location.href = '/4TTJ/Zielinski%20Olivier/Site/site-v2/index.php';
+                window.location.href = '/4TTJ/Zielinski%20Olivier/Site/site-v2/index.php?refresh=' + new Date().getTime();
             }, 1500);
         } else {
             showSnackbar(data.message, 'error');
