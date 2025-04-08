@@ -419,6 +419,7 @@ def process_anime_page(url, category, conn, api_client, existing_ids, logger, fi
     max_retries = 3
     attempts = 0
     success = False
+    has_data = False
     
     # Liste des genres à filtrer si filter_adult est activé
     adult_genres = ["Ecchi", "Erotica", "Hentai"]
@@ -442,8 +443,9 @@ def process_anime_page(url, category, conn, api_client, existing_ids, logger, fi
             # Vérifier si nous avons atteint la dernière page
             if len(data["data"]) == 0:
                 logger.log("🏁 Dernière page atteinte, aucun anime supplémentaire disponible.", logging.INFO)
-                return False
+                return {'success': True, 'continue_next': False, 'has_data': False}
 
+            has_data = True
             items_processed = 0
             
             # Traiter chaque anime de la page
@@ -525,19 +527,19 @@ def process_anime_page(url, category, conn, api_client, existing_ids, logger, fi
             # Si on a traité tous les items sans erreur, marquer comme un succès
             if items_processed > 0:
                 success = True
-                return True  # Il y a plus de pages à explorer
+                return {'success': True, 'continue_next': True, 'has_data': True}
             else:
                 logger.log("🏁 Aucun anime à traiter dans cette page.", logging.INFO)
-                return False  # Fin des pages à explorer
+                return {'success': True, 'continue_next': False, 'has_data': False}
 
         except Exception as e:
             logger.log(f"❌ Tentative {attempts} échouée: {e}", logging.ERROR)
             # Attendre avant de réessayer
             time.sleep(5)
 
-    if not success:
-        logger.log(f"❌ Échec du traitement de la page après {max_retries} tentatives. Ignorer...", logging.ERROR)
-        return False  # Problème avec cette page
+    # Même après 3 tentatives échouées, on continue avec la page suivante
+    logger.log(f"⚠️ Échec du traitement de la page après {max_retries} tentatives. Passage à la page suivante...", logging.WARNING)
+    return {'success': False, 'continue_next': True, 'has_data': has_data}
 
 def process_page(page, conn, api_client, existing_ids, logger, filter_adult=True, skip_details=False, batch_size=10):
     logger.log(f"\n🔄 Traitement de la page {page}", logging.INFO)
@@ -545,10 +547,17 @@ def process_page(page, conn, api_client, existing_ids, logger, filter_adult=True
     # Variable pour suivre si on peut continuer avec la page suivante
     continue_next_page = True
     
+    # Dictionnaire pour suivre les échecs consécutifs par catégorie
+    category_failures = {
+        "trending": 0,
+        "upcoming": 0,
+        "general": 0
+    }
+    
     # 🔥 Récupérer les anime tendance
     if continue_next_page:
         logger.log("\n🔥 Catégorie: TRENDING", logging.INFO)
-        continue_next_page = process_anime_page(
+        result = process_anime_page(
             f"https://api.jikan.moe/v4/top/anime?page={page}",
             "trending",
             conn,
@@ -559,11 +568,14 @@ def process_page(page, conn, api_client, existing_ids, logger, filter_adult=True
             skip_details,
             batch_size
         )
+        if not result['success'] and result['has_data']:
+            category_failures["trending"] += 1
+        continue_next_page = result['continue_next']
     
     # 📅 Récupérer les anime à venir
-    if continue_next_page:
+    if continue_next_page and category_failures["upcoming"] < 3:
         logger.log("\n📅 Catégorie: UPCOMING", logging.INFO)
-        continue_next_page = process_anime_page(
+        result = process_anime_page(
             f"https://api.jikan.moe/v4/seasons/upcoming?page={page}",
             "upcoming",
             conn,
@@ -574,11 +586,16 @@ def process_page(page, conn, api_client, existing_ids, logger, filter_adult=True
             skip_details,
             batch_size
         )
+        if not result['success'] and result['has_data']:
+            category_failures["upcoming"] += 1
+            if category_failures["upcoming"] >= 3:
+                logger.log("\n⚠️ La catégorie UPCOMING a échoué 3 fois consécutives. Cette catégorie sera ignorée pour les pages suivantes.", logging.WARNING)
+        continue_next_page = result['continue_next']
     
     # 🔍 Récupérer les anime généraux (non catégorisés)
     if continue_next_page:
         logger.log("\n🔍 Catégorie: GENERAL", logging.INFO)
-        continue_next_page = process_anime_page(
+        result = process_anime_page(
             f"https://api.jikan.moe/v4/anime?page={page}",
             "none",
             conn,
@@ -589,6 +606,9 @@ def process_page(page, conn, api_client, existing_ids, logger, filter_adult=True
             skip_details,
             batch_size
         )
+        if not result['success'] and result['has_data']:
+            category_failures["general"] += 1
+        continue_next_page = result['continue_next']
     
     return continue_next_page
 
