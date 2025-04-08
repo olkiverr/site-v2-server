@@ -16,26 +16,28 @@ $local_config = [
 ];
 
 // Fonction pour tester la connexion
-function tryConnection($config) {
-    try {
-        $conn = new mysqli(
-            $config['servername'],
-            $config['username'],
-            $config['password'],
-            $config['dbname']
-        );
+if (!function_exists('tryConnection')) {
+    function tryConnection($config) {
+        try {
+            $conn = new mysqli(
+                $config['servername'],
+                $config['username'],
+                $config['password'],
+                $config['dbname']
+            );
 
-        // Vérifier la connexion
-        if ($conn->connect_error) {
+            // Vérifier la connexion
+            if ($conn->connect_error) {
+                return false;
+            }
+
+            // Définir le jeu de caractères
+            $conn->set_charset("utf8mb4");
+            
+            return $conn;
+        } catch (Exception $e) {
             return false;
         }
-
-        // Définir le jeu de caractères
-        $conn->set_charset("utf8mb4");
-        
-        return $conn;
-    } catch (Exception $e) {
-        return false;
     }
 }
 

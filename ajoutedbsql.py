@@ -65,7 +65,7 @@ def parse_arguments():
     parser.add_argument("--db-name", default="mangamuse", help="Nom de la base de données (par défaut: mangamuse)")
     parser.add_argument("--skip-details", action="store_true", help="Ignorer la recherche des détails supplémentaires (créateurs) pour accélérer le traitement")
     parser.add_argument("--batch-size", type=int, default=10, help="Nombre d'éléments à traiter avant une insertion groupée en base de données (par défaut: 10)")
-    parser.add_argument("--cache-dir", default="cache", help="Répertoire pour stocker les réponses API en cache (par défaut: 'cache')")
+    parser.add_argument("--cache-dir", default="cache", help="Directory to store API responses in cache (default: 'cache')")
     parser.add_argument("--threads", type=int, default=1, help="Nombre de threads pour les requêtes API parallèles (par défaut: 1)")
     parser.add_argument("--log-dir", default="logs", help="Répertoire pour stocker les fichiers de logs (par défaut: 'logs')")
     parser.add_argument("--verbose", action="store_true", help="Activer les logs détaillés")
@@ -106,9 +106,9 @@ class ApiCache:
                 json.dump(data, f)
         except Exception as e:
             if self.logger:
-                self.logger.log(f"⚠️ Impossible de sauvegarder dans le cache: {e}", logging.WARNING)
+                self.logger.log(f"⚠️ Unable to save to cache: {e}", logging.WARNING)
             else:
-                print(f"⚠️ Impossible de sauvegarder dans le cache: {e}")
+                print(f"⚠️ Unable to save to cache: {e}")
 
 # Classe pour gérer les requêtes API avec gestion de la limitation de débit
 class ApiClient:

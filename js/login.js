@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
             method: 'POST',
             body: formData
         })
-        .then(response => response.text()) // Changez ici pour récupérer la réponse sous forme de texte brut
+        .then(response => response.text()) // Change here to get response as plain text
         .then(text => {
-            console.log("Raw text response:", text); // Affiche la réponse brute en texte
+            console.log("Raw text response:", text); // Display raw text response
             try {
-                const data = JSON.parse(text); // Essaye de convertir la réponse en JSON
+                const data = JSON.parse(text); // Try to convert response to JSON
                 console.log(data); // Affiche l'objet JSON
                 if (data.status === 'success') {
                     showSnackbar(data.message, 'success');

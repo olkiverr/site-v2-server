@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $row = $result->fetch_assoc();
         if (password_verify($password, $row['password'])) {
             $_SESSION['user'] = $username;
+            $_SESSION['user_id'] = $row['id'];
             $_SESSION['is_admin'] = $row['is_admin'];
             error_log("User is admin: " . $_SESSION['is_admin']); // Debugging line
             // header("Location: /4TTJ/Zielinski%20Olivier/Site/site-v2/index.php");

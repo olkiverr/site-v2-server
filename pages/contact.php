@@ -8,7 +8,7 @@ if (isset($_SESSION['user'])) {
     $is_connected = false;
 }
 
-// Vérifier s'il y a un message de succès ou d'erreur
+// Check if there is a success or error message
 $success = isset($_GET['success']) ? true : false;
 $error = isset($_GET['error']) ? true : false;
 ?>
@@ -33,40 +33,40 @@ $error = isset($_GET['error']) ? true : false;
     
     <main>
         <div class="contact-container">
-            <h1><i class="fas fa-envelope"></i> Contactez-nous</h1>
+            <h1><i class="fas fa-envelope"></i> Contact Us</h1>
             
             <?php if ($success): ?>
                 <div class="message success">
-                    <i class="fas fa-check-circle"></i> Votre message a été envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.
+                    <i class="fas fa-check-circle"></i> Your message has been sent successfully! We will get back to you as soon as possible.
                 </div>
             <?php endif; ?>
             
             <?php if ($error): ?>
                 <div class="message error">
-                    <i class="fas fa-exclamation-circle"></i> Une erreur s'est produite lors de l'envoi du message. Veuillez réessayer.
+                    <i class="fas fa-exclamation-circle"></i> An error occurred while sending the message. Please try again.
                 </div>
             <?php endif; ?>
             
             <form action="../php/send_mail.php" method="POST">
                 <?php if (!$is_connected): ?>
                     <div class="form-group">
-                        <label for="name">Nom</label>
-                        <input placeholder="Votre nom" type="text" name="name" id="name" required>
+                        <label for="name">Name</label>
+                        <input placeholder="Your name" type="text" name="name" id="name" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input placeholder="Votre email" type="email" name="email" id="email" required>
+                        <input placeholder="Your email" type="email" name="email" id="email" required>
                     </div>
                 <?php endif; ?>
                 
                 <div class="form-group">
                     <label for="message">Message</label>
-                    <textarea placeholder="Tapez votre message ici..." name="message" id="message" required></textarea>
+                    <textarea placeholder="Type your message here..." name="message" id="message" required></textarea>
                 </div>
                 
                 <button type="submit">
-                    <i class="fas fa-paper-plane"></i> Envoyer
+                    <i class="fas fa-paper-plane"></i> Send
                 </button>
             </form>
         </div>

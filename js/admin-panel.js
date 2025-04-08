@@ -106,7 +106,7 @@ function filterByGenre() {
 function updateResultsCount(count) {
     const resultsCount = document.getElementById("results-count");
     if (resultsCount) {
-        resultsCount.textContent = count + (count === 1 ? " animé trouvé" : " animés trouvés");
+        resultsCount.textContent = count + (count === 1 ? " animé found" : " animés found");
     }
 }
 
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (selectedCount > 0) {
             deleteBtn.style.display = 'flex';
-            deleteBtn.innerHTML = `<i class="fas fa-trash-alt"></i> Supprimer (${selectedCount})`;
+            deleteBtn.innerHTML = `<i class="fas fa-trash-alt"></i> Delete (${selectedCount})`;
         } else {
             deleteBtn.style.display = 'none';
         }
@@ -295,7 +295,7 @@ function updateDeleteButtonAfterSelectAll() {
     
     if (selectedCount > 0) {
         deleteBtn.style.display = 'flex';
-        deleteBtn.innerHTML = `<i class="fas fa-trash-alt"></i> Supprimer (${selectedCount})`;
+        deleteBtn.innerHTML = `<i class="fas fa-trash-alt"></i> Delete (${selectedCount})`;
     } else {
         deleteBtn.style.display = 'none';
     }

@@ -35,7 +35,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <ul id="nav-menu" class="nav-menu" style="list-style: none; gap: 15px; padding: 0; margin: 0; display: flex;">
                 <li><a class="home-nav" href="/4TTJ/Zielinski%20Olivier/Site/site-v2/index.php" style="color: #fff; text-decoration: none;">Home</a></li>
                 <li><a class="search-nav" href="/4TTJ/Zielinski%20Olivier/Site/site-v2/pages/search.php" style="color: #fff; text-decoration: none;">Search</a></li>
-                <li><a class="services-nav" href="#" style="color: #fff; text-decoration: none;">Services</a></li>
+                <li><a class="forum-nav" href="/4TTJ/Zielinski%20Olivier/Site/site-v2/pages/forum.php" style="color: #fff; text-decoration: none;">Forum</a></li>
                 <li><a class="contact-nav" href="/4TTJ/Zielinski%20Olivier/Site/site-v2/pages/contact.php" style="color: #fff; text-decoration: none;">Contact</a></li>
             </ul>
         </div>
