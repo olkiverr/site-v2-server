@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form data
     $name = trim($_POST['name'] ?? '');
     $description = trim($_POST['description'] ?? '');
+    $community_image = isset($_POST['community_image_data']) ? $_POST['community_image_data'] : '';
     
     // Validate inputs
     if (empty($name)) {
@@ -56,18 +57,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Insert new community
     if (empty($errors)) {
-        $stmt = $conn->prepare("INSERT INTO forum_communities (name, slug, description, user_id) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("sssi", $name, $slug, $description, $_SESSION['user_id']);
+        // Commencer une transaction
+        $conn->begin_transaction();
         
-        if ($stmt->execute()) {
-            $success = true;
-            $community_id = $conn->insert_id;
-            $community_slug = $slug;
-        } else {
-            $errors[] = "Error creating community: " . $conn->error;
+        try {
+            // D'abord insérer sans l'image
+            $stmt = $conn->prepare("INSERT INTO forum_communities (name, slug, description, user_id) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("sssi", $name, $slug, $description, $_SESSION['user_id']);
+            
+            if ($stmt->execute()) {
+                $community_id = $conn->insert_id;
+                $community_slug = $slug;
+                
+                // Sauvegarder l'image si elle existe
+                if (!empty($community_image)) {
+                    // Extraire le contenu de l'image (sans le préfixe data:image/...)
+                    if (preg_match('/^data:image\/(\w+);base64,(.+)$/', $community_image, $matches)) {
+                        $image_type = $matches[1];
+                        $image_data = base64_decode($matches[2]);
+                        
+                        // Créer le dossier de stockage s'il n'existe pas
+                        $upload_dir = __DIR__ . '/../uploads/community_images/';
+                        if (!file_exists($upload_dir)) {
+                            mkdir($upload_dir, 0777, true);
+                        }
+                        
+                        // Générer un nom unique pour l'image
+                        $image_name = 'community_' . $community_id . '_' . time() . '.' . $image_type;
+                        $image_path = $upload_dir . $image_name;
+                        
+                        // Enregistrer l'image
+                        if (file_put_contents($image_path, $image_data)) {
+                            // Mettre à jour la communauté avec le chemin de l'image
+                            $image_url = '../uploads/community_images/' . $image_name;
+                            $update_stmt = $conn->prepare("UPDATE forum_communities SET image_url = ? WHERE id = ?");
+                            $update_stmt->bind_param("si", $image_url, $community_id);
+                            $update_stmt->execute();
+                            $update_stmt->close();
+                        }
+                    }
+                }
+                
+                $success = true;
+                $conn->commit();
+            } else {
+                $errors[] = "Error creating community: " . $conn->error;
+                $conn->rollback();
+            }
+            
+            $stmt->close();
+        } catch (Exception $e) {
+            $conn->rollback();
+            $errors[] = "Error: " . $e->getMessage();
         }
-        
-        $stmt->close();
     }
 }
 
@@ -144,6 +186,73 @@ $page_title = "Create a Community - MangaMuse";
             color: #28a745;
             border: 1px solid #28a745;
         }
+        
+        /* Styles pour l'upload d'image */
+        .image-upload-container {
+            margin-bottom: 15px;
+        }
+        
+        .image-upload-area {
+            border: 2px dashed #444;
+            border-radius: 4px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background-color: #333;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+        
+        .image-upload-area.active {
+            border-color: #5e72e4;
+            background-color: rgba(94, 114, 228, 0.1);
+        }
+        
+        .btn-upload {
+            background-color: #5e72e4;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn-upload:hover {
+            background-color: #4a5fd1;
+        }
+        
+        .image-preview {
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 4px;
+            border: 1px solid #444;
+        }
+        
+        .preview-controls {
+            margin-top: 5px;
+        }
+        
+        .btn-remove {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .btn-remove:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
@@ -182,6 +291,20 @@ $page_title = "Create a Community - MangaMuse";
                     <p class="form-help">Describe your community to help people understand what it's about.</p>
                 </div>
                 
+                <div class="form-group">
+                    <label for="community_image" class="form-label">Community Image (optionnelle)</label>
+                    <div class="image-upload-container" id="community-image-upload">
+                        <div class="image-upload-area" id="community-drop-area">
+                            <p>Glissez et déposez une image ici ou</p>
+                            <input type="file" id="community-file-input" name="community_image" accept="image/*" style="display:none">
+                            <button type="button" class="btn-upload" id="community-upload-btn">Sélectionner une image</button>
+                        </div>
+                        <div class="image-preview" id="community-image-preview"></div>
+                        <input type="hidden" name="community_image_data" id="community-image-data">
+                        <p class="form-help">Cette image représentera votre communauté dans les listings.</p>
+                    </div>
+                </div>
+                
                 <div class="form-group form-submit">
                     <button type="submit" class="btn btn-primary">Create Community</button>
                     <a href="/4TTJ/Zielinski%20Olivier/Site/site-v2/pages/forum.php" class="btn btn-secondary" style="margin-left: 10px;">Cancel</a>
@@ -191,5 +314,120 @@ $page_title = "Create a Community - MangaMuse";
     </div>
     
     <?php include_once __DIR__ . '/../partials/footer.php'; ?>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Configuration du drag & drop pour les images
+        setupImageUpload('community');
+        
+        function setupImageUpload(prefix) {
+            const dropArea = document.getElementById(`${prefix}-drop-area`);
+            const fileInput = document.getElementById(`${prefix}-file-input`);
+            const uploadBtn = document.getElementById(`${prefix}-upload-btn`);
+            const imagePreview = document.getElementById(`${prefix}-image-preview`);
+            const imageData = document.getElementById(`${prefix}-image-data`);
+            
+            if (!dropArea || !fileInput || !uploadBtn || !imagePreview) return;
+            
+            // Ouvrir le sélecteur de fichier quand on clique sur le bouton
+            uploadBtn.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            // Gérer le glisser-déposer
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, highlight, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, unhighlight, false);
+            });
+            
+            function highlight() {
+                dropArea.classList.add('active');
+            }
+            
+            function unhighlight() {
+                dropArea.classList.remove('active');
+            }
+            
+            // Gérer le drop
+            dropArea.addEventListener('drop', handleDrop, false);
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                handleFiles(files);
+            }
+            
+            // Gérer la sélection via input file
+            fileInput.addEventListener('change', function() {
+                handleFiles(this.files);
+            });
+            
+            function handleFiles(files) {
+                if (files.length > 0) {
+                    const file = files[0];
+                    
+                    // Vérifier que c'est bien une image
+                    if (!file.type.match('image.*')) {
+                        alert('Veuillez sélectionner une image valide.');
+                        return;
+                    }
+                    
+                    // Vérifier la taille (max 5MB)
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert('L\'image est trop volumineuse. Veuillez choisir une image de moins de 5 Mo.');
+                        return;
+                    }
+                    
+                    previewFile(file);
+                }
+            }
+            
+            function previewFile(file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    // Masquer la zone de drop
+                    dropArea.style.display = 'none';
+                    
+                    // Afficher l'aperçu
+                    imagePreview.innerHTML = `
+                        <img src="${e.target.result}" alt="Image preview">
+                        <div class="preview-controls">
+                            <button type="button" class="btn-remove" id="${prefix}-remove-btn">Supprimer</button>
+                        </div>
+                    `;
+                    imagePreview.style.display = 'block';
+                    
+                    // Stocker les données de l'image
+                    imageData.value = e.target.result;
+                    
+                    // Ajouter un gestionnaire pour le bouton de suppression
+                    document.getElementById(`${prefix}-remove-btn`).addEventListener('click', function() {
+                        imagePreview.innerHTML = '';
+                        imagePreview.style.display = 'none';
+                        imageData.value = '';
+                        fileInput.value = '';
+                        // Réafficher la zone de drop
+                        dropArea.style.display = 'block';
+                    });
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        }
+    });
+    </script>
 </body>
 </html> 

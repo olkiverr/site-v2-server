@@ -7,10 +7,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Start the session if not already started
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+// Remplacer session_start() par l'inclusion de la configuration
+include '../php/session_config.php';
 
 // Get topic ID from URL
 $topic_id = isset($_GET['topic_id']) ? intval($_GET['topic_id']) : 0;
@@ -128,6 +126,7 @@ if ($table_exists) {
     <title>Diagnostic des Votes - Forum</title>
     <link rel="stylesheet" href="/4TTJ/Zielinski%20Olivier/Site/site-v2/css/header.css">
     <link rel="stylesheet" href="/4TTJ/Zielinski%20Olivier/Site/site-v2/css/footer.css">
+    <link rel="stylesheet" href="/4TTJ/Zielinski%20Olivier/Site/site-v2/css/layout.css">
     <style>
         body {
             font-family: Arial, sans-serif;

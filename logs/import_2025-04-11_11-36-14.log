@@ -1,0 +1,839 @@
+2025-04-11 11:36:14,309 - DEBUG - 
+🔍 État initial des catégories vides: {'trending': False, 'upcoming': False, 'general': False}
+2025-04-11 11:36:14,428 - INFO - ℹ️ 2817 animés déjà présents dans la base de données.
+2025-04-11 11:36:14,429 - INFO - 
+📋 CONFIGURATION:
+2025-04-11 11:36:14,429 - INFO -   - Page de départ: 56
+2025-04-11 11:36:14,429 - INFO -   - Page de fin: Non spécifiée (va jusqu'à la fin)
+2025-04-11 11:36:14,429 - INFO -   - Filtre contenu adulte: Activé
+2025-04-11 11:36:14,429 - INFO -   - Recherche détaillée des créateurs: Activée
+2025-04-11 11:36:14,431 - INFO -   - Taille des lots d'insertion: 10
+2025-04-11 11:36:14,431 - INFO -   - Cache des requêtes API: cache
+2025-04-11 11:36:14,432 - INFO - 
+🚀 Démarrage de l'ajout des animés...
+
+2025-04-11 11:36:14,432 - INFO - 
+🔄 Traitement de la page 56
+2025-04-11 11:36:14,432 - DEBUG - 
+🔍 État des catégories vides avant le traitement: {'trending': False, 'upcoming': False, 'general': False}
+2025-04-11 11:36:14,432 - INFO - 
+🔥 Catégorie: TRENDING
+2025-04-11 11:36:14,446 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/top/anime?page=56
+2025-04-11 11:36:14,446 - INFO - ⚠️ L'anime ID: 28069 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,446 - INFO - ⚠️ L'anime ID: 997 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,446 - INFO - ⚠️ L'anime ID: 36214 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,446 - INFO - ⚠️ L'anime ID: 48426 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,446 - INFO - ⚠️ L'anime ID: 49778 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,446 - INFO - ⚠️ L'anime ID: 2313 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,446 - INFO - ⚠️ L'anime ID: 48804 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,446 - INFO - ⚠️ L'anime ID: 324 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,446 - INFO - ⚠️ L'anime ID: 50275 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,446 - INFO - ⚠️ L'anime ID: 120 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,446 - INFO - ⚠️ L'anime ID: 21339 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,446 - INFO - ⚠️ L'anime ID: 61295 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,446 - INFO - ⚠️ L'anime ID: 60449 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,447 - INFO - ⚠️ L'anime ID: 58812 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,447 - INFO - ⚠️ L'anime ID: 53747 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,447 - INFO - ⚠️ L'anime ID: 53580 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,447 - INFO - ⛔ L'anime 'Kill la Kill Specials' ignoré en raison du contenu pour adultes: Action, Comedy, Fantasy, Ecchi
+2025-04-11 11:36:14,447 - INFO - ⚠️ L'anime ID: 13119 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,447 - INFO - ⚠️ L'anime ID: 28907 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,447 - INFO - ⚠️ L'anime ID: 34544 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,447 - INFO - ⚠️ L'anime ID: 87 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,447 - INFO - ⚠️ L'anime ID: 39619 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,447 - INFO - ⚠️ L'anime ID: 39959 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,447 - INFO - ⚠️ L'anime ID: 35860 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,447 - INFO - ⚠️ L'anime ID: 2582 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,447 - DEBUG - 
+🔍 État des catégories vides après TRENDING: {'trending': False, 'upcoming': False, 'general': False}
+2025-04-11 11:36:14,448 - WARNING - 
+⚠️ Page 56 pour UPCOMING: forçage de vérification spéciale
+2025-04-11 11:36:14,448 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/seasons/upcoming?page=56
+2025-04-11 11:36:14,448 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/seasons/upcoming?page=56
+2025-04-11 11:36:14,448 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/seasons/upcoming?page=56
+2025-04-11 11:36:14,449 - WARNING - 
+🚫 UPCOMING forcé comme vide après 3 erreurs à la page 56
+2025-04-11 11:36:14,449 - INFO - 
+📅 Catégorie UPCOMING ignorée (précédemment détectée comme vide).
+2025-04-11 11:36:14,449 - DEBUG - 
+🔍 État des catégories vides après UPCOMING: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:36:14,449 - WARNING - 
+🚫 SOLUTION DE SECOURS: Force le statut vide pour UPCOMING après la page 56
+2025-04-11 11:36:14,449 - INFO - 
+🔍 Catégorie: GENERAL
+2025-04-11 11:36:14,461 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/anime?page=56
+2025-04-11 11:36:14,461 - INFO - ⚠️ L'anime ID: 1514 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,461 - INFO - ⚠️ L'anime ID: 1515 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,461 - INFO - ⚠️ L'anime ID: 1516 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,461 - INFO - ⚠️ L'anime ID: 1517 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,461 - INFO - ⚠️ L'anime ID: 1519 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,461 - INFO - ⚠️ L'anime ID: 1520 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,461 - INFO - ⚠️ L'anime ID: 1521 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,461 - INFO - ⚠️ L'anime ID: 1524 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,461 - INFO - ⚠️ L'anime ID: 1525 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,461 - INFO - ⚠️ L'anime ID: 1526 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,462 - INFO - ⚠️ L'anime ID: 1527 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,462 - INFO - ⚠️ L'anime ID: 1528 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,462 - INFO - ⛔ L'anime 'Devadasy' ignoré en raison du contenu pour adultes: Action, Ecchi
+2025-04-11 11:36:14,462 - INFO - ⚠️ L'anime ID: 1530 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,462 - INFO - ⛔ L'anime 'Shakugan no Shana: Koi to Onsen no Kougai Gakushuu!' ignoré en raison du contenu pour adultes: Comedy, Fantasy, Romance, Ecchi
+2025-04-11 11:36:14,462 - INFO - ⚠️ L'anime ID: 1532 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,462 - INFO - ⚠️ L'anime ID: 1533 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,462 - INFO - ⚠️ L'anime ID: 1534 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,462 - INFO - ⚠️ L'anime ID: 1535 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,462 - INFO - ⚠️ L'anime ID: 1536 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,462 - INFO - ⚠️ L'anime ID: 1537 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,462 - INFO - ⚠️ L'anime ID: 1538 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,462 - INFO - ⚠️ L'anime ID: 1539 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,462 - INFO - ⚠️ L'anime ID: 1540 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,462 - INFO - ⚠️ L'anime ID: 1541 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:14,462 - DEBUG - 
+🔍 État final des catégories vides: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:36:14,475 - INFO - 
+🔄 Traitement de la page 57
+2025-04-11 11:36:14,475 - DEBUG - 
+🔍 État des catégories vides avant le traitement: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:36:14,475 - INFO - 
+🔥 Catégorie: TRENDING
+2025-04-11 11:36:14,488 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/top/anime?page=57
+2025-04-11 11:36:14,489 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/anime/32370/full
+2025-04-11 11:36:14,489 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/manga/24
+2025-04-11 11:36:14,489 - INFO - 🔹 L'anime 'D.Gray-man HALLOW' préparé pour l'insertion.
+2025-04-11 11:36:14,489 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/anime/2547/full
+2025-04-11 11:36:14,490 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/anime/2547/staff
+2025-04-11 11:36:14,490 - INFO - 🔹 L'anime 'A Little Princess Sara' préparé pour l'insertion.
+2025-04-11 11:36:14,490 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/44586/full
+2025-04-11 11:36:15,787 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/94169
+2025-04-11 11:36:15,988 - INFO - 🔹 L'anime 'Kakushigoto Movie' préparé pour l'insertion.
+2025-04-11 11:36:16,986 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/36653/full
+2025-04-11 11:36:18,192 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/114744
+2025-04-11 11:36:20,165 - INFO - 🔹 L'anime 'Tsurune: Kazemai High School Kyudo Club' préparé pour l'insertion.
+2025-04-11 11:36:21,162 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/20517/full
+2025-04-11 11:36:22,311 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/19325
+2025-04-11 11:36:22,518 - INFO - 🔹 L'anime 'Little Busters! EX' préparé pour l'insertion.
+2025-04-11 11:36:23,516 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/5835/full
+2025-04-11 11:36:24,664 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/5854
+2025-04-11 11:36:24,813 - INFO - 🔹 L'anime 'Hanasakeru Seishonen' préparé pour l'insertion.
+2025-04-11 11:36:25,811 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/34430/full
+2025-04-11 11:36:26,857 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/117572
+2025-04-11 11:36:28,004 - INFO - 🔹 L'anime 'Detective Conan Movie 21: The Crimson Love Letter' préparé pour l'insertion.
+2025-04-11 11:36:28,005 - INFO - ⚠️ L'anime ID: 1000 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:29,000 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/8426/full
+2025-04-11 11:36:30,152 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/585
+2025-04-11 11:36:31,160 - INFO - 🔹 L'anime 'Wandering Son' préparé pour l'insertion.
+2025-04-11 11:36:32,155 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/13767/full
+2025-04-11 11:36:33,374 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/765
+2025-04-11 11:36:33,530 - INFO - 🔹 L'anime 'Junjou Romantica OVA' préparé pour l'insertion.
+2025-04-11 11:36:34,529 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/13667/full
+2025-04-11 11:36:35,676 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/40549
+2025-04-11 11:36:36,817 - INFO - 🔹 L'anime 'Naruto Shippuden the Movie 6: Road to Ninja' préparé pour l'insertion.
+2025-04-11 11:36:36,825 - INFO - ✅ 10 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:36:36,826 - INFO - ⚠️ L'anime ID: 477 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:36:37,815 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/12017/full
+2025-04-11 11:36:38,969 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/12017/staff
+2025-04-11 11:36:39,996 - INFO - 🔹 L'anime 'Tiger & Bunny: The Rising' préparé pour l'insertion.
+2025-04-11 11:36:40,994 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/50401/full
+2025-04-11 11:36:42,143 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/50401/staff
+2025-04-11 11:36:42,322 - INFO - 🔹 L'anime 'God Troubles Me 3rd Season' préparé pour l'insertion.
+2025-04-11 11:36:43,321 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/51038/full
+2025-04-11 11:36:44,516 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/79193
+2025-04-11 11:36:44,565 - INFO - 🔹 L'anime 'Fights Break Sphere: Origin' préparé pour l'insertion.
+2025-04-11 11:36:45,561 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/56894/full
+2025-04-11 11:36:46,756 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/56894/staff
+2025-04-11 11:36:46,970 - INFO - 🔹 L'anime 'Dragon Ball Daima' préparé pour l'insertion.
+2025-04-11 11:36:47,966 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/56243/full
+2025-04-11 11:36:49,118 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/56243/staff
+2025-04-11 11:36:49,922 - INFO - 🔹 L'anime 'Jujutsu Kaisen Season 2 Recaps' préparé pour l'insertion.
+2025-04-11 11:36:50,920 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/20847/full
+2025-04-11 11:36:52,121 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/14110
+2025-04-11 11:36:52,172 - INFO - 🔹 L'anime 'Seitokai Yakuindomo*' préparé pour l'insertion.
+2025-04-11 11:36:53,169 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/35777/full
+2025-04-11 11:36:54,371 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/35777/staff
+2025-04-11 11:36:54,716 - INFO - 🔹 L'anime 'Rilakkuma and Kaoru' préparé pour l'insertion.
+2025-04-11 11:36:55,715 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/35240/full
+2025-04-11 11:36:56,763 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/145795
+2025-04-11 11:36:56,928 - INFO - 🔹 L'anime 'Princess Principal' préparé pour l'insertion.
+2025-04-11 11:36:57,925 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/33502/full
+2025-04-11 11:36:59,141 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/98964
+2025-04-11 11:36:59,905 - INFO - 🔹 L'anime 'WorldEnd: What do you do at the end of the world? Are you busy? Will you save us?' préparé pour l'insertion.
+2025-04-11 11:37:00,897 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/32491/full
+2025-04-11 11:37:02,092 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/32491/staff
+2025-04-11 11:37:02,264 - INFO - 🔹 L'anime 'She and Her Cat: Everything Flows' préparé pour l'insertion.
+2025-04-11 11:37:02,272 - INFO - ✅ 10 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:37:03,260 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/34284/full
+2025-04-11 11:37:04,305 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/82347
+2025-04-11 11:37:04,460 - INFO - 🔹 L'anime 'Yuki Yuna is a Hero: The Washio Sumi Chapter' préparé pour l'insertion.
+2025-04-11 11:37:04,460 - INFO - ⛔ L'anime 'My Younger Brother is Really Big, Wanna Come See?' ignoré en raison du contenu pour adultes: Hentai
+2025-04-11 11:37:05,457 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/4814/full
+2025-04-11 11:37:06,628 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/manga/765
+2025-04-11 11:37:06,629 - INFO - 🔹 L'anime 'Junjo Romantica 2' préparé pour l'insertion.
+2025-04-11 11:37:06,633 - INFO - ✅ 2 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:37:06,633 - DEBUG - 
+🔍 État des catégories vides après TRENDING: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:37:06,633 - INFO - 
+📅 Catégorie UPCOMING ignorée (précédemment détectée comme vide).
+2025-04-11 11:37:06,633 - DEBUG - 
+🔍 État des catégories vides après UPCOMING: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:37:06,634 - WARNING - 
+🚫 SOLUTION DE SECOURS: Force le statut vide pour UPCOMING après la page 57
+2025-04-11 11:37:06,634 - INFO - 
+🔍 Catégorie: GENERAL
+2025-04-11 11:37:07,625 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime?page=57
+2025-04-11 11:37:08,951 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1542/full
+2025-04-11 11:37:10,173 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/155
+2025-04-11 11:37:10,333 - INFO - 🔹 L'anime 'Brain Powerd' préparé pour l'insertion.
+2025-04-11 11:37:11,330 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1543/full
+2025-04-11 11:37:12,509 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/4236
+2025-04-11 11:37:12,744 - INFO - 🔹 L'anime 'Brighter Than the Dawning Blue' préparé pour l'insertion.
+2025-04-11 11:37:13,742 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1544/full
+2025-04-11 11:37:14,954 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1544/staff
+2025-04-11 11:37:15,897 - INFO - 🔹 L'anime 'Super Robot Wars Original Generation: The Animation' préparé pour l'insertion.
+2025-04-11 11:37:15,898 - INFO - ⛔ L'anime 'Negima!? Magister Negi Magi' ignoré en raison du contenu pour adultes: Comedy, Fantasy, Romance, Ecchi
+2025-04-11 11:37:16,896 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1547/full
+2025-04-11 11:37:18,076 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/25187
+2025-04-11 11:37:18,985 - INFO - 🔹 L'anime 'Obake no Q-tarou' préparé pour l'insertion.
+2025-04-11 11:37:19,984 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1548/full
+2025-04-11 11:37:21,198 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/34019
+2025-04-11 11:37:21,354 - INFO - 🔹 L'anime 'Queen Millennia' préparé pour l'insertion.
+2025-04-11 11:37:22,354 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1549/full
+2025-04-11 11:37:22,519 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/manga/34019
+2025-04-11 11:37:22,519 - INFO - 🔹 L'anime '1000-nen Joou: Queen Millennia' préparé pour l'insertion.
+2025-04-11 11:37:23,516 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1550/full
+2025-04-11 11:37:24,665 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/10199
+2025-04-11 11:37:24,830 - INFO - 🔹 L'anime 'Attack No.1' préparé pour l'insertion.
+2025-04-11 11:37:25,827 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1552/full
+2025-04-11 11:37:26,999 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1552/staff
+2025-04-11 11:37:28,703 - INFO - 🔹 L'anime 'Sunny Ryoko! You Were There in a Dream' préparé pour l'insertion.
+2025-04-11 11:37:29,699 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1553/full
+2025-04-11 11:37:30,954 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/26486
+2025-04-11 11:37:33,145 - INFO - 🔹 L'anime 'Queen Emeraldas' préparé pour l'insertion.
+2025-04-11 11:37:34,142 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1554/full
+2025-04-11 11:37:36,259 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/1643
+2025-04-11 11:37:36,416 - INFO - 🔹 L'anime 'Living for the Day After Tomorrow' préparé pour l'insertion.
+2025-04-11 11:37:36,424 - INFO - ✅ 10 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:37:37,414 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1555/full
+2025-04-11 11:37:38,571 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/21613
+2025-04-11 11:37:39,618 - INFO - 🔹 L'anime 'Tokimeki Memorial' préparé pour l'insertion.
+2025-04-11 11:37:40,617 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1556/full
+2025-04-11 11:37:41,805 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/7703
+2025-04-11 11:37:42,015 - INFO - 🔹 L'anime 'Demon Prince Enma' préparé pour l'insertion.
+2025-04-11 11:37:43,011 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1557/full
+2025-04-11 11:37:44,198 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/12663
+2025-04-11 11:37:44,413 - INFO - 🔹 L'anime 'Shonen Onmyoji' préparé pour l'insertion.
+2025-04-11 11:37:44,414 - INFO - ⛔ L'anime 'Sex Demon Queen' ignoré en raison du contenu pour adultes: Comedy, Fantasy, Hentai
+2025-04-11 11:37:44,414 - INFO - ⚠️ L'anime ID: 1559 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:37:44,415 - INFO - ⛔ L'anime 'Voltage Fighter Gowcaizer' ignoré en raison du contenu pour adultes: Action, Sci-Fi, Ecchi
+2025-04-11 11:37:45,412 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1561/full
+2025-04-11 11:37:46,560 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1561/staff
+2025-04-11 11:37:47,376 - INFO - 🔹 L'anime 'Lovely Idol' préparé pour l'insertion.
+2025-04-11 11:37:47,378 - INFO - ⚠️ L'anime ID: 1562 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:37:48,373 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1563/full
+2025-04-11 11:37:49,527 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/697
+2025-04-11 11:37:49,698 - INFO - 🔹 L'anime 'Magic Knight Rayearth II' préparé pour l'insertion.
+2025-04-11 11:37:50,695 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1564/full
+2025-04-11 11:37:52,042 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1564/staff
+2025-04-11 11:37:54,850 - INFO - 🔹 L'anime 'Pokémon: Advanced' préparé pour l'insertion.
+2025-04-11 11:37:55,844 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1565/full
+2025-04-11 11:37:57,204 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1565/staff
+2025-04-11 11:37:59,308 - INFO - 🔹 L'anime 'Pokémon: Diamond and Pearl' préparé pour l'insertion.
+2025-04-11 11:37:59,309 - INFO - ⚠️ L'anime ID: 1566 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:38:00,307 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1567/full
+2025-04-11 11:38:01,530 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/508
+2025-04-11 11:38:01,774 - INFO - 🔹 L'anime 'Mysterious Thief Saint Tail' préparé pour l'insertion.
+2025-04-11 11:38:02,772 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1568/full
+2025-04-11 11:38:04,002 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/4328
+2025-04-11 11:38:04,872 - INFO - 🔹 L'anime 'Sumomomo Momomo: The World's Strongest Bride' préparé pour l'insertion.
+2025-04-11 11:38:05,085 - INFO - ✅ 9 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:38:05,086 - DEBUG - 
+🔍 État final des catégories vides: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:38:05,267 - INFO - 
+🔄 Traitement de la page 58
+2025-04-11 11:38:05,267 - DEBUG - 
+🔍 État des catégories vides avant le traitement: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:38:05,267 - INFO - 
+🔥 Catégorie: TRENDING
+2025-04-11 11:38:05,872 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/top/anime?page=58
+2025-04-11 11:38:07,309 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/40269/full
+2025-04-11 11:38:09,997 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/72025
+2025-04-11 11:38:10,128 - INFO - 🔹 L'anime 'Kengan Ashura Part 2' préparé pour l'insertion.
+2025-04-11 11:38:11,121 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/10092/full
+2025-04-11 11:38:12,419 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/4608
+2025-04-11 11:38:12,580 - INFO - 🔹 L'anime 'Broken Blade 6' préparé pour l'insertion.
+2025-04-11 11:38:13,570 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/2451/full
+2025-04-11 11:38:14,844 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/1062
+2025-04-11 11:38:15,959 - INFO - 🔹 L'anime 'Space Adventure Cobra' préparé pour l'insertion.
+2025-04-11 11:38:16,956 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/6154/full
+2025-04-11 11:38:18,274 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/6154/staff
+2025-04-11 11:38:19,102 - INFO - 🔹 L'anime 'Saint Seiya: The Hades Chapter - Recaps' préparé pour l'insertion.
+2025-04-11 11:38:20,095 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/4811/full
+2025-04-11 11:38:21,459 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/371
+2025-04-11 11:38:21,767 - INFO - 🔹 L'anime 'Strawberry Marshmallow Encore' préparé pour l'insertion.
+2025-04-11 11:38:22,766 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/4454/full
+2025-04-11 11:38:24,023 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/4454/staff
+2025-04-11 11:38:25,100 - INFO - 🔹 L'anime 'Macross F: Close Encounter - Deculture Edition' préparé pour l'insertion.
+2025-04-11 11:38:26,100 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/3841/full
+2025-04-11 11:38:27,381 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/1397
+2025-04-11 11:38:27,455 - INFO - 🔹 L'anime 'Chi's Sweet Home' préparé pour l'insertion.
+2025-04-11 11:38:27,457 - INFO - ⚠️ L'anime ID: 852 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:38:28,452 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/48375/full
+2025-04-11 11:38:29,690 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/60977
+2025-04-11 11:38:29,835 - INFO - 🔹 L'anime 'The Irregular at Magic High School: Reminiscence Arc' préparé pour l'insertion.
+2025-04-11 11:38:29,835 - INFO - ⚠️ L'anime ID: 450 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:38:30,836 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/441/full
+2025-04-11 11:38:32,060 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/931
+2025-04-11 11:38:32,263 - INFO - 🔹 L'anime 'Revolutionary Girl Utena: The Adolescence of Utena' préparé pour l'insertion.
+2025-04-11 11:38:32,263 - INFO - ⚠️ L'anime ID: 90 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:38:33,263 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/50203/full
+2025-04-11 11:38:34,411 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/50203/staff
+2025-04-11 11:38:34,621 - INFO - 🔹 L'anime 'Love Live! Superstar!! Season 2' préparé pour l'insertion.
+2025-04-11 11:38:34,631 - INFO - ✅ 10 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:38:35,618 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/37956/full
+2025-04-11 11:38:36,768 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/50767
+2025-04-11 11:38:36,935 - INFO - 🔹 L'anime 'Real Girl Season 2' préparé pour l'insertion.
+2025-04-11 11:38:37,934 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/59245/full
+2025-04-11 11:38:39,155 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/59245/staff
+2025-04-11 11:38:40,057 - INFO - 🔹 L'anime 'The Demon Hunter: Dongning Mansion Special' préparé pour l'insertion.
+2025-04-11 11:38:41,057 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/56715/full
+2025-04-11 11:38:43,286 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/56715/staff
+2025-04-11 11:38:44,118 - INFO - 🔹 L'anime 'Shukusei!! Loli Kami Requiem ☆' préparé pour l'insertion.
+2025-04-11 11:38:45,117 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/51710/full
+2025-04-11 11:38:46,337 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/51710/staff
+2025-04-11 11:38:46,497 - INFO - 🔹 L'anime 'Marine Shukkou!!' préparé pour l'insertion.
+2025-04-11 11:38:47,493 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/37176/full
+2025-04-11 11:38:47,643 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/manga/79193
+2025-04-11 11:38:47,643 - INFO - 🔹 L'anime 'Fights Break Sphere 2nd Season' préparé pour l'insertion.
+2025-04-11 11:38:48,642 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/31227/full
+2025-04-11 11:38:49,791 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/17111
+2025-04-11 11:38:49,956 - INFO - 🔹 L'anime 'Kindaichi Shounen no Jikenbo Returns 2nd Season' préparé pour l'insertion.
+2025-04-11 11:38:50,950 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/33354/full
+2025-04-11 11:38:52,174 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/98374
+2025-04-11 11:38:52,400 - INFO - 🔹 L'anime 'Cardcaptor Sakura: Clear Card' préparé pour l'insertion.
+2025-04-11 11:38:53,400 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/30311/full
+2025-04-11 11:38:54,619 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/30311/staff
+2025-04-11 11:38:55,595 - INFO - 🔹 L'anime 'Kuroko no Basket 3rd Season NG-shuu' préparé pour l'insertion.
+2025-04-11 11:38:56,595 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/36561/full
+2025-04-11 11:38:58,605 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/36561/staff
+2025-04-11 11:38:59,467 - INFO - 🔹 L'anime 'Fights Break Sphere Specials' préparé pour l'insertion.
+2025-04-11 11:39:00,466 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/14735/full
+2025-04-11 11:39:01,613 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/14735/staff
+2025-04-11 11:39:02,088 - INFO - 🔹 L'anime 'Detective Conan Movie 17: Private Eye in the Distant Sea' préparé pour l'insertion.
+2025-04-11 11:39:02,092 - INFO - ✅ 10 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:39:03,089 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/33071/full
+2025-04-11 11:39:04,241 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/165085
+2025-04-11 11:39:04,454 - INFO - 🔹 L'anime 'Bungo Stray Dogs 2 - Walking Alone' préparé pour l'insertion.
+2025-04-11 11:39:05,453 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/7193/full
+2025-04-11 11:39:06,619 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/7193/staff
+2025-04-11 11:39:06,834 - INFO - 🔹 L'anime 'Aoi Bungaku Series' préparé pour l'insertion.
+2025-04-11 11:39:06,839 - INFO - ✅ 2 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:39:06,839 - DEBUG - 
+🔍 État des catégories vides après TRENDING: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:39:06,840 - INFO - 
+📅 Catégorie UPCOMING ignorée (précédemment détectée comme vide).
+2025-04-11 11:39:06,840 - DEBUG - 
+🔍 État des catégories vides après UPCOMING: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:39:06,841 - WARNING - 
+🚫 SOLUTION DE SECOURS: Force le statut vide pour UPCOMING après la page 58
+2025-04-11 11:39:06,841 - INFO - 
+🔍 Catégorie: GENERAL
+2025-04-11 11:39:07,826 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime?page=58
+2025-04-11 11:39:09,130 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1569/full
+2025-04-11 11:39:10,308 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/2955
+2025-04-11 11:39:10,513 - INFO - 🔹 L'anime 'Otoboku: Maidens are Falling for Me!' préparé pour l'insertion.
+2025-04-11 11:39:11,513 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1570/full
+2025-04-11 11:39:12,675 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/4121
+2025-04-11 11:39:13,712 - INFO - 🔹 L'anime 'Happiness!' préparé pour l'insertion.
+2025-04-11 11:39:13,713 - INFO - ⚠️ L'anime ID: 1571 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:39:14,713 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1572/full
+2025-04-11 11:39:15,951 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/1771
+2025-04-11 11:39:16,909 - INFO - 🔹 L'anime 'Kimba the White Lion' préparé pour l'insertion.
+2025-04-11 11:39:17,909 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1573/full
+2025-04-11 11:39:19,101 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/5625
+2025-04-11 11:39:19,316 - INFO - 🔹 L'anime 'Zenki' préparé pour l'insertion.
+2025-04-11 11:39:20,314 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1574/full
+2025-04-11 11:39:21,496 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1574/staff
+2025-04-11 11:39:22,444 - INFO - 🔹 L'anime 'Get Ride! AMDriver' préparé pour l'insertion.
+2025-04-11 11:39:22,445 - INFO - ⚠️ L'anime ID: 1575 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:39:23,442 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1576/full
+2025-04-11 11:39:24,594 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1576/staff
+2025-04-11 11:39:25,467 - INFO - 🔹 L'anime 'Intrigue in the Bakumatsu: Irohanihoheto' préparé pour l'insertion.
+2025-04-11 11:39:26,461 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1577/full
+2025-04-11 11:39:27,649 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/1292
+2025-04-11 11:39:27,703 - INFO - 🔹 L'anime 'You're Under Arrest' préparé pour l'insertion.
+2025-04-11 11:39:28,694 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1578/full
+2025-04-11 11:39:29,879 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/7852
+2025-04-11 11:39:30,091 - INFO - 🔹 L'anime 'Loving Angel Angelique: When Hearts Awaken' préparé pour l'insertion.
+2025-04-11 11:39:31,087 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1579/full
+2025-04-11 11:39:32,241 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/1051
+2025-04-11 11:39:32,413 - INFO - 🔹 L'anime 'La corda d'oro: primo passo' préparé pour l'insertion.
+2025-04-11 11:39:33,412 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1580/full
+2025-04-11 11:39:34,614 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/4035
+2025-04-11 11:39:35,496 - INFO - 🔹 L'anime 'Madara' préparé pour l'insertion.
+2025-04-11 11:39:35,502 - INFO - ✅ 10 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:39:36,495 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1581/full
+2025-04-11 11:39:37,654 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/10759
+2025-04-11 11:39:37,811 - INFO - 🔹 L'anime 'Gift: Eternal Rainbow' préparé pour l'insertion.
+2025-04-11 11:39:38,803 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1582/full
+2025-04-11 11:39:39,954 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/47174
+2025-04-11 11:39:40,121 - INFO - 🔹 L'anime 'Submarine 707R' préparé pour l'insertion.
+2025-04-11 11:39:41,117 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1583/full
+2025-04-11 11:39:42,278 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/16738
+2025-04-11 11:39:43,320 - INFO - 🔹 L'anime '009-1' préparé pour l'insertion.
+2025-04-11 11:39:44,317 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1584/full
+2025-04-11 11:39:45,470 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1584/staff
+2025-04-11 11:39:46,307 - INFO - 🔹 L'anime 'Stratos 4 Advance Kanketsu-hen' préparé pour l'insertion.
+2025-04-11 11:39:47,303 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1585/full
+2025-04-11 11:39:48,459 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1585/staff
+2025-04-11 11:39:49,841 - INFO - 🔹 L'anime 'Spectral Force' préparé pour l'insertion.
+2025-04-11 11:39:50,839 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1586/full
+2025-04-11 11:39:52,058 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/86155
+2025-04-11 11:39:52,989 - INFO - 🔹 L'anime 'Aoi Umi no Tristia' préparé pour l'insertion.
+2025-04-11 11:39:53,986 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1587/full
+2025-04-11 11:39:55,141 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/10525
+2025-04-11 11:39:56,328 - INFO - 🔹 L'anime 'Ghost Slayers Ayashi' préparé pour l'insertion.
+2025-04-11 11:39:57,326 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1588/full
+2025-04-11 11:39:58,543 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/25478
+2025-04-11 11:39:59,539 - INFO - 🔹 L'anime 'Venus to Mamoru!' préparé pour l'insertion.
+2025-04-11 11:40:00,535 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1589/full
+2025-04-11 11:40:01,578 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/3713
+2025-04-11 11:40:01,729 - INFO - 🔹 L'anime 'Bartender' préparé pour l'insertion.
+2025-04-11 11:40:02,726 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1590/full
+2025-04-11 11:40:03,870 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/4607
+2025-04-11 11:40:04,085 - INFO - 🔹 L'anime 'Legendz: Tale of the Dragon Kings' préparé pour l'insertion.
+2025-04-11 11:40:04,096 - INFO - ✅ 10 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:40:05,081 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1591/full
+2025-04-11 11:40:06,227 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/4156
+2025-04-11 11:40:06,446 - INFO - 🔹 L'anime 'Kujibiki♥Unbalance' préparé pour l'insertion.
+2025-04-11 11:40:07,442 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1592/full
+2025-04-11 11:40:08,596 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/3068
+2025-04-11 11:40:08,826 - INFO - 🔹 L'anime 'Hataraki Man' préparé pour l'insertion.
+2025-04-11 11:40:09,821 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1593/full
+2025-04-11 11:40:10,974 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1593/staff
+2025-04-11 11:40:11,440 - INFO - 🔹 L'anime 'Azumanga Web Daioh' préparé pour l'insertion.
+2025-04-11 11:40:11,446 - INFO - ✅ 3 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:40:11,448 - DEBUG - 
+🔍 État final des catégories vides: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:40:11,465 - INFO - 
+🔄 Traitement de la page 59
+2025-04-11 11:40:11,465 - DEBUG - 
+🔍 État des catégories vides avant le traitement: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:40:11,466 - INFO - 
+🔥 Catégorie: TRENDING
+2025-04-11 11:40:12,437 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/top/anime?page=59
+2025-04-11 11:40:13,646 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/31859/full
+2025-04-11 11:40:14,844 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/87637
+2025-04-11 11:40:15,061 - INFO - 🔹 L'anime 'Grimgar: Ashes and Illusions' préparé pour l'insertion.
+2025-04-11 11:40:16,053 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/40111/full
+2025-04-11 11:40:17,205 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/40111/staff
+2025-04-11 11:40:17,983 - INFO - 🔹 L'anime 'Ne Zha' préparé pour l'insertion.
+2025-04-11 11:40:18,982 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/4192/full
+2025-04-11 11:40:21,008 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/696
+2025-04-11 11:40:21,234 - INFO - 🔹 L'anime 'Hayate the Combat Butler!!' préparé pour l'insertion.
+2025-04-11 11:40:22,229 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/3785/full
+2025-04-11 11:40:23,394 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/3785/staff
+2025-04-11 11:40:23,620 - INFO - 🔹 L'anime 'Evangelion: 3.0 You Can (Not) Redo' préparé pour l'insertion.
+2025-04-11 11:40:24,613 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/6591/full
+2025-04-11 11:40:25,763 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/22
+2025-04-11 11:40:25,814 - INFO - 🔹 L'anime 'Samurai X DVD-BOX Special Ending' préparé pour l'insertion.
+2025-04-11 11:40:26,811 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1888/full
+2025-04-11 11:40:27,015 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/manga/371
+2025-04-11 11:40:27,015 - INFO - 🔹 L'anime 'Strawberry Marshmallow OVA' préparé pour l'insertion.
+2025-04-11 11:40:28,010 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/3931/full
+2025-04-11 11:40:29,158 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/3931/staff
+2025-04-11 11:40:30,591 - INFO - 🔹 L'anime 'Initial D Battle Stage 2' préparé pour l'insertion.
+2025-04-11 11:40:31,588 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/50537/full
+2025-04-11 11:40:32,735 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/172546
+2025-04-11 11:40:33,557 - INFO - 🔹 L'anime 'Fairies Albums 3' préparé pour l'insertion.
+2025-04-11 11:40:34,554 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/48916/full
+2025-04-11 11:40:35,710 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/48916/staff
+2025-04-11 11:40:35,935 - INFO - 🔹 L'anime 'Love Live! Nijigasaki High School Idol Club Season 2' préparé pour l'insertion.
+2025-04-11 11:40:36,929 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/15117/full
+2025-04-11 11:40:38,146 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/7519
+2025-04-11 11:40:38,192 - INFO - 🔹 L'anime 'The World God Only Knows: Tenri Arc' préparé pour l'insertion.
+2025-04-11 11:40:38,201 - INFO - ✅ 10 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:40:39,189 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/13535/full
+2025-04-11 11:40:40,342 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/20242
+2025-04-11 11:40:40,549 - INFO - 🔹 L'anime 'Good Luck Girl!' préparé pour l'insertion.
+2025-04-11 11:40:40,550 - INFO - ⚠️ L'anime ID: 528 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:40:41,545 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/2175/full
+2025-04-11 11:40:42,695 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/104475
+2025-04-11 11:40:42,747 - INFO - 🔹 L'anime 'Kino no Tabi: The Beautiful World - Byouki no Kuni - For You' préparé pour l'insertion.
+2025-04-11 11:40:43,743 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/30191/full
+2025-04-11 11:40:44,897 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/78183
+2025-04-11 11:40:45,117 - INFO - 🔹 L'anime 'Durarara!! x2 Shou: My Heart Is in the Pattern of a Hot Pot' préparé pour l'insertion.
+2025-04-11 11:40:45,118 - INFO - ⚠️ L'anime ID: 323 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:40:46,115 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/22043/full
+2025-04-11 11:40:47,297 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/598
+2025-04-11 11:40:47,510 - INFO - 🔹 L'anime 'Fairy Tail Series 2' préparé pour l'insertion.
+2025-04-11 11:40:48,506 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/8516/full
+2025-04-11 11:40:49,661 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/13872
+2025-04-11 11:40:49,868 - INFO - 🔹 L'anime 'Baka & Test – Summon the Beasts 2' préparé pour l'insertion.
+2025-04-11 11:40:50,864 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/56949/full
+2025-04-11 11:40:52,015 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/56949/staff
+2025-04-11 11:40:52,665 - INFO - 🔹 L'anime 'Veil (July 2019)' préparé pour l'insertion.
+2025-04-11 11:40:52,666 - INFO - ⚠️ L'anime ID: 56715 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:40:53,661 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/55733/full
+2025-04-11 11:40:54,813 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/55733/staff
+2025-04-11 11:40:55,568 - INFO - 🔹 L'anime 'The First Order' préparé pour l'insertion.
+2025-04-11 11:40:56,564 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/54123/full
+2025-04-11 11:40:57,781 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/54123/staff
+2025-04-11 11:40:58,546 - INFO - 🔹 L'anime 'My Senior Brother Is Too Steady' préparé pour l'insertion.
+2025-04-11 11:40:59,544 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/53446/full
+2025-04-11 11:41:00,717 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/105747
+2025-04-11 11:41:00,933 - INFO - 🔹 L'anime 'Campfire Cooking in Another World with My Absurd Skill' préparé pour l'insertion.
+2025-04-11 11:41:01,930 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/51916/full
+2025-04-11 11:41:03,145 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/137041
+2025-04-11 11:41:03,311 - INFO - 🔹 L'anime 'The Masterful Cat Is Depressed Again Today' préparé pour l'insertion.
+2025-04-11 11:41:03,321 - INFO - ✅ 10 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:41:04,310 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/51678/full
+2025-04-11 11:41:05,466 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/112592
+2025-04-11 11:41:05,687 - INFO - 🔹 L'anime 'Onimai: I'm Now Your Sister!' préparé pour l'insertion.
+2025-04-11 11:41:06,678 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/51369/full
+2025-04-11 11:41:06,880 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/manga/72025
+2025-04-11 11:41:06,884 - INFO - 🔹 L'anime 'Kengan Ashura Season 2' préparé pour l'insertion.
+2025-04-11 11:41:06,889 - INFO - ✅ 2 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:41:06,890 - DEBUG - 
+🔍 État des catégories vides après TRENDING: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:41:06,892 - INFO - 
+📅 Catégorie UPCOMING ignorée (précédemment détectée comme vide).
+2025-04-11 11:41:06,892 - DEBUG - 
+🔍 État des catégories vides après UPCOMING: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:41:06,893 - WARNING - 
+🚫 SOLUTION DE SECOURS: Force le statut vide pour UPCOMING après la page 59
+2025-04-11 11:41:06,894 - INFO - 
+🔍 Catégorie: GENERAL
+2025-04-11 11:41:07,875 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime?page=59
+2025-04-11 11:41:08,132 - INFO - ⚠️ L'anime ID: 1594 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:41:08,132 - INFO - ⛔ L'anime 'Beast City' ignoré en raison du contenu pour adultes: Hentai
+2025-04-11 11:41:08,132 - INFO - ⛔ L'anime 'Arcade Gamer Fubuki' ignoré en raison du contenu pour adultes: Comedy, Sports, Ecchi
+2025-04-11 11:41:09,128 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1597/full
+2025-04-11 11:41:10,316 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1597/staff
+2025-04-11 11:41:11,103 - INFO - 🔹 L'anime 'Panyo Panyo Di Gi Charat' préparé pour l'insertion.
+2025-04-11 11:41:12,100 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1598/full
+2025-04-11 11:41:13,310 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1598/staff
+2025-04-11 11:41:14,100 - INFO - 🔹 L'anime 'Casshan: Robot Hunter' préparé pour l'insertion.
+2025-04-11 11:41:15,096 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1599/full
+2025-04-11 11:41:16,301 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/1800
+2025-04-11 11:41:16,457 - INFO - 🔹 L'anime 'Eat-Man '98' préparé pour l'insertion.
+2025-04-11 11:41:17,448 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1600/full
+2025-04-11 11:41:18,603 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/679
+2025-04-11 11:41:18,768 - INFO - 🔹 L'anime 'Galaxy Angel Rune' préparé pour l'insertion.
+2025-04-11 11:41:19,766 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1601/full
+2025-04-11 11:41:21,839 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/5600
+2025-04-11 11:41:22,745 - INFO - 🔹 L'anime 'Red Garden' préparé pour l'insertion.
+2025-04-11 11:41:22,745 - INFO - ⛔ L'anime 'Strain: Strategic Armored Infantry' ignoré en raison du contenu pour adultes: Action, Drama, Sci-Fi, Ecchi
+2025-04-11 11:41:23,743 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1603/full
+2025-04-11 11:41:24,892 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/28779
+2025-04-11 11:41:25,811 - INFO - 🔹 L'anime 'Super Robot Wars The Original Generation: The Divine Wars' préparé pour l'insertion.
+2025-04-11 11:41:25,812 - INFO - ⚠️ L'anime ID: 1604 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:41:26,808 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1606/full
+2025-04-11 11:41:29,079 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/105
+2025-04-11 11:41:29,252 - INFO - 🔹 L'anime 'Kekkaishi' préparé pour l'insertion.
+2025-04-11 11:41:30,250 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1607/full
+2025-04-11 11:41:31,398 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/1465
+2025-04-11 11:41:31,577 - INFO - 🔹 L'anime 'Venus Versus Virus' préparé pour l'insertion.
+2025-04-11 11:41:32,569 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1608/full
+2025-04-11 11:41:33,720 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/10611
+2025-04-11 11:41:34,917 - INFO - 🔹 L'anime 'Salaryman Kintarou' préparé pour l'insertion.
+2025-04-11 11:41:35,908 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1609/full
+2025-04-11 11:41:37,096 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/25144
+2025-04-11 11:41:37,310 - INFO - 🔹 L'anime 'My-Otome Zwei' préparé pour l'insertion.
+2025-04-11 11:41:37,315 - INFO - ✅ 10 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:41:38,309 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1611/full
+2025-04-11 11:41:40,325 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1611/staff
+2025-04-11 11:41:41,148 - INFO - 🔹 L'anime 'Galerians: Rion' préparé pour l'insertion.
+2025-04-11 11:41:42,142 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1613/full
+2025-04-11 11:41:43,362 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/86
+2025-04-11 11:41:43,515 - INFO - 🔹 L'anime 'Jikuu Ihoujin Kyoko: Chocola ni Omakase!' préparé pour l'insertion.
+2025-04-11 11:41:44,513 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1614/full
+2025-04-11 11:41:45,753 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/1789
+2025-04-11 11:41:45,909 - INFO - 🔹 L'anime 'Captain Tsubasa' préparé pour l'insertion.
+2025-04-11 11:41:46,908 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1617/full
+2025-04-11 11:41:48,073 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/48775
+2025-04-11 11:41:48,974 - INFO - 🔹 L'anime 'Massugu ni Ikou.' préparé pour l'insertion.
+2025-04-11 11:41:49,972 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1618/full
+2025-04-11 11:41:51,184 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/87368
+2025-04-11 11:41:51,229 - INFO - 🔹 L'anime 'Soreyuke! Uchuu Senkan Yamamoto Youko (1999)' préparé pour l'insertion.
+2025-04-11 11:41:51,230 - INFO - ⛔ L'anime 'Negima!? Haru Special!?' ignoré en raison du contenu pour adultes: Comedy, Fantasy, Romance, Ecchi
+2025-04-11 11:41:52,229 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1620/full
+2025-04-11 11:41:53,399 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/3818
+2025-04-11 11:41:55,041 - INFO - 🔹 L'anime 'Maps' préparé pour l'insertion.
+2025-04-11 11:41:56,034 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1621/full
+2025-04-11 11:41:57,777 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1621/staff
+2025-04-11 11:41:58,118 - INFO - 🔹 L'anime 'Haru no Ashioto The Movie: Ourin Dakkan' préparé pour l'insertion.
+2025-04-11 11:41:59,118 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1622/full
+2025-04-11 11:42:00,294 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1622/staff
+2025-04-11 11:42:01,156 - INFO - 🔹 L'anime 'Kai Doh Maru' préparé pour l'insertion.
+2025-04-11 11:42:02,155 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1623/full
+2025-04-11 11:42:03,357 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/20032
+2025-04-11 11:42:04,081 - INFO - 🔹 L'anime 'G-On Riders' préparé pour l'insertion.
+2025-04-11 11:42:04,089 - INFO - ✅ 9 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:42:04,089 - DEBUG - 
+🔍 État final des catégories vides: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:42:04,113 - INFO - 
+🔄 Traitement de la page 60
+2025-04-11 11:42:04,114 - DEBUG - 
+🔍 État des catégories vides avant le traitement: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:42:04,115 - INFO - 
+🔥 Catégorie: TRENDING
+2025-04-11 11:42:05,079 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/top/anime?page=60
+2025-04-11 11:42:06,346 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/18849/full
+2025-04-11 11:42:07,499 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/18849/staff
+2025-04-11 11:42:08,618 - INFO - 🔹 L'anime 'Natsume’s Book of Friends: Nyanko-Sensei and the First Errand' préparé pour l'insertion.
+2025-04-11 11:42:09,609 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/15487/full
+2025-04-11 11:42:10,838 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/15487/staff
+2025-04-11 11:42:11,837 - INFO - 🔹 L'anime 'Kuroko's Basketball Specials' préparé pour l'insertion.
+2025-04-11 11:42:12,829 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/9510/full
+2025-04-11 11:42:13,989 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/17641
+2025-04-11 11:42:14,950 - INFO - 🔹 L'anime 'Mitsudomoe Zouryouchuu!' préparé pour l'insertion.
+2025-04-11 11:42:15,949 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/37804/full
+2025-04-11 11:42:17,163 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/37804/staff
+2025-04-11 11:42:18,289 - INFO - 🔹 L'anime 'Shirobako Movie' préparé pour l'insertion.
+2025-04-11 11:42:19,284 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/28249/full
+2025-04-11 11:42:20,452 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/51233
+2025-04-11 11:42:20,671 - INFO - 🔹 L'anime 'The Heroic Legend of Arslan' préparé pour l'insertion.
+2025-04-11 11:42:21,662 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/21667/full
+2025-04-11 11:42:22,884 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/21667/staff
+2025-04-11 11:42:23,868 - INFO - 🔹 L'anime 'Non Non Biyori: We're Going to Okinawa' préparé pour l'insertion.
+2025-04-11 11:42:24,864 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/35503/full
+2025-04-11 11:42:26,015 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/115887
+2025-04-11 11:42:26,171 - INFO - 🔹 L'anime 'Revue Starlight' préparé pour l'insertion.
+2025-04-11 11:42:27,165 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/6213/full
+2025-04-11 11:42:29,091 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/7776
+2025-04-11 11:42:29,290 - INFO - 🔹 L'anime 'A Certain Scientific Railgun' préparé pour l'insertion.
+2025-04-11 11:42:30,287 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/39651/full
+2025-04-11 11:42:31,432 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/39651/staff
+2025-04-11 11:42:32,339 - INFO - 🔹 L'anime 'Mob Psycho 100 II: The Spirits and Such Consultation Office's First Company Outing ~A Healing Trip That Warms the Heart~' préparé pour l'insertion.
+2025-04-11 11:42:33,336 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/32863/full
+2025-04-11 11:42:34,487 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/39883
+2025-04-11 11:42:34,639 - INFO - 🔹 L'anime 'Assassination Classroom: Extracurricular Lesson' préparé pour l'insertion.
+2025-04-11 11:42:34,649 - INFO - ✅ 10 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:42:35,637 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/41141/full
+2025-04-11 11:42:36,850 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/41141/staff
+2025-04-11 11:42:37,337 - INFO - 🔹 L'anime 'Princess Principal: Crown Handler - Chapter 3' préparé pour l'insertion.
+2025-04-11 11:42:38,335 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/5485/full
+2025-04-11 11:42:39,544 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/8773
+2025-04-11 11:42:39,763 - INFO - 🔹 L'anime 'Mazinger Edition Z: The Impact!' préparé pour l'insertion.
+2025-04-11 11:42:40,761 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/21405/full
+2025-04-11 11:42:41,913 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/26769
+2025-04-11 11:42:42,066 - INFO - 🔹 L'anime 'The Kawai Complex Guide to Manors and Hostel Behavior' préparé pour l'insertion.
+2025-04-11 11:42:43,065 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/4898/full
+2025-04-11 11:42:44,110 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/3866
+2025-04-11 11:42:44,160 - INFO - 🔹 L'anime 'Black Butler' préparé pour l'insertion.
+2025-04-11 11:42:45,159 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/34445/full
+2025-04-11 11:42:46,207 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/34445/staff
+2025-04-11 11:42:46,428 - INFO - 🔹 L'anime 'Yuki Yuna is a Hero: The Hero Chapter' préparé pour l'insertion.
+2025-04-11 11:42:47,419 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/19115/full
+2025-04-11 11:42:48,570 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/19115/staff
+2025-04-11 11:42:49,752 - INFO - 🔹 L'anime 'Giovanni's Island' préparé pour l'insertion.
+2025-04-11 11:42:49,753 - INFO - ⚠️ L'anime ID: 951 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:42:50,747 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/48791/full
+2025-04-11 11:42:51,959 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/48791/staff
+2025-04-11 11:42:52,859 - INFO - 🔹 L'anime 'The Legend of Luoxiaohei: The Gate of All Living Beings' préparé pour l'insertion.
+2025-04-11 11:42:52,860 - INFO - ⚠️ L'anime ID: 874 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:42:53,852 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/2665/full
+2025-04-11 11:42:55,005 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/12471
+2025-04-11 11:42:56,002 - INFO - 🔹 L'anime 'Doraemon the Movie: Nobita and the Steel Troops' préparé pour l'insertion.
+2025-04-11 11:42:57,001 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/49838/full
+2025-04-11 11:42:58,144 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/49838/staff
+2025-04-11 11:42:58,941 - INFO - 🔹 L'anime 'Living Idly and Dying as if Dreaming' préparé pour l'insertion.
+2025-04-11 11:42:59,941 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/12883/full
+2025-04-11 11:43:01,105 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/51733
+2025-04-11 11:43:01,262 - INFO - 🔹 L'anime 'Tsuritama' préparé pour l'insertion.
+2025-04-11 11:43:01,273 - INFO - ✅ 10 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:43:02,255 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/2104/full
+2025-04-11 11:43:03,470 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/759
+2025-04-11 11:43:03,521 - INFO - 🔹 L'anime 'My Bride is a Mermaid' préparé pour l'insertion.
+2025-04-11 11:43:03,522 - INFO - ⚠️ L'anime ID: 396 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:43:04,513 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/42940/full
+2025-04-11 11:43:05,672 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/7760
+2025-04-11 11:43:05,853 - INFO - 🔹 L'anime 'Baki Hanma' préparé pour l'insertion.
+2025-04-11 11:43:05,860 - INFO - ✅ 2 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:43:05,864 - DEBUG - 
+🔍 État des catégories vides après TRENDING: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:43:05,867 - INFO - 
+📅 Catégorie UPCOMING ignorée (précédemment détectée comme vide).
+2025-04-11 11:43:05,871 - DEBUG - 
+🔍 État des catégories vides après UPCOMING: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:43:05,873 - WARNING - 
+🚫 SOLUTION DE SECOURS: Force le statut vide pour UPCOMING après la page 60
+2025-04-11 11:43:05,874 - INFO - 
+🔍 Catégorie: GENERAL
+2025-04-11 11:43:06,852 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime?page=60
+2025-04-11 11:43:08,251 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1624/full
+2025-04-11 11:43:09,459 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1624/staff
+2025-04-11 11:43:10,255 - INFO - 🔹 L'anime 'To Heart 2 Special' préparé pour l'insertion.
+2025-04-11 11:43:10,256 - INFO - ⛔ L'anime 'Soul Link Special' ignoré en raison du contenu pour adultes: Adventure, Comedy, Romance, Sci-Fi, Ecchi
+2025-04-11 11:43:11,252 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1626/full
+2025-04-11 11:43:12,608 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/117398
+2025-04-11 11:43:13,603 - INFO - 🔹 L'anime 'Harmagedon' préparé pour l'insertion.
+2025-04-11 11:43:13,605 - INFO - ⛔ L'anime 'Choushin Hime Dangaizer 3' ignoré en raison du contenu pour adultes: Adventure, Sci-Fi, Ecchi
+2025-04-11 11:43:14,599 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1628/full
+2025-04-11 11:43:15,961 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/7666
+2025-04-11 11:43:16,314 - INFO - 🔹 L'anime 'Demon Lord Dante' préparé pour l'insertion.
+2025-04-11 11:43:17,311 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1629/full
+2025-04-11 11:43:18,633 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/1475
+2025-04-11 11:43:18,967 - INFO - 🔹 L'anime 'The Devil Lady' préparé pour l'insertion.
+2025-04-11 11:43:19,964 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1630/full
+2025-04-11 11:43:21,338 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1630/staff
+2025-04-11 11:43:21,881 - INFO - 🔹 L'anime 'Elf Princess Rane' préparé pour l'insertion.
+2025-04-11 11:43:22,878 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1631/full
+2025-04-11 11:43:25,215 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1631/staff
+2025-04-11 11:43:25,742 - INFO - 🔹 L'anime 'Koukyoushihen Eureka Seven: Kinkyuu Tokuban Navigation ray=out' préparé pour l'insertion.
+2025-04-11 11:43:25,742 - INFO - ⛔ L'anime 'Princess 69: Midnight Gymnastics' ignoré en raison du contenu pour adultes: Hentai
+2025-04-11 11:43:25,742 - INFO - ⛔ L'anime 'Princess 69' ignoré en raison du contenu pour adultes: Hentai
+2025-04-11 11:43:25,743 - INFO - ⛔ L'anime 'Immoral Sisters' ignoré en raison du contenu pour adultes: Hentai
+2025-04-11 11:43:25,743 - INFO - ⛔ L'anime 'Immoral Sisters 2' ignoré en raison du contenu pour adultes: Hentai
+2025-04-11 11:43:25,743 - INFO - ⛔ L'anime 'Immoral Sisters: Blossoming' ignoré en raison du contenu pour adultes: Hentai
+2025-04-11 11:43:26,742 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1637/full
+2025-04-11 11:43:28,720 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/1365
+2025-04-11 11:43:28,934 - INFO - 🔹 L'anime 'The Poem of Wind and Trees' préparé pour l'insertion.
+2025-04-11 11:43:29,933 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1638/full
+2025-04-11 11:43:31,080 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1638/staff
+2025-04-11 11:43:32,207 - INFO - 🔹 L'anime 'Peter Pan & Wendy' préparé pour l'insertion.
+2025-04-11 11:43:32,207 - INFO - ⛔ L'anime 'Boku no Pico' ignoré en raison du contenu pour adultes: Boys Love, Hentai
+2025-04-11 11:43:33,200 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1640/full
+2025-04-11 11:43:34,381 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1640/staff
+2025-04-11 11:43:34,753 - INFO - 🔹 L'anime 'Angel's Feather' préparé pour l'insertion.
+2025-04-11 11:43:34,753 - INFO - ⛔ L'anime 'Iron Virgin Jun' ignoré en raison du contenu pour adultes: Action, Comedy, Fantasy, Ecchi
+2025-04-11 11:43:35,753 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1642/full
+2025-04-11 11:43:36,938 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/429
+2025-04-11 11:43:38,542 - INFO - 🔹 L'anime 'Sugar Sugar Rune' préparé pour l'insertion.
+2025-04-11 11:43:38,552 - INFO - ✅ 10 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:43:39,532 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1643/full
+2025-04-11 11:43:40,740 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1643/staff
+2025-04-11 11:43:41,180 - INFO - 🔹 L'anime 'Sailor Victory' préparé pour l'insertion.
+2025-04-11 11:43:42,180 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1644/full
+2025-04-11 11:43:43,385 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1644/staff
+2025-04-11 11:43:43,849 - INFO - 🔹 L'anime 'Princess Rouge' préparé pour l'insertion.
+2025-04-11 11:43:44,847 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1645/full
+2025-04-11 11:43:46,050 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/5904
+2025-04-11 11:43:46,956 - INFO - 🔹 L'anime 'Harlock Saga' préparé pour l'insertion.
+2025-04-11 11:43:47,954 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1647/full
+2025-04-11 11:43:49,117 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/1001
+2025-04-11 11:43:49,270 - INFO - 🔹 L'anime 'Apocalypse Zero' préparé pour l'insertion.
+2025-04-11 11:43:50,267 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1648/full
+2025-04-11 11:43:51,480 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1648/staff
+2025-04-11 11:43:52,327 - INFO - 🔹 L'anime 'UFO Ultramaiden Valkyrie 4: Banquet of Time, Dreams, and Galaxies' préparé pour l'insertion.
+2025-04-11 11:43:53,326 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1650/full
+2025-04-11 11:43:54,477 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/33333
+2025-04-11 11:43:54,658 - INFO - 🔹 L'anime 'Star Blazers: The Quest for Iscandar' préparé pour l'insertion.
+2025-04-11 11:43:54,731 - INFO - ✅ 6 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:43:54,733 - DEBUG - 
+🔍 État final des catégories vides: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:43:54,796 - INFO - 
+🔄 Traitement de la page 61
+2025-04-11 11:43:54,797 - DEBUG - 
+🔍 État des catégories vides avant le traitement: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:43:54,798 - INFO - 
+🔥 Catégorie: TRENDING
+2025-04-11 11:43:55,653 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/top/anime?page=61
+2025-04-11 11:43:56,918 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/35191/full
+2025-04-11 11:43:57,965 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/35191/staff
+2025-04-11 11:43:58,796 - INFO - 🔹 L'anime 'Free! The Movie -Timeless Medley- the Promise' préparé pour l'insertion.
+2025-04-11 11:43:58,796 - INFO - ⚠️ L'anime ID: 182 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:43:59,793 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/48553/full
+2025-04-11 11:44:00,943 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/101851
+2025-04-11 11:44:01,100 - INFO - 🔹 L'anime 'Akebi's Sailor Uniform' préparé pour l'insertion.
+2025-04-11 11:44:02,098 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/10460/full
+2025-04-11 11:44:03,319 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/8557
+2025-04-11 11:44:03,372 - INFO - 🔹 L'anime 'You and Me.' préparé pour l'insertion.
+2025-04-11 11:44:04,367 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/54444/full
+2025-04-11 11:44:05,513 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/54444/staff
+2025-04-11 11:44:06,402 - INFO - 🔹 L'anime 'Fanren Xiu Xian Chuan: Chongzhi Ban' préparé pour l'insertion.
+2025-04-11 11:44:07,401 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/54842/full
+2025-04-11 11:44:08,556 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/45968
+2025-04-11 11:44:08,907 - INFO - 🔹 L'anime 'Sugar Apple Fairy Tale Part 2' préparé pour l'insertion.
+2025-04-11 11:44:09,901 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/52747/full
+2025-04-11 11:44:11,172 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/169728
+2025-04-11 11:44:12,181 - INFO - 🔹 L'anime 'Psycho-Pass Movie: Providence' préparé pour l'insertion.
+2025-04-11 11:44:13,180 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/14511/full
+2025-04-11 11:44:14,450 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/2629
+2025-04-11 11:44:15,427 - INFO - 🔹 L'anime 'Minami-ke Tadaima' préparé pour l'insertion.
+2025-04-11 11:44:16,424 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/36904/full
+2025-04-11 11:44:17,646 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/36904/staff
+2025-04-11 11:44:17,980 - INFO - 🔹 L'anime 'Aggretsuko (ONA)' préparé pour l'insertion.
+2025-04-11 11:44:18,978 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/36513/full
+2025-04-11 11:44:20,258 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/111322
+2025-04-11 11:44:20,578 - INFO - 🔹 L'anime 'Yotsuiro Biyori' préparé pour l'insertion.
+2025-04-11 11:44:21,575 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/32792/full
+2025-04-11 11:44:22,859 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/18254
+2025-04-11 11:44:23,113 - INFO - 🔹 L'anime 'Mobile Suit Gundam Unicorn RE:0096' préparé pour l'insertion.
+2025-04-11 11:44:23,123 - INFO - ✅ 10 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:44:24,111 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/34439/full
+2025-04-11 11:44:25,228 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/34439/staff
+2025-04-11 11:44:25,549 - INFO - 🔹 L'anime 'Code Geass: Lelouch of the Rebellion II - Transgression' préparé pour l'insertion.
+2025-04-11 11:44:25,550 - INFO - ⚠️ L'anime ID: 74 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:44:26,546 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/6956/full
+2025-04-11 11:44:27,886 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/3044
+2025-04-11 11:44:27,953 - INFO - 🔹 L'anime 'Wagnaria!!' préparé pour l'insertion.
+2025-04-11 11:44:28,951 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/39477/full
+2025-04-11 11:44:31,188 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/23390
+2025-04-11 11:44:31,346 - INFO - 🔹 L'anime 'Attack on Titan: Chibi Theater - Survey Corps, Levi Squad!' préparé pour l'insertion.
+2025-04-11 11:44:32,343 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/2963/full
+2025-04-11 11:44:32,553 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/manga/2629
+2025-04-11 11:44:32,554 - INFO - 🔹 L'anime 'Minami-ke' préparé pour l'insertion.
+2025-04-11 11:44:33,549 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/9288/full
+2025-04-11 11:44:34,700 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/9288/staff
+2025-04-11 11:44:35,412 - INFO - 🔹 L'anime 'Heartcatch Precure! Movie: Hana no Miyako de Fashion Show... desu ka!?' préparé pour l'insertion.
+2025-04-11 11:44:36,409 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/42423/full
+2025-04-11 11:44:37,562 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/105347
+2025-04-11 11:44:38,502 - INFO - 🔹 L'anime 'Date A Bullet: Nightmare or Queen' préparé pour l'insertion.
+2025-04-11 11:44:39,501 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/2673/full
+2025-04-11 11:44:41,567 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/2673/staff
+2025-04-11 11:44:42,533 - INFO - 🔹 L'anime 'Doraemon the Movie: Nobita's New Great Adventure into the Underworld' préparé pour l'insertion.
+2025-04-11 11:44:43,528 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/7305/full
+2025-04-11 11:44:44,678 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/7305/staff
+2025-04-11 11:44:45,378 - INFO - 🔹 L'anime 'Detective Conan Movie 10: Requiem of the Detectives Recap' préparé pour l'insertion.
+2025-04-11 11:44:46,376 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/5530/full
+2025-04-11 11:44:47,424 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/3031
+2025-04-11 11:44:47,631 - INFO - 🔹 L'anime 'Pandora Hearts' préparé pour l'insertion.
+2025-04-11 11:44:47,632 - INFO - ⚠️ L'anime ID: 1015 existe déjà dans la base de données. Ignorer...
+2025-04-11 11:44:48,629 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/48780/full
+2025-04-11 11:44:49,799 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/68021
+2025-04-11 11:44:50,009 - INFO - 🔹 L'anime 'DAKAICHI -I'm being harassed by the sexiest man of the year- the Movie: Spain Arc' préparé pour l'insertion.
+2025-04-11 11:44:50,018 - INFO - ✅ 10 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:44:51,007 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/48491/full
+2025-04-11 11:44:52,162 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/41049
+2025-04-11 11:44:53,016 - INFO - 🔹 L'anime 'Encouragement of Climb: Next Summit' préparé pour l'insertion.
+2025-04-11 11:44:54,014 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/8525/full
+2025-04-11 11:44:54,237 - INFO - 🔄 Utilisation du cache pour: https://api.jikan.moe/v4/manga/7519
+2025-04-11 11:44:54,238 - INFO - 🔹 L'anime 'The World God Only Knows' préparé pour l'insertion.
+2025-04-11 11:44:54,242 - INFO - ✅ 2 animés ont été ajoutés en lot à la base de données.
+2025-04-11 11:44:54,243 - DEBUG - 
+🔍 État des catégories vides après TRENDING: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:44:54,244 - INFO - 
+📅 Catégorie UPCOMING ignorée (précédemment détectée comme vide).
+2025-04-11 11:44:54,244 - DEBUG - 
+🔍 État des catégories vides après UPCOMING: {'trending': False, 'upcoming': True, 'general': False}
+2025-04-11 11:44:54,245 - WARNING - 
+🚫 SOLUTION DE SECOURS: Force le statut vide pour UPCOMING après la page 61
+2025-04-11 11:44:54,245 - INFO - 
+🔍 Catégorie: GENERAL
+2025-04-11 11:44:55,233 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime?page=61
+2025-04-11 11:44:56,527 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1651/full
+2025-04-11 11:44:57,747 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1651/staff
+2025-04-11 11:44:58,756 - INFO - 🔹 L'anime 'Star Blazers: The Comet Empire' préparé pour l'insertion.
+2025-04-11 11:44:59,751 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1652/full
+2025-04-11 11:45:00,994 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/33373
+2025-04-11 11:45:02,677 - INFO - 🔹 L'anime 'Star Blazers: The Bolar Wars' préparé pour l'insertion.
+2025-04-11 11:45:03,675 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1654/full
+2025-04-11 11:45:04,885 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1654/staff
+2025-04-11 11:45:05,779 - INFO - 🔹 L'anime 'Girl Meets Girl' préparé pour l'insertion.
+2025-04-11 11:45:06,778 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1655/full
+2025-04-11 11:45:08,007 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/manga/12266
+2025-04-11 11:45:08,901 - INFO - 🔹 L'anime 'Nerima Daikon Brothers' préparé pour l'insertion.
+2025-04-11 11:45:09,901 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1656/full
+2025-04-11 11:45:11,057 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1656/staff
+2025-04-11 11:45:11,849 - INFO - 🔹 L'anime 'PostPet Momobin' préparé pour l'insertion.
+2025-04-11 11:45:12,847 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1657/full
+2025-04-11 11:45:14,020 - INFO - 📡 Récupération des données depuis: https://api.jikan.moe/v4/anime/1657/staff
+2025-04-11 11:45:14,387 - INFO - 🔹 L'anime 'Garzey's Wing' préparé pour l'insertion.
+2025-04-11 11:45:15,003 - WARNING - 
+⚠️ Opération interrompue par l'utilisateur
+2025-04-11 11:45:15,006 - INFO - 
+📊 RÉSUMÉ:
+2025-04-11 11:45:15,006 - INFO -   - Pages traitées: 5
+2025-04-11 11:45:15,007 - INFO -   - Dernière page traitée: 61
+2025-04-11 11:45:15,008 - INFO -   - Durée d'exécution: 540.69 secondes
+2025-04-11 11:45:15,008 - INFO - 
+✅ Connexion à la base de données fermée

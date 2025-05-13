@@ -1,39 +1,3 @@
-const slider = document.querySelector('.trending-slider');
-const leftButton = document.querySelector('.slider-button.left');
-const rightButton = document.querySelector('.slider-button.right');
-
-leftButton.addEventListener('click', function() {
-    slider.scrollBy({
-        left: -200,
-        behavior: 'smooth'
-    });
-});
-
-rightButton.addEventListener('click', function() {
-    slider.scrollBy({
-        left: 200,
-        behavior: 'smooth'
-    });
-});
-
-const upcomingSlider = document.querySelector('.upcoming-slider');
-const upcomingLeftButton = document.querySelector('.upcoming-slider-container .slider-button.left');
-const upcomingRightButton = document.querySelector('.upcoming-slider-container .slider-button.right');
-
-upcomingLeftButton.addEventListener('click', function() {
-    upcomingSlider.scrollBy({
-        left: -200,
-        behavior: 'smooth'
-    });
-});
-
-upcomingRightButton.addEventListener('click', function() {
-    upcomingSlider.scrollBy({
-        left: 200,
-        behavior: 'smooth'
-    });
-});
-
 const isAdmin = document.body.classList.contains('admin');
 if (isAdmin) {
     document.querySelectorAll('.trending-item, .upcoming-item').forEach(item => {
@@ -102,3 +66,41 @@ function deleteImage(category) {
         data: {functionname: 'deleteImage', category: category, imageId: imageId}
     })
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Fonction pour gérer le défilement des sliders
+    function setupSliders() {
+        // Pour le slider des tendances
+        setupSlider('trending');
+        
+        // Pour le slider des à venir
+        setupSlider('upcoming');
+    }
+    
+    // Configure un slider spécifique
+    function setupSlider(category) {
+        const slider = document.querySelector(`.${category}-slider`);
+        const leftButton = slider.querySelector('.slider-button.left');
+        const rightButton = slider.querySelector('.slider-button.right');
+        
+        // Gestionnaire pour le bouton gauche
+        leftButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            slider.scrollBy({
+                left: -300,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Gestionnaire pour le bouton droit
+        rightButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            slider.scrollBy({
+                left: 300,
+                behavior: 'smooth'
+            });
+        });
+    }
+    
+    setupSliders();
+});

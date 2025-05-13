@@ -2,10 +2,8 @@
 require_once __DIR__ . '/../php/db.php';
 require_once __DIR__ . '/../php/forum/forum_functions.php';
 
-// Start the session if not already started
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+// Remplacer la vérification de session par l'inclusion de la configuration
+include_once '../php/session_config.php';
 
 // Get community slug from URL
 $community_slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
@@ -34,7 +32,7 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $per_page = 15;
 
 // Get topics for this community
-$sql = "SELECT t.*, u.username, 
+$sql = "SELECT t.*, u.username,
         (SELECT COUNT(*) FROM forum_comments WHERE topic_id = t.id) AS comment_count,
         COALESCE((SELECT SUM(vote_type) FROM forum_votes WHERE reference_id = t.id AND reference_type = 'topic'), 0) AS vote_score
         FROM forum_topics t
@@ -81,12 +79,14 @@ $page_title = "m/" . htmlspecialchars($community['slug']) . " - MangaMuse";
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/forum/forum.css">
+    <link rel="icon" href="../img/MangaMuse_White-Book.png" type="image/x-icon">
     <style>
         .forum-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
             box-sizing: border-box;
+            overflow-x: hidden; /* Empêcher le défilement horizontal */
         }
 
         .breadcrumb {
@@ -173,6 +173,33 @@ $page_title = "m/" . htmlspecialchars($community['slug']) . " - MangaMuse";
 
         .topic-item:hover {
             background-color: #3a3a3a;
+        }
+
+        .topic-image-container {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .topic-image {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+
+        .placeholder-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            background-color: #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 20px;
         }
 
         .vote-info {
@@ -287,6 +314,27 @@ $page_title = "m/" . htmlspecialchars($community['slug']) . " - MangaMuse";
             cursor: not-allowed;
         }
 
+        .community-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .edit-community-btn {
+            background-color: #5e72e4;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .edit-community-btn:hover {
+            background-color: #4a5fd1;
+            transform: translateY(-2px);
+        }
+
         @media (max-width: 768px) {
             .topic-header,
             .topic-item {
@@ -311,6 +359,12 @@ $page_title = "m/" . htmlspecialchars($community['slug']) . " - MangaMuse";
                 text-align: center;
             }
 
+            .community-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .edit-community-btn,
             .new-topic-btn {
                 width: 100%;
                 text-align: center;
@@ -333,24 +387,33 @@ $page_title = "m/" . htmlspecialchars($community['slug']) . " - MangaMuse";
                     <p class="community-description"><?php echo htmlspecialchars($community['description']); ?></p>
                 <?php endif; ?>
             </div>
-            <?php if (isset($_SESSION['user'])): ?>
-                <a href="../pages/forum_new_topic.php?community_id=<?php echo $community['id']; ?>" class="new-topic-btn">New Topic</a>
-            <?php endif; ?>
+            <div class="community-actions">
+                <?php if (isset($_SESSION['user'])): ?>
+                    <a href="../pages/forum_new_topic.php?community_id=<?php echo $community['id']; ?>" class="new-topic-btn">New Topic</a>
+                <?php endif; ?>
+                <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1): ?>
+                    <a href="../pages/edit_community.php?id=<?php echo $community['id']; ?>" class="edit-community-btn">Edit Community</a>
+                <?php endif; ?>
+            </div>
         </div>
         
         <?php if (!empty($topics)): ?>
             <div class="topic-list">
                 <div class="topic-header">
+                    <div>Image</div>
                     <div>Topic</div>
-                    <div>Author</div>
                     <div>Replies</div>
                     <div>Votes</div>
                 </div>
                 
                 <?php foreach ($topics as $topic): ?>
                     <div class="topic-item">
-                        <div class="vote-info">
-                            <span class="vote-count"><?php echo isset($topic['vote_score']) ? $topic['vote_score'] : 0; ?></span>
+                        <div class="topic-image-container">
+                            <?php if (!empty($topic['image_url'])): ?>
+                                <img src="<?php echo htmlspecialchars($topic['image_url']); ?>" alt="Topic image" class="topic-image">
+                            <?php else: ?>
+                                <div class="placeholder-image">T</div>
+                            <?php endif; ?>
                         </div>
                         <div class="topic-content">
                             <a href="../pages/forum_topic.php?id=<?php echo $topic['id']; ?>" class="topic-title"><?php echo htmlspecialchars($topic['title']); ?></a>

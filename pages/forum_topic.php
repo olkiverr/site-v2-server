@@ -2,15 +2,81 @@
 require_once __DIR__ . '/../php/db.php';
 require_once __DIR__ . '/../php/forum/forum_functions.php';
 
+// Function to display nested replies recursively
+function displayReplies($replies, $topic_id, $is_logged_in, $user_id) {
+    foreach ($replies as $reply): ?>
+        <div class="reply" id="comment-<?php echo $reply['id']; ?>">
+            <?php if ($is_logged_in && isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                <div class="admin-controls">
+                    <button onclick="showEditCommentForm(<?php echo $reply['id']; ?>)" class="admin-btn edit-btn">Edit</button>
+                    <form method="post" style="display: inline;">
+                        <input type="hidden" name="delete_comment" value="1">
+                        <input type="hidden" name="comment_id" value="<?php echo $reply['id']; ?>">
+                        <button type="submit" class="admin-btn delete-btn" onclick="return confirm('Are you sure you want to delete this reply?')">Delete</button>
+                    </form>
+                </div>
+                
+                <div id="edit-comment-form-<?php echo $reply['id']; ?>" class="edit-comment-form" style="display: none;">
+                    <form method="post">
+                        <input type="hidden" name="edit_comment" value="1">
+                        <input type="hidden" name="comment_id" value="<?php echo $reply['id']; ?>">
+                        <textarea name="comment_content" required><?php echo htmlspecialchars($reply['content']); ?></textarea>
+                        <button type="submit">Save</button>
+                        <button type="button" onclick="hideEditCommentForm(<?php echo $reply['id']; ?>)">Cancel</button>
+                    </form>
+                </div>
+            <?php endif; ?>
+            <div class="comment-meta">
+                <span class="comment-author"><?php echo htmlspecialchars($reply['username'] ?? 'Anonymous'); ?></span>
+                <span><?php echo formatTimestamp($reply['created_at']); ?></span>
+            </div>
+            <div class="comment-content">
+                <?php echo nl2br(htmlspecialchars($reply['content'])); ?>
+            </div>
+            <div class="vote-container">
+                <?php if ($is_logged_in): 
+                    $user_reply_vote = getUserVote($user_id, $reply['id'], 'comment');
+                ?>
+                    <a href="?id=<?php echo $topic_id; ?>&comment_id=<?php echo $reply['id']; ?>&vote=up" class="vote-btn <?php echo ($user_reply_vote === 1) ? 'voted-up' : ''; ?>">&#9650;</a>
+                    <span class="vote-score"><?php echo $reply['vote_score']; ?></span>
+                <?php else: ?>
+                    <span class="vote-score"><?php echo $reply['vote_score']; ?> votes</span>
+                <?php endif; ?>
+                
+                <?php if ($is_logged_in): ?>
+                    <button class="reply-btn" onclick="showReplyForm(<?php echo $reply['id']; ?>)">Reply</button>
+                <?php endif; ?>
+            </div>
+
+            <!-- Reply form for nested replies (hidden by default) -->
+            <div id="reply-form-<?php echo $reply['id']; ?>" class="reply-form nested" style="display: none;">
+                <form action="?id=<?php echo $topic_id; ?>" method="post">
+                    <input type="hidden" name="parent_id" value="<?php echo $reply['id']; ?>">
+                    <textarea name="comment_content" required placeholder="Write your reply here..."></textarea>
+                    <div class="form-buttons">
+                        <button type="submit">Submit Reply</button>
+                        <button type="button" onclick="hideReplyForm(<?php echo $reply['id']; ?>)">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Nested replies -->
+            <?php if (!empty($reply['replies'])): ?>
+                <div class="replies-container nested">
+                    <?php displayReplies($reply['replies'], $topic_id, $is_logged_in, $user_id); ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endforeach;
+}
+
 // Activer l'affichage des erreurs pour le débogage
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Start the session if not already started
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+// Remplacer session_start() par l'inclusion de la configuration
+include '../php/session_config.php';
 
 // Get topic ID from URL
 $topic_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
@@ -133,6 +199,8 @@ if (isset($_GET['vote']) && $is_logged_in) {
     
     // Ajout de paramètre à l'URL pour mise à jour du score
     $redirect_url = '/4TTJ/Zielinski%20Olivier/Site/site-v2/pages/forum_topic.php?id=' . $topic_id;
+    $sort_param = isset($_GET['sort']) ? '&sort=' . $_GET['sort'] : '';
+    $redirect_url .= $sort_param;
     if ($reference_type === 'topic') {
         $redirect_url .= '&topic_voted=1&topic_score=' . $new_score;
     } else {
@@ -178,6 +246,7 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/forum/forum.css">
+    <link rel="icon" href="../img/MangaMuse_White-Book.png" type="image/x-icon">
     <style>
         .topic-container {
             max-width: 1000px;
@@ -190,6 +259,9 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
             margin-bottom: 20px;
             padding: 10px 0;
             border-bottom: 1px solid #444;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .breadcrumb a {
@@ -201,36 +273,112 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
             text-decoration: underline;
         }
         
+        .breadcrumb-path {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .breadcrumb-separator {
+            color: #aaa;
+            margin: 0 5px;
+        }
+        
         .topic {
             background-color: #333;
             border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             border: 1px solid #444;
         }
         
         .topic-title {
-            font-size: 24px;
+            font-size: 26px;
             margin-bottom: 15px;
             color: #fff;
+            line-height: 1.3;
+        }
+        
+        .topic-header-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            gap: 25px;
+        }
+        
+        .topic-title-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
         
         .topic-meta {
             color: #aaa;
             font-size: 14px;
-            margin-bottom: 20px;
+            margin-bottom: 0;
             padding-bottom: 15px;
             border-bottom: 1px solid #444;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .topic-image-container {
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #444;
+            order: -1;
+            align-self: flex-start;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .topic-image-container::after {
+            content: "🔍";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+            background-color: rgba(0, 0, 0, 0.6);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .topic-image-container:hover::after {
+            opacity: 1;
+        }
+        
+        .topic-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
         }
         
         .topic-content {
             margin-bottom: 20px;
-            line-height: 1.6;
+            line-height: 1.7;
             font-size: 16px;
-            background-color: #333;
+            background-color: #2d2d2d;
             border-radius: 8px;
-            padding: 20px;
+            padding: 25px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
         
@@ -246,7 +394,7 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 20px;
             color: #aaa;
             padding: 5px;
             transition: color 0.2s;
@@ -268,6 +416,7 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
             margin: 0 10px;
             font-weight: bold;
             color: #fff;
+            font-size: 16px;
         }
         
         .login-to-vote {
@@ -276,12 +425,13 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
         }
         
         .comments-section {
-            margin-top: 30px;
+            margin-top: 40px;
+            width: 100%;
         }
         
         .comments-header {
-            font-size: 20px;
-            margin-bottom: 20px;
+            font-size: 22px;
+            margin-bottom: 0;
             color: #fff;
         }
         
@@ -289,20 +439,20 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
             border-bottom: 1px solid #444;
         }
         
         .sort-options {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-size: 14px;
         }
         
         .sort-link {
-            padding: 5px 10px;
+            padding: 6px 12px;
             text-decoration: none;
             color: #ddd;
             border-radius: 4px;
@@ -322,23 +472,35 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
         .comment {
             background-color: #2d2d2d;
             border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
             border: 1px solid #444;
+            width: 100%;
+            box-sizing: border-box;
         }
         
         .comment-meta {
             color: #aaa;
             font-size: 14px;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
             border-bottom: 1px solid #444;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .comment-author {
+            font-weight: bold;
+            color: #ddd;
         }
         
         .comment-content {
             margin-bottom: 15px;
-            line-height: 1.5;
+            line-height: 1.6;
+            width: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
         
         .votes {
@@ -349,41 +511,53 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
         
         .comment-form {
             background-color: #333;
-            padding: 20px;
+            padding: 25px;
             border-radius: 8px;
-            margin-top: 20px;
+            margin-top: 30px;
+            margin-bottom: 30px;
             border: 1px solid #444;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
         
         .comment-form h3 {
             margin-top: 0;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             color: #fff;
+            font-size: 20px;
         }
         
         .comment-form textarea {
             width: 100%;
-            padding: 12px;
-            border-radius: 4px;
+            padding: 15px;
+            border-radius: 6px;
             background-color: #222;
             color: #fff;
             border: 1px solid #444;
             resize: vertical;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            min-height: 120px;
+            font-family: inherit;
+            font-size: 15px;
         }
         
         .comment-form button {
-            padding: 10px 20px;
+            padding: 10px 25px;
             background-color: #5e72e4;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.2s ease;
         }
         
         .comment-form button:hover {
             background-color: #4a5fd1;
+            transform: translateY(-2px);
         }
         
         .pagination {
@@ -404,10 +578,12 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
         .pagination a {
             background-color: #444;
             color: #ddd;
+            transition: all 0.2s ease;
         }
         
         .pagination a:hover {
             background-color: #5e72e4;
+            transform: translateY(-2px);
         }
         
         .pagination span.current {
@@ -423,16 +599,18 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
         
         .login-notice {
             background-color: #333;
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
-            margin-top: 20px;
+            margin: 30px 0;
             text-align: center;
             border: 1px solid #444;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
         
         .login-notice a {
             color: #5e72e4;
             text-decoration: none;
+            font-weight: 500;
         }
         
         .login-notice a:hover {
@@ -465,30 +643,37 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
             font-size: 14px;
             padding: 5px 10px;
             margin-left: 15px;
+            transition: all 0.2s ease;
         }
         
         .reply-btn:hover {
             text-decoration: underline;
+            transform: translateY(-1px);
         }
         
         .reply-form {
-            margin-top: 10px;
-            margin-left: 20px;
-            padding: 10px;
+            margin-top: 15px;
+            padding: 15px;
             background-color: #2a2a2a;
-            border-radius: 4px;
+            border-radius: 6px;
             border: 1px solid #444;
+            width: 100%;
+            box-sizing: border-box;
         }
         
         .reply-form textarea {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border-radius: 4px;
             background-color: #222;
             color: #fff;
             border: 1px solid #444;
             resize: vertical;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            min-height: 100px;
+            font-family: inherit;
+            font-size: 14px;
         }
         
         .form-buttons {
@@ -501,6 +686,7 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
             border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
+            transition: all 0.2s ease;
         }
         
         .form-buttons button[type="submit"] {
@@ -509,17 +695,27 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
             border: none;
         }
         
+        .form-buttons button[type="submit"]:hover {
+            background-color: #4a5fd1;
+            transform: translateY(-2px);
+        }
+        
         .form-buttons button[type="button"] {
             background-color: #444;
             color: #ddd;
             border: none;
         }
         
+        .form-buttons button[type="button"]:hover {
+            background-color: #555;
+        }
+        
         .replies-container {
-            margin-left: 30px;
-            margin-top: 10px;
-            border-left: 2px solid #444;
-            padding-left: 15px;
+            margin-top: 15px;
+            border-left: 2px solid #5e72e4;
+            padding-left: 20px;
+            width: calc(100% - 20px);
+            box-sizing: border-box;
         }
         
         .reply {
@@ -529,19 +725,40 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
             margin-bottom: 15px;
             box-shadow: 0 1px 4px rgba(0,0,0,0.2);
             border: 1px solid #444;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        /* Limiter la profondeur des commentaires imbriqués pour éviter le rétrécissement */
+        .replies-container .replies-container .replies-container {
+            margin-left: 0;
+            width: 100%;
+            border-left-color: #4a5fd1;
+        }
+        
+        /* Style pour les réponses profondément imbriquées */
+        .replies-container .replies-container .replies-container .reply {
+            border-left: 3px solid #5e72e4;
         }
         
         .admin-controls {
             float: right;
             margin-bottom: 10px;
+            display: flex;
+            gap: 8px;
         }
         
         .admin-btn {
-            padding: 5px 10px;
-            margin-left: 5px;
+            padding: 6px 12px;
             border: none;
-            border-radius: 3px;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s ease;
+        }
+        
+        .admin-btn:hover {
+            transform: translateY(-2px);
         }
         
         .edit-btn {
@@ -549,37 +766,229 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
             color: white;
         }
         
+        .edit-btn:hover {
+            background-color: #3a80d2;
+        }
+        
         .delete-btn {
             background-color: #e74c3c;
             color: white;
         }
         
+        .delete-btn:hover {
+            background-color: #d73c2c;
+        }
+        
         .edit-comment-form, #edit-topic-form {
-            margin: 10px 0;
-            padding: 10px;
+            margin: 15px 0;
+            padding: 15px;
             background-color: #2a2a2a;
-            border-radius: 5px;
+            border-radius: 6px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #444;
         }
         
         .edit-comment-form textarea, #edit-topic-form textarea {
             width: 100%;
-            min-height: 100px;
-            margin-bottom: 10px;
-            padding: 10px;
-            background-color: #333;
+            min-height: 120px;
+            margin-bottom: 15px;
+            padding: 12px;
+            background-color: #222;
             color: white;
             border: 1px solid #444;
-            border-radius: 3px;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 14px;
         }
         
         #edit-topic-form input[type="text"] {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: #333;
+            padding: 12px;
+            margin-bottom: 15px;
+            background-color: #222;
             color: white;
             border: 1px solid #444;
-            border-radius: 3px;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 16px;
+        }
+        
+        .image-upload-area {
+            border: 2px dashed #444;
+            border-radius: 6px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background-color: #2a2a2a;
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+        
+        .image-upload-area.active {
+            border-color: #5e72e4;
+            background-color: rgba(94, 114, 228, 0.1);
+        }
+        
+        .btn-upload {
+            background-color: #5e72e4;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .btn-upload:hover {
+            background-color: #4a5fd1;
+            transform: translateY(-2px);
+        }
+        
+        .image-preview {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 6px;
+            border: 1px solid #444;
+        }
+        
+        .preview-controls {
+            margin-top: 10px;
+        }
+        
+        .btn-remove {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-remove:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .image-edit-container {
+            margin-bottom: 20px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .topic-header-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .topic-image-container {
+                width: 100%;
+                height: auto;
+                max-height: 300px;
+                margin-bottom: 20px;
+                order: -1;
+            }
+            
+            .topic-title-container {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .comment-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .admin-controls {
+                float: none;
+                margin-bottom: 15px;
+                justify-content: flex-end;
+            }
+            
+            .comments-header-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .sort-options {
+                margin-top: 10px;
+            }
+        }
+
+        /* Modal/Lightbox pour l'image agrandie */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow: auto;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .modal.show {
+            opacity: 1;
+            display: flex;
+        }
+        
+        .modal-content {
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            margin: auto;
+            object-fit: contain;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+        
+        .modal.show .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            opacity: 0;
+            transform: rotate(-90deg);
+            transition: all 0.3s ease;
+        }
+        
+        .modal.show .close {
+            opacity: 1;
+            transform: rotate(0);
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            transform: rotate(90deg);
         }
     </style>
 </head>
@@ -589,9 +998,13 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
     <div class="container">
         <div class="topic-container">
             <div class="breadcrumb">
-                <a href="../pages/forum.php">Forum</a> &raquo; 
-                <a href="../pages/m.php?slug=<?php echo $topic['community_slug']; ?>"><?php echo htmlspecialchars($community['name']); ?></a> &raquo; 
-                <?php echo htmlspecialchars($topic['title']); ?>
+                <div class="breadcrumb-path">
+                    <a href="../pages/forum.php">Forum</a>
+                    <span class="breadcrumb-separator">&raquo;</span>
+                    <a href="../pages/m.php?slug=<?php echo htmlspecialchars($community['slug']); ?>">m/<?php echo htmlspecialchars($community['slug']); ?></a>
+                    <span class="breadcrumb-separator">&raquo;</span>
+                    <span><?php echo htmlspecialchars($topic['title']); ?></span>
+                </div>
                 <?php if (isset($_SESSION['user'])): ?>
                     <a href="../pages/debug_comments.php?topic_id=<?php echo $topic_id; ?>" style="float: right; font-size: 12px; color: #888;">Diagnostic</a>
                 <?php endif; ?>
@@ -608,9 +1021,29 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
                     </div>
                     
                     <div id="edit-topic-form" style="display: none;">
-                        <form method="post">
+                        <form method="post" enctype="multipart/form-data">
                             <input type="hidden" name="edit_topic" value="1">
                             <input type="text" name="topic_title" value="<?php echo htmlspecialchars($topic['title']); ?>" required>
+                            
+                            <div class="image-edit-container">
+                                <label>Topic Image</label>
+                                <div class="image-upload-area" id="topic-drop-area">
+                                    <p>Drag & drop an image here or</p>
+                                    <input type="file" id="topic-file-input" name="topic_image" accept="image/*" style="display:none">
+                                    <button type="button" class="btn-upload" id="topic-upload-btn">Select an image</button>
+                                </div>
+                                <div class="image-preview" id="topic-image-preview">
+                                    <?php if (!empty($topic['image_url'])): ?>
+                                        <img src="<?php echo htmlspecialchars($topic['image_url']); ?>" alt="Current image">
+                                        <div class="preview-controls">
+                                            <button type="button" class="btn-remove" id="topic-remove-btn">Remove</button>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                                <input type="hidden" name="topic_image_data" id="topic-image-data">
+                                <input type="hidden" name="remove_current_image" id="remove-current-image" value="0">
+                            </div>
+                            
                             <textarea name="topic_content" required><?php echo htmlspecialchars($topic['content']); ?></textarea>
                             <button type="submit">Save</button>
                             <button type="button" onclick="hideEditTopicForm()">Cancel</button>
@@ -618,14 +1051,27 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
                     </div>
                 <?php endif; ?>
                 
-                <h1 class="topic-title"><?php echo htmlspecialchars($topic['title']); ?></h1>
-                <div class="topic-meta">
-                    <span>By: <?php echo htmlspecialchars($topic['username'] ?? 'Anonymous'); ?></span>
-                    <span>Posted: <?php echo formatTimestamp($topic['created_at']); ?></span>
-                    <span>Views: <?php echo $topic['views']; ?></span>
+                <div class="topic-header-container">
+                    <div class="topic-title-container">
+                        <h1 class="topic-title"><?php echo htmlspecialchars($topic['title']); ?></h1>
+                        <div class="topic-meta">
+                            <span>By: <?php echo htmlspecialchars($topic['username'] ?? 'Anonymous'); ?></span>
+                            <span>Posted: <?php echo formatTimestamp($topic['created_at']); ?></span>
+                            <span>Views: <?php echo $topic['views']; ?></span>
+                        </div>
+                    </div>
+                    <?php if (!empty($topic['image_url'])): ?>
+                    <div class="topic-image-container" id="topic-image-container">
+                        <img src="<?php echo htmlspecialchars($topic['image_url']); ?>" alt="Topic image" class="topic-image" id="topic-image">
+                    </div>
+                    <?php endif; ?>
                 </div>
+                
                 <div class="topic-content">
-                    <?php echo nl2br(htmlspecialchars($topic['content'])); ?>
+                    <?php 
+                    // Ne pas utiliser htmlspecialchars pour le contenu car il contient du HTML formaté
+                    echo $topic['content']; 
+                    ?>
                 </div>
             </div>
 
@@ -722,75 +1168,7 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
                                 <!-- Replies to this comment -->
                                 <?php if (!empty($comment['replies'])): ?>
                                     <div class="replies-container">
-                                        <?php 
-                                        function displayReplies($replies, $topic_id, $is_logged_in, $user_id) {
-                                            foreach ($replies as $reply): ?>
-                                                <div class="reply" id="comment-<?php echo $reply['id']; ?>">
-                                                    <?php if ($is_logged_in && isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-                                                        <div class="admin-controls">
-                                                            <button onclick="showEditCommentForm(<?php echo $reply['id']; ?>)" class="admin-btn edit-btn">Edit</button>
-                                                            <form method="post" style="display: inline;">
-                                                                <input type="hidden" name="delete_comment" value="1">
-                                                                <input type="hidden" name="comment_id" value="<?php echo $reply['id']; ?>">
-                                                                <button type="submit" class="admin-btn delete-btn" onclick="return confirm('Are you sure you want to delete this reply?')">Delete</button>
-                                                            </form>
-                                                        </div>
-                                                        
-                                                        <div id="edit-comment-form-<?php echo $reply['id']; ?>" class="edit-comment-form" style="display: none;">
-                                                            <form method="post">
-                                                                <input type="hidden" name="edit_comment" value="1">
-                                                                <input type="hidden" name="comment_id" value="<?php echo $reply['id']; ?>">
-                                                                <textarea name="comment_content" required><?php echo htmlspecialchars($reply['content']); ?></textarea>
-                                                                <button type="submit">Save</button>
-                                                                <button type="button" onclick="hideEditCommentForm(<?php echo $reply['id']; ?>)">Cancel</button>
-                                                            </form>
-                                                        </div>
-                                                    <?php endif; ?>
-                                                    <div class="comment-meta">
-                                                        <span class="comment-author"><?php echo htmlspecialchars($reply['username'] ?? 'Anonymous'); ?></span>
-                                                        <span><?php echo formatTimestamp($reply['created_at']); ?></span>
-                                                    </div>
-                                                    <div class="comment-content">
-                                                        <?php echo nl2br(htmlspecialchars($reply['content'])); ?>
-                                                    </div>
-                                                    <div class="vote-container">
-                                                        <?php if ($is_logged_in): 
-                                                            $user_reply_vote = getUserVote($user_id, $reply['id'], 'comment');
-                                                        ?>
-                                                            <a href="?id=<?php echo $topic_id; ?>&comment_id=<?php echo $reply['id']; ?>&vote=up" class="vote-btn <?php echo ($user_reply_vote === 1) ? 'voted-up' : ''; ?>">&#9650;</a>
-                                                            <span class="vote-score"><?php echo $reply['vote_score']; ?></span>
-                                                        <?php else: ?>
-                                                            <span class="vote-score"><?php echo $reply['vote_score']; ?> votes</span>
-                                                        <?php endif; ?>
-                                                        
-                                                        <?php if ($is_logged_in): ?>
-                                                            <button class="reply-btn" onclick="showReplyForm(<?php echo $reply['id']; ?>)">Reply</button>
-                                                        <?php endif; ?>
-                                                    </div>
-
-                                                    <!-- Reply form for nested replies (hidden by default) -->
-                                                    <div id="reply-form-<?php echo $reply['id']; ?>" class="reply-form nested" style="display: none;">
-                                                        <form action="?id=<?php echo $topic_id; ?>" method="post">
-                                                            <input type="hidden" name="parent_id" value="<?php echo $reply['id']; ?>">
-                                                            <textarea name="comment_content" required placeholder="Write your reply here..."></textarea>
-                                                            <div class="form-buttons">
-                                                                <button type="submit">Submit Reply</button>
-                                                                <button type="button" onclick="hideReplyForm(<?php echo $reply['id']; ?>)">Cancel</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-
-                                                    <!-- Nested replies -->
-                                                    <?php if (!empty($reply['replies'])): ?>
-                                                        <div class="replies-container nested">
-                                                            <?php displayReplies($reply['replies'], $topic_id, $is_logged_in, $user_id); ?>
-                                                        </div>
-                                                    <?php endif; ?>
-                                                </div>
-                                            <?php endforeach;
-                                        }
-                                        displayReplies($comment['replies'], $topic_id, $is_logged_in, $user_id);
-                                        ?>
+                                        <?php displayReplies($comment['replies'], $topic_id, $is_logged_in, $user_id); ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -807,6 +1185,12 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
     </div>
     
     <?php include_once '../partials/footer.php'; ?>
+    
+    <!-- Modal pour afficher l'image en grand -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
     
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -825,6 +1209,50 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
                 handleEnterKeyPress(event, this.closest('form'));
             });
         });
+
+        // Configuration de la modal pour l'image
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        const imageContainer = document.getElementById("topic-image-container");
+        const img = document.getElementById("topic-image");
+        const closeBtn = document.querySelector(".close");
+
+        // Si l'image existe, ajouter l'événement de clic
+        if (imageContainer && img) {
+            imageContainer.addEventListener("click", function() {
+                modal.style.display = "flex";
+                modalImg.src = img.src;
+                
+                // Déclencher le reflow pour que les transitions fonctionnent
+                void modal.offsetWidth;
+                
+                // Ajouter la classe pour déclencher l'animation
+                modal.classList.add("show");
+            });
+        }
+
+        // Fermer la modal lors du clic sur le X
+        if (closeBtn) {
+            closeBtn.addEventListener("click", closeModal);
+        }
+
+        // Fermer également la modal lors du clic à l'extérieur de l'image
+        window.addEventListener("click", function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // Fonction de fermeture avec animation
+        function closeModal() {
+            // Retirer la classe pour lancer l'animation de sortie
+            modal.classList.remove("show");
+            
+            // Attendre que l'animation soit terminée avant de cacher la modal
+            setTimeout(function() {
+                modal.style.display = "none";
+            }, 400); // Même durée que la transition CSS
+        }
 
         // Fonctions pour gérer les formulaires de réponse
         window.showReplyForm = function(commentId) {
@@ -923,6 +1351,7 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
 
         function showEditTopicForm() {
             document.getElementById('edit-topic-form').style.display = 'block';
+            setupImageUpload('topic');
         }
 
         function hideEditTopicForm() {
@@ -936,6 +1365,135 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
         function hideEditCommentForm(commentId) {
             document.getElementById('edit-comment-form-' + commentId).style.display = 'none';
         }
+        
+        function setupImageUpload(prefix) {
+            const dropArea = document.getElementById(`${prefix}-drop-area`);
+            const fileInput = document.getElementById(`${prefix}-file-input`);
+            const uploadBtn = document.getElementById(`${prefix}-upload-btn`);
+            const imagePreview = document.getElementById(`${prefix}-image-preview`);
+            const imageData = document.getElementById(`${prefix}-image-data`);
+            const removeCurrentImageInput = document.getElementById('remove-current-image');
+            
+            if (!dropArea || !fileInput || !uploadBtn || !imagePreview) return;
+            
+            // Vérifier si un bouton de suppression existe déjà
+            const existingRemoveBtn = document.getElementById(`${prefix}-remove-btn`);
+            if (existingRemoveBtn) {
+                existingRemoveBtn.addEventListener('click', function() {
+                    imagePreview.innerHTML = '';
+                    if (removeCurrentImageInput) {
+                        removeCurrentImageInput.value = '1';
+                    }
+                });
+            }
+            
+            // Ouvrir le sélecteur de fichier quand on clique sur le bouton
+            uploadBtn.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            // Gérer le glisser-déposer
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, highlight, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, unhighlight, false);
+            });
+            
+            function highlight() {
+                dropArea.classList.add('active');
+            }
+            
+            function unhighlight() {
+                dropArea.classList.remove('active');
+            }
+            
+            // Gérer le drop
+            dropArea.addEventListener('drop', handleDrop, false);
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                handleFiles(files);
+            }
+            
+            // Gérer la sélection via input file
+            fileInput.addEventListener('change', function() {
+                handleFiles(this.files);
+            });
+            
+            function handleFiles(files) {
+                if (files.length > 0) {
+                    const file = files[0];
+                    
+                    // Vérifier que c'est bien une image
+                    if (!file.type.match('image.*')) {
+                        alert('Veuillez sélectionner une image valide.');
+                        return;
+                    }
+                    
+                    // Vérifier la taille (max 5MB)
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert('L\'image est trop volumineuse. Veuillez choisir une image de moins de 5 Mo.');
+                        return;
+                    }
+                    
+                    previewFile(file);
+                }
+            }
+            
+            function previewFile(file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    // Afficher l'aperçu
+                    imagePreview.innerHTML = `
+                        <img src="${e.target.result}" alt="Image preview">
+                        <div class="preview-controls">
+                            <button type="button" class="btn-remove" id="${prefix}-remove-btn">Supprimer</button>
+                        </div>
+                    `;
+                    imagePreview.style.display = 'block';
+                    
+                    // Stocker les données de l'image
+                    if (imageData) {
+                        imageData.value = e.target.result;
+                    }
+                    
+                    // Si on ajoute une nouvelle image, on ne supprime pas l'ancienne
+                    if (removeCurrentImageInput) {
+                        removeCurrentImageInput.value = '0';
+                    }
+                    
+                    // Ajouter un gestionnaire pour le bouton de suppression
+                    document.getElementById(`${prefix}-remove-btn`).addEventListener('click', function() {
+                        imagePreview.innerHTML = '';
+                        imagePreview.style.display = 'none';
+                        if (imageData) {
+                            imageData.value = '';
+                        }
+                        fileInput.value = '';
+                        
+                        // Si on supprime l'aperçu, on indique qu'il faut supprimer l'image actuelle
+                        if (removeCurrentImageInput) {
+                            removeCurrentImageInput.value = '1';
+                        }
+                    });
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        }
 
         window.showEditTopicForm = showEditTopicForm;
         window.hideEditTopicForm = hideEditTopicForm;
@@ -944,4 +1502,4 @@ $page_title = htmlspecialchars($topic['title']) . " - Forum - MangaMuse";
     });
     </script>
 </body>
-</html> 
+</html>

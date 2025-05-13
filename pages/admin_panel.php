@@ -1,5 +1,6 @@
 <?php
-session_start();
+// Remplacer session_start() par l'inclusion de la configuration
+include '../php/session_config.php';
 if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
     header('Location: /4TTJ/Zielinski%20Olivier/Site/site-v2/index.php');
     exit();
@@ -36,64 +37,250 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
             <h3>Dashboard</h3>
             <p>Welcome to the admin dashboard. Here you can find an overview of the site statistics and recent activities.</p>
             <div class="dashboard-info">
+                <?php
+                    include_once '../php/db.php';
+                    
+                    // Requêtes pour les statistiques principales
+                    $userCount = $conn->query("SELECT COUNT(*) as total FROM users")->fetch_assoc()['total'];
+                    $adminCount = $conn->query("SELECT COUNT(*) as total FROM users WHERE is_admin = 1")->fetch_assoc()['total'];
+                    $animeCount = $conn->query("SELECT COUNT(*) as total FROM pages")->fetch_assoc()['total'];
+                    
+                    // Anime par catégorie
+                    $trendingCount = $conn->query("SELECT COUNT(*) as total FROM pages WHERE category = 'trending'")->fetch_assoc()['total'];
+                    $upcomingCount = $conn->query("SELECT COUNT(*) as total FROM pages WHERE category = 'upcoming'")->fetch_assoc()['total'];
+                    
+                    // Top genres (prend en compte que les genres sont séparés par des virgules)
+                    $genresQuery = $conn->query("SELECT genres FROM pages");
+                    $genresCounts = [];
+                    while ($row = $genresQuery->fetch_assoc()) {
+                        $genresList = explode(',', $row['genres']);
+                        foreach ($genresList as $genre) {
+                            $genre = trim($genre);
+                            if (!empty($genre)) {
+                                if (isset($genresCounts[$genre])) {
+                                    $genresCounts[$genre]++;
+                                } else {
+                                    $genresCounts[$genre] = 1;
+                                }
+                            }
+                        }
+                    }
+                    arsort($genresCounts);
+                    $topGenres = array_slice($genresCounts, 0, 3, true);
+                    
+                    // Derniers utilisateurs inscrits
+                    // La table users n'a pas de colonne created_at, nous utilisons seulement l'ID pour déterminer les plus récents
+                    $newUsers = $conn->query("SELECT username, id FROM users ORDER BY id DESC LIMIT 5");
+                ?>
                 <div class="info-box small-box">
-                    <h4>Total Users</h4>
-                    <p><?php
-                        include '../php/db.php';
-                        $sql = "SELECT COUNT(*) as total_users FROM users";
-                        $result = $conn->query($sql);
-                        $row = $result->fetch_assoc();
-                        echo $row['total_users'];
-                    ?></p>
+                    <h4><i class="fas fa-users"></i> Total Users</h4>
+                    <p class="stat-number"><?php echo $userCount; ?></p>
+                    <p class="stat-detail">Including <?php echo $adminCount; ?> admins</p>
                 </div>
                 <div class="info-box small-box">
-                    <h4>Total Admins</h4>
-                    <p><?php
-                        $sql = "SELECT COUNT(*) as total_admins FROM users WHERE is_admin = 1";
-                        $result = $conn->query($sql);
-                        $row = $result->fetch_assoc();
-                        echo $row['total_admins'];
-                    ?></p>
+                    <h4><i class="fas fa-film"></i> Total Animes</h4>
+                    <p class="stat-number"><?php echo $animeCount; ?></p>
+                    <p class="stat-detail"><?php echo $trendingCount; ?> trending, <?php echo $upcomingCount; ?> upcoming</p>
                 </div>
                 <div class="info-box small-box">
-                    <h4>Total Animes</h4>
-                    <p><?php
-                        $sql = "SELECT COUNT(*) as total_pages FROM pages";
-                        $result = $conn->query($sql);
-                        $row = $result->fetch_assoc();
-                        echo $row['total_pages'];
-                    ?></p>
+                    <h4><i class="fas fa-tags"></i> Top Genres</h4>
+                    <ul class="top-genres">
+                        <?php foreach ($topGenres as $genre => $count): ?>
+                            <li><?php echo htmlspecialchars($genre); ?> <span class="genre-count">(<?php echo $count; ?>)</span></li>
+                        <?php endforeach; ?>
+                    </ul>
                 </div>
             </div>
-            <div class="info-box large-chart">
-                <h4>Connections Over Time</h4>
-                <canvas id="connectionsChart"></canvas>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const ctx = document.getElementById('connectionsChart').getContext('2d');
-                        const connectionsChart = new Chart(ctx, {
-                            type: 'line',
-                            data: {
-                                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                                datasets: [{
-                                    label: 'Connections',
-                                    data: [90, 50, 20, 100, 20, 50, 50, 90, 20, 100, 50, 50],
-                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            
+            <div class="dashboard-row">
+                <div class="info-box large-chart">
+                    <h4><i class="fas fa-chart-line"></i> Site Activity (Last 30 Days)</h4>
+                    <canvas id="visitsChart"></canvas>
+                </div>
+                
+                <div class="info-box medium-box">
+                    <h4><i class="fas fa-user-plus"></i> New Users</h4>
+                    <ul class="recent-users">
+                        <?php if ($newUsers->num_rows > 0): ?>
+                            <?php while ($user = $newUsers->fetch_assoc()): ?>
+                                <li>
+                                    <span class="user-name"><?php echo htmlspecialchars($user['username']); ?></span>
+                                    <span class="user-date">ID: <?php echo $user['id']; ?></span>
+                                </li>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <li>No recent users</li>
+                        <?php endif; ?>
+                    </ul>
+                    <div class="analytics-info">
+                        <p><i class="fas fa-info-circle"></i> Le système d'analytics collecte automatiquement les visites sur votre site. Chaque page vue est comptée et anonymisée.</p>
+                        <p>Les nouveaux utilisateurs sont enregistrés lors de leur inscription.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <?php
+                include_once '../php/analytics.php';
+                
+                // Récupérer les véritables données d'analytics
+                $analyticsData = getAnalyticsData(30);
+                
+                // Convertir en JSON pour le graphique
+                $labelsJson = json_encode($analyticsData['dates']);
+                $visitsJson = json_encode($analyticsData['visits']);
+                $newUsersJson = json_encode($analyticsData['newUsers']);
+                
+                // Récupérer les totaux pour affichage
+                $totalVisits = getTotalVisits(30);
+                $totalNewUsers = getTotalNewUsers(30);
+            ?>
+            
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Graphique des visites
+                    const visitsCtx = document.getElementById('visitsChart').getContext('2d');
+                    
+                    const visits = <?php echo $visitsJson; ?>;
+                    const labels = <?php echo $labelsJson; ?>;
+                    const newUsers = <?php echo $newUsersJson; ?>;
+                    
+                    const gradient = visitsCtx.createLinearGradient(0, 0, 0, 400);
+                    gradient.addColorStop(0, 'rgba(75, 192, 192, 0.7)');
+                    gradient.addColorStop(1, 'rgba(75, 192, 192, 0.1)');
+                    
+                    const userGradient = visitsCtx.createLinearGradient(0, 0, 0, 400);
+                    userGradient.addColorStop(0, 'rgba(255, 99, 132, 0.7)');
+                    userGradient.addColorStop(1, 'rgba(255, 99, 132, 0.1)');
+                    
+                    new Chart(visitsCtx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [
+                                {
+                                    label: 'Daily Visits',
+                                    data: visits,
+                                    backgroundColor: gradient,
                                     borderColor: 'rgba(75, 192, 192, 1)',
-                                    borderWidth: 1
-                                }]
+                                    borderWidth: 2,
+                                    pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                                    pointRadius: 4,
+                                    pointHoverRadius: 6,
+                                    fill: true,
+                                    tension: 0.3,
+                                    yAxisID: 'y'
+                                },
+                                {
+                                    label: 'New Users',
+                                    data: newUsers,
+                                    backgroundColor: userGradient,
+                                    borderColor: 'rgba(255, 99, 132, 1)',
+                                    borderWidth: 2,
+                                    pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                                    pointRadius: 3,
+                                    pointHoverRadius: 5,
+                                    fill: true,
+                                    tension: 0.3,
+                                    yAxisID: 'y1'
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            interaction: {
+                                mode: 'index',
+                                intersect: false
                             },
-                            options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
+                            layout: {
+                                padding: {
+                                    top: 10,  // Ajouter un peu d'espace en haut
+                                    bottom: 10  // Ajouter un peu d'espace en bas
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    position: 'left',
+                                    title: {
+                                        display: true,
+                                        text: 'Visits',
+                                        color: 'rgba(75, 192, 192, 1)'
+                                    },
+                                    grid: {
+                                        color: 'rgba(200, 200, 200, 0.1)'
+                                    },
+                                    ticks: {
+                                        color: 'rgba(75, 192, 192, 0.8)'
+                                    }
+                                },
+                                y1: {
+                                    beginAtZero: true,
+                                    position: 'right',
+                                    title: {
+                                        display: true,
+                                        text: 'New Users',
+                                        color: 'rgba(255, 99, 132, 1)'
+                                    },
+                                    grid: {
+                                        drawOnChartArea: false
+                                    },
+                                    ticks: {
+                                        color: 'rgba(255, 99, 132, 0.8)'
+                                    }
+                                },
+                                x: {
+                                    grid: {
+                                        display: false
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'top',
+                                    labels: {
+                                        color: '#fff',
+                                        usePointStyle: true,
+                                        padding: 15
+                                    }
+                                },
+                                tooltip: {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                    padding: 12,
+                                    titleFont: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    },
+                                    bodyFont: {
+                                        size: 14
+                                    },
+                                    callbacks: {
+                                        title: function(context) {
+                                            return context[0].label;
+                                        },
+                                        label: function(context) {
+                                            let label = context.dataset.label || '';
+                                            if (label) {
+                                                label += ': ';
+                                            }
+                                            if (context.parsed.y !== null) {
+                                                label += context.parsed.y;
+                                                if (context.dataset.label === 'Daily Visits') {
+                                                    label += ' visitors';
+                                                } else if (context.dataset.label === 'New Users') {
+                                                    label += ' users joined';
+                                                }
+                                            }
+                                            return label;
+                                        }
                                     }
                                 }
                             }
-                        });
+                        }
                     });
-                </script>
-            </div>
+                });
+            </script>
         </div>
         <div class="tab-content" id="users">
             <h3>Manage Users</h3>

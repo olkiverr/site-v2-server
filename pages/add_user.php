@@ -1,3 +1,7 @@
+<?php
+// Remplacer session_start() par l'inclusion de la configuration
+include '../php/session_config.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +10,8 @@
     <title>Add User</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/layout.css">
     <link rel="stylesheet" href="../css/add-user.css">
     <link rel="icon" href="../img/MangaMuse_White-Book.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">

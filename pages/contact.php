@@ -1,5 +1,6 @@
 <?php
-session_start();
+// Remplacer session_start() par l'inclusion de la configuration
+include '../php/session_config.php';
 include '../php/db.php';
 
 if (isset($_SESSION['user'])) {
@@ -72,12 +73,6 @@ $error = isset($_GET['error']) ? true : false;
         </div>
     </main>
     
-    <?php if ($is_connected): ?>
-        <footer>
-            <p><span><a href="42.php" style="text-decoration: none; color: white; cursor: text;">&copy;</a></span> 2025 Mangamuse by Zielinski Olivier</p>
-        </footer>
-    <?php else: ?>
-        <?php include '../partials/footer.php' ?>
-    <?php endif;?>
+    <?php include '../partials/footer.php' ?>
 </body>
 </html>

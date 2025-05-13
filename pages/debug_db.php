@@ -1,10 +1,8 @@
 <?php
 require_once __DIR__ . '/../php/db.php';
 
-// Start the session if not already started
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+// Remplacer la vérification de session par l'inclusion de la configuration
+include_once '../php/session_config.php';
 
 // Fonction d'affichage formaté
 function printTableRow($col1, $col2, $success = true) {
@@ -20,7 +18,7 @@ function printTableRow($col1, $col2, $success = true) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagnostic Base de données - Forum</title>
+    <title>Database Debug</title>
     <link rel="stylesheet" href="/4TTJ/Zielinski%20Olivier/Site/site-v2/css/header.css">
     <link rel="stylesheet" href="/4TTJ/Zielinski%20Olivier/Site/site-v2/css/footer.css">
     <style>

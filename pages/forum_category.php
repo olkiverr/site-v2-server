@@ -2,10 +2,8 @@
 require_once __DIR__ . '/../php/db.php';
 require_once __DIR__ . '/../php/forum/forum_functions.php';
 
-// Start the session if not already started
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+// Remplacer la vérification de session par l'inclusion de la configuration
+include_once '../php/session_config.php';
 
 // Get community ID from URL
 $community_id = isset($_GET['id']) ? intval($_GET['id']) : 0;

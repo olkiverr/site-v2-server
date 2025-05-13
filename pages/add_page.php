@@ -1,5 +1,6 @@
 <?php
-session_start();
+// Remplacer session_start() par l'inclusion de la configuration
+include '../php/session_config.php';
 if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
     header('Location: /4TTJ/Zielinski%20Olivier/Site/site-v2/index.php');
     exit();
@@ -14,6 +15,7 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
     <link rel="stylesheet" href="../css/admin-panel.css">
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/layout.css">
     <link rel="icon" href="../img/MangaMuse_White-Book.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

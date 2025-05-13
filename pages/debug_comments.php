@@ -1,15 +1,14 @@
 <?php
 require_once __DIR__ . '/../php/db.php';
+require_once __DIR__ . '/../php/forum/forum_functions.php';
+
+// Remplacer la vérification de session par l'inclusion de la configuration
+include_once '../php/session_config.php';
 
 // Activer l'affichage des erreurs pour le débogage
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
-// Start the session if not already started
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
 
 // Récupérer l'ID du sujet depuis l'URL
 $topic_id = isset($_GET['topic_id']) ? intval($_GET['topic_id']) : 0;
@@ -25,7 +24,7 @@ function formatDate($date) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Débogage des Commentaires</title>
+    <title>Debug Comments</title>
     <link rel="stylesheet" href="/4TTJ/Zielinski%20Olivier/Site/site-v2/css/header.css">
     <link rel="stylesheet" href="/4TTJ/Zielinski%20Olivier/Site/site-v2/css/footer.css">
     <style>

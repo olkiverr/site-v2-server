@@ -1,5 +1,6 @@
 <?php
-session_start();
+// Remplacer session_start() par l'inclusion de la configuration
+include '../php/session_config.php';
 include '../php/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -35,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Login - Mangamuse</title>
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/layout.css">
     <link rel="stylesheet" href="../css/login.css">
     <link rel="stylesheet" href="../css/snackbar.css">
     <link rel="icon" href="../img/MangaMuse_White-Book.png" type="image/x-icon">

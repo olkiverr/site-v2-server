@@ -1,10 +1,8 @@
 <?php
 require_once __DIR__ . '/../php/db.php';
 
-// Start the session if not already started
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+// Remplacer la vérification de session par l'inclusion de la configuration
+include_once '../php/session_config.php';
 
 // Check if the user is logged in and is an admin
 if (!isset($_SESSION['user']) || $_SESSION['is_admin'] != 1) {
@@ -15,15 +13,17 @@ if (!isset($_SESSION['user']) || $_SESSION['is_admin'] != 1) {
 $output = [];
 
 // Function to run a query and log the result
-function runQuery($conn, $sql, $description) {
-    global $output;
-    
-    if ($conn->query($sql) === TRUE) {
-        $output[] = "SUCCESS: " . $description;
-        return true;
-    } else {
-        $output[] = "ERROR: " . $description . " - " . $conn->error;
-        return false;
+if (!function_exists('runQuery')) {
+    function runQuery($conn, $sql, $description) {
+        global $output;
+        
+        if ($conn->query($sql) === TRUE) {
+            $output[] = "SUCCESS: " . $description;
+            return true;
+        } else {
+            $output[] = "ERROR: " . $description . " - " . $conn->error;
+            return false;
+        }
     }
 }
 
@@ -50,6 +50,7 @@ $sql_topics = "CREATE TABLE IF NOT EXISTS forum_topics (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     views INT DEFAULT 0,
+    image_url VARCHAR(255) DEFAULT NULL,
     FOREIGN KEY (community_id) REFERENCES forum_communities(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 )";

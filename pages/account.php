@@ -1,5 +1,5 @@
 <?php
-session_start();
+include '../php/session_config.php';
 include '../php/db.php';
 
 if (isset($_SESSION['user'])) {
@@ -34,6 +34,7 @@ if (isset($_SESSION['user'])) {
     <title>Account - Mangamuse</title>
     <link rel="stylesheet" href="../css/account.css ">
     <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
     <link rel="icon" href="../img/MangaMuse_White-Book.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

@@ -7,10 +7,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Start the session if not already started
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+// Remplacer session_start() par l'inclusion de la configuration
+include '../php/session_config.php';
 
 // Get topic ID from URL
 $topic_id = isset($_GET['id']) ? intval($_GET['id']) : 0;

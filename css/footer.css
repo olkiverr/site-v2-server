@@ -4,13 +4,28 @@ footer {
     text-align: center;
     padding: 1em 0;
     width: 100%;
-    position: relative;
-    bottom: 0;
+    margin-top: auto;
+}
+
+/* Styles pour la structure globale de la page */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1 0 auto;
 }
 
 @media (max-width: 768px) {
     footer {
-        position: relative;
-        bottom: 0;
+        width: 100%;
     }
 }

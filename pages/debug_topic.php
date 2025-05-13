@@ -2,15 +2,13 @@
 require_once __DIR__ . '/../php/db.php';
 require_once __DIR__ . '/../php/forum/forum_functions.php';
 
+// Remplacer la vérification de session par l'inclusion de la configuration
+include_once '../php/session_config.php';
+
 // Activer l'affichage des erreurs
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
-// Start the session if not already started
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
 
 echo "<h1>Débogage de la page de sujet</h1>";
 

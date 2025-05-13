@@ -1,5 +1,6 @@
 <?php
 include '../php/db.php';
+include '../php/session_config.php';
 
 // Liste des genres interdits
 $forbidden_genres = ['Ecchi', 'Erotica', 'Hentai'];
@@ -39,6 +40,7 @@ sort($all_genres); // Trier les genres par ordre alphabétique
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <link rel="icon" href="../img/MangaMuse_White-Book.png" type="image/x-icon">
     <style>
         .anime-search-container {
             padding: 20px;

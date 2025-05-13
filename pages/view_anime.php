@@ -1,5 +1,6 @@
 <?php
-session_start();
+// Remplacer session_start() par l'inclusion de la configuration
+include '../php/session_config.php';
 $id = isset($_GET['id']) ? $_GET['id'] : null;
 include '../php/db.php';
 $sql = "SELECT * FROM pages WHERE id = '$id'";
@@ -50,27 +51,32 @@ if ($user_id) {
     <style>
         .status-controls {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 15px;
+            flex-direction: row;
+            gap: 15px;
+            margin-top: 25px;
             width: 100%;
+            justify-content: flex-start;
         }
         
         .status-btn {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            padding: 8px 12px;
+            padding: 10px 15px;
             background-color: #333;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
+            width: auto;
+            min-width: 120px;
         }
         
         .status-btn:hover {
             background-color: #444;
+            transform: scale(1.05);
         }
         
         .status-btn.active {
@@ -84,6 +90,13 @@ if ($user_id) {
         .status-btn i.fa-eye, .status-btn i.fa-eye-slash {
             color: #ffffff;
         }
+
+        @media (max-width: 768px) {
+            .status-controls {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
     </style>
 </head>
 <body>
@@ -92,29 +105,20 @@ if ($user_id) {
     
     <style><?php echo htmlspecialchars($row['style']); ?></style>
 
-    <h1><?php echo htmlspecialchars($row['title']); ?></h1>
+    <div class="title-container" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1><?php echo htmlspecialchars($row['title']); ?></h1>
+        <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+        <a href="edit_page.php?id=<?php echo $id; ?>" class="btn btn-primary" style="margin-left: 20px;">
+            <i class="fas fa-edit"></i> Modifier l'anime
+        </a>
+        <?php endif; ?>
+    </div>
 
     <div class="page-prev">
 
         <div class="img-infos">
             <div class="img">
                 <img src="<?php echo htmlspecialchars($row['img']); ?>" alt="<?php echo htmlspecialchars($row['title']); ?>">
-                
-                <?php if ($user_id): ?>
-                <div class="status-controls">
-                    <!-- Bouton "vu" -->
-                    <button id="watched-btn" class="status-btn <?php echo $status['is_watched'] ? 'active' : ''; ?>" data-id="<?php echo $id; ?>" data-type="watched">
-                        <i class="fas <?php echo $status['is_watched'] ? 'fa-eye' : 'fa-eye-slash'; ?>"></i>
-                        <?php echo $status['is_watched'] ? 'Vu' : 'Non vu'; ?>
-                    </button>
-                    
-                    <!-- Bouton "favoris" -->
-                    <button id="favorite-btn" class="status-btn <?php echo $status['is_favorite'] ? 'active' : ''; ?>" data-id="<?php echo $id; ?>" data-type="favorite">
-                        <i class="<?php echo $status['is_favorite'] ? 'fas' : 'far'; ?> fa-star"></i>
-                        <?php echo $status['is_favorite'] ? 'Favori' : 'Ajouter aux favoris'; ?>
-                    </button>
-                </div>
-                <?php endif; ?>
             </div>
             <div class="infos">
                 <h2><?php echo htmlspecialchars($row['title']); ?></h2>
@@ -125,6 +129,22 @@ if ($user_id) {
                     <li><strong>Episodes: </strong><?php echo htmlspecialchars($row['episodes']); ?></li>
                     <li><strong>Studio: </strong><?php echo htmlspecialchars($row['studio']); ?></li>
                 </ul>
+                
+                <?php if ($user_id): ?>
+                <div class="status-controls">
+                    <!-- Bouton "vu" -->
+                    <button id="watched-btn" class="status-btn <?php echo $status['is_watched'] ? 'active' : ''; ?>" data-id="<?php echo $id; ?>" data-type="watched">
+                        <i class="fas <?php echo $status['is_watched'] ? 'fa-eye' : 'fa-eye-slash'; ?>"></i>
+                        <?php echo $status['is_watched'] ? 'Watched' : 'Not watched'; ?>
+                    </button>
+                    
+                    <!-- Bouton "favoris" -->
+                    <button id="favorite-btn" class="status-btn <?php echo $status['is_favorite'] ? 'active' : ''; ?>" data-id="<?php echo $id; ?>" data-type="favorite">
+                        <i class="<?php echo $status['is_favorite'] ? 'fas' : 'far'; ?> fa-star"></i>
+                        <?php echo $status['is_favorite'] ? 'Favorite' : 'Add to favorites'; ?>
+                    </button>
+                </div>
+                <?php endif; ?>
             </div>
         </div>
         <div class="description">
@@ -167,24 +187,24 @@ if ($user_id) {
                             iconElement.classList.remove('fa-eye-slash');
                             iconElement.classList.add('fa-eye');
                             button.classList.add('active');
-                            button.innerHTML = '<i class="fas fa-eye"></i> Vu';
+                            button.innerHTML = '<i class="fas fa-eye"></i> Watched';
                         } else {
                             iconElement.classList.remove('fa-eye');
                             iconElement.classList.add('fa-eye-slash');
                             button.classList.remove('active');
-                            button.innerHTML = '<i class="fas fa-eye-slash"></i> Non vu';
+                            button.innerHTML = '<i class="fas fa-eye-slash"></i> Not watched';
                         }
                     } else if (type === 'favorite') {
                         if (data.status) {
                             iconElement.classList.remove('far');
                             iconElement.classList.add('fas');
                             button.classList.add('active');
-                            button.innerHTML = '<i class="fas fa-star"></i> Favori';
+                            button.innerHTML = '<i class="fas fa-star"></i> Favorite';
                         } else {
                             iconElement.classList.remove('fas');
                             iconElement.classList.add('far');
                             button.classList.remove('active');
-                            button.innerHTML = '<i class="far fa-star"></i> Ajouter aux favoris';
+                            button.innerHTML = '<i class="far fa-star"></i> Add to favorites';
                         }
                     }
                 }

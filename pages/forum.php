@@ -1,4 +1,6 @@
 <?php
+// Remplacer session_start() par l'inclusion de la configuration
+include '../php/session_config.php';
 require_once __DIR__ . '/../php/db.php';
 require_once __DIR__ . '/../php/forum/forum_functions.php';
 
@@ -39,6 +41,7 @@ $page_title = "Anime Forum - MangaMuse";
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/forum/forum.css">
+    <link rel="icon" href="../img/MangaMuse_White-Book.png" type="image/x-icon">
     <style>
         /* Styles pour la barre de recherche */
         .search-box {
@@ -61,6 +64,71 @@ $page_title = "Anime Forum - MangaMuse";
             box-sizing: border-box;
         }
         
+        /* Style pour les sujets populaires */
+        .trending-topic {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            border-bottom: 1px solid #444;
+            transition: background-color 0.3s ease;
+            align-items: flex-start;
+        }
+        
+        .trending-topic:hover {
+            background-color: #3a3a3a;
+        }
+        
+        .trending-topic:last-child {
+            border-bottom: none;
+        }
+        
+        .trending-topic-image {
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+            border-radius: 6px;
+            overflow: hidden;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+        }
+        
+        .trending-topic-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .trending-topic-content {
+            flex: 1;
+        }
+        
+        .topic-title {
+            display: block;
+            font-size: 16px;
+            font-weight: bold;
+            color: #5e72e4;
+            text-decoration: none;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        
+        .topic-title:hover {
+            text-decoration: underline;
+        }
+        
+        .topic-meta {
+            font-size: 12px;
+            color: #aaa;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .topic-community {
+            color: #5e72e4;
+            font-weight: 500;
+        }
+        
         /* Style pour le conteneur des communautés */
         #communities-list {
             display: grid;
@@ -80,6 +148,88 @@ $page_title = "Anime Forum - MangaMuse";
             box-sizing: border-box;
             width: 100%;
             margin: 0;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .community-image {
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+            border-radius: 6px;
+            overflow: hidden;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .community-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .placeholder-icon {
+            font-size: 20px;
+            font-weight: bold;
+            color: #5e72e4;
+            font-family: monospace;
+        }
+        
+        .community-info {
+            flex: 1;
+        }
+        
+        .community-name {
+            color: #5e72e4;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .community-description {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .community-meta {
+            color: #666;
+            font-size: 12px;
+            display: flex;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .forum-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .categories-section {
+                padding: 10px;
+            }
+        }
+
+        .sidebar-section {
+            background-color: #333;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #444;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+            color: #fff;
         }
 
         .categories-section {
@@ -152,39 +302,6 @@ $page_title = "Anime Forum - MangaMuse";
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-color: #5e72e4;
         }
-        
-        .community-name {
-            color: #5e72e4;
-            font-size: 18px;
-            font-weight: bold;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 8px;
-        }
-        
-        .community-description {
-            color: #aaa;
-            font-size: 14px;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-        
-        .community-meta {
-            color: #666;
-            font-size: 12px;
-            display: flex;
-            gap: 15px;
-        }
-
-        @media (max-width: 768px) {
-            .forum-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .categories-section {
-                padding: 10px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -193,7 +310,7 @@ $page_title = "Anime Forum - MangaMuse";
     <div class="forum-container">
         <?php if (isset($_SESSION['user']) && $_SESSION['is_admin'] == 1): ?>
             <div class="admin-actions">
-                <a href="../pages/forum_setup.php" class="btn btn-sm btn-primary">Setup Forum Database</a>
+                <a href="../php/db_setup.php" class="btn btn-sm btn-primary">Setup Database</a>
             </div>
         <?php endif; ?>
         
@@ -201,7 +318,9 @@ $page_title = "Anime Forum - MangaMuse";
             <h1 class="forum-heading">MangaMuse Forum</h1>
             <?php if (isset($_SESSION['user'])): ?>
                 <div class="forum-actions">
-                    <a href="../pages/create_community.php" class="btn btn-outline-primary">Create a Community</a>
+                    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1): ?>
+                        <a href="../pages/create_community.php" class="btn btn-outline-primary">Create a Community</a>
+                    <?php endif; ?>
                     <a href="../pages/forum_new_topic.php" class="new-topic-btn">New Topic</a>
                 </div>
             <?php endif; ?>
@@ -222,6 +341,13 @@ $page_title = "Anime Forum - MangaMuse";
                     <div id="communities-list">
                         <?php foreach ($communities as $community): ?>
                             <div class="community-item">
+                                <div class="community-image">
+                                    <?php if (!empty($community['image_url'])): ?>
+                                        <img src="<?php echo htmlspecialchars($community['image_url']); ?>" alt="Community image">
+                                    <?php else: ?>
+                                        <div class="placeholder-icon">m/</div>
+                                    <?php endif; ?>
+                                </div>
                                 <div class="community-info">
                                     <a href="../pages/m.php?slug=<?php echo $community['slug']; ?>" class="community-name">
                                         m/<?php echo htmlspecialchars($community['slug']); ?>
@@ -236,6 +362,13 @@ $page_title = "Anime Forum - MangaMuse";
                                         <?php endif; ?>
                                     </div>
                                 </div>
+                                <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                                    <div class="community-actions">
+                                        <a href="edit_community.php?id=<?php echo $community['id']; ?>" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -250,13 +383,20 @@ $page_title = "Anime Forum - MangaMuse";
                 <?php if (!empty($trending_topics)): ?>
                     <?php foreach ($trending_topics as $topic): ?>
                         <div class="trending-topic">
-                            <a href="../pages/forum_topic.php?id=<?php echo $topic['id']; ?>" class="topic-title">
-                                <?php echo htmlspecialchars($topic['title']); ?>
-                            </a>
-                            <div class="topic-meta">
-                                <span class="topic-community">m/<?php echo htmlspecialchars($topic['community_slug'] ?? 'unknown'); ?></span>
-                                <span><?php echo $topic['comment_count']; ?> comments</span>
-                                <span><?php echo $topic['vote_score'] ?? 0; ?> votes</span>
+                            <?php if (!empty($topic['image_url'])): ?>
+                            <div class="trending-topic-image">
+                                <img src="<?php echo htmlspecialchars($topic['image_url']); ?>" alt="Topic image">
+                            </div>
+                            <?php endif; ?>
+                            <div class="trending-topic-content">
+                                <a href="../pages/forum_topic.php?id=<?php echo $topic['id']; ?>" class="topic-title">
+                                    <?php echo htmlspecialchars($topic['title']); ?>
+                                </a>
+                                <div class="topic-meta">
+                                    <span class="topic-community">m/<?php echo htmlspecialchars($topic['community_slug'] ?? 'unknown'); ?></span>
+                                    <span><?php echo $topic['comment_count']; ?> comments</span>
+                                    <span><?php echo $topic['vote_score'] ?? 0; ?> votes</span>
+                                </div>
                             </div>
                         </div>
                     <?php endforeach; ?>
