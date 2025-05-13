@@ -1,5 +1,6 @@
 <?php
 include 'db.php';
+include 'session_config.php';
 
 // Fonction pour vérifier le token Bearer
 function verifyBearerToken() {

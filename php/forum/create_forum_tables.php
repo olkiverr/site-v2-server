@@ -9,6 +9,7 @@ $sql_communities = "CREATE TABLE IF NOT EXISTS forum_communities (
     description TEXT,
     user_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    image_url VARCHAR(255) DEFAULT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 )";
 
@@ -22,6 +23,7 @@ $sql_topics = "CREATE TABLE IF NOT EXISTS forum_topics (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     views INT DEFAULT 0,
+    image_url VARCHAR(255) DEFAULT NULL,
     FOREIGN KEY (community_id) REFERENCES forum_communities(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 )";
@@ -93,7 +95,7 @@ $result = $conn->query("SELECT COUNT(*) as count FROM forum_communities");
 $row = $result->fetch_assoc();
 
 if ($row['count'] == 0) {
-    $stmt = $conn->prepare("INSERT INTO forum_communities (name, slug, description, user_id) VALUES (?, ?, ?, ?)");
+    $stmt = $conn->prepare("CALL InsertForumCommunity(?, ?, ?, ?)");
     
     foreach ($default_communities as $community) {
         $stmt->bind_param("sssi", $community['name'], $community['slug'], $community['description'], $community['user_id']);
@@ -170,6 +172,14 @@ if ($result->num_rows === 0) {
     echo "Colonne vote_score ajoutée à la table forum_comments<br>";
 }
 
+// Vérifier si la colonne image_url existe dans forum_communities
+$result = $conn->query("SHOW COLUMNS FROM forum_communities LIKE 'image_url'");
+if ($result->num_rows === 0) {
+    // Ajouter la colonne image_url si elle n'existe pas
+    $conn->query("ALTER TABLE forum_communities ADD COLUMN image_url VARCHAR(255) DEFAULT NULL");
+    echo "Colonne image_url ajoutée à la table forum_communities<br>";
+}
+
 // Mettre à jour les scores de vote existants
 $conn->query("
     UPDATE forum_comments c
@@ -218,4 +228,4 @@ echo "</ul>";
 
 $conn->close();
 echo "Forum tables setup completed!";
-?> 
+?>

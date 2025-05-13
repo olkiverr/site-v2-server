@@ -1,1 +1,1 @@
-Upload new code
+fais une procedure stocker qui permet d'inserer des information dans la db et qui verifie avant l'insertion que l'utilisateur est bien un admin

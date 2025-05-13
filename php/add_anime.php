@@ -1,6 +1,13 @@
 <?php
 // Include database connection
 include('db.php');
+include('session_config.php'); // Ajout pour accéder à $_SESSION
+
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION['id'])) {
+    echo "Erreur: Vous devez être connecté pour ajouter des animes.";
+    exit();
+}
 
 // Increase the execution time limit to avoid max execution time errors
 set_time_limit(0); // 0 means no time limit
@@ -9,7 +16,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 1;
 echo $page;
 
 // Function to fetch and insert anime with retry logic
-function insertAnime($url, $category, $conn) {
+function insertAnime($url, $category, $conn, $user_id) {
     $maxRetries = 3;
     $attempts = 0;
     $success = false;
@@ -213,12 +220,36 @@ function insertAnime($url, $category, $conn) {
                             background-color: $background_color;
                         }";
 
-                    $stmt = $conn->prepare("INSERT INTO pages (id, title, creator, broadcast, genres, episodes, studio, img, category, description, style, background_color, border_color, title_color, label_color, text_color)
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                    $stmt->bind_param("issssissssssssss", $id, $title, $creator, $broadcast, $genres, $episodes, $studio, $img, $category, $synopsis, $style, $background_color, $border_color, $title_color, $label_color, $text_color);
-                    $stmt->execute();
-
-                    echo "✅ Anime '$title' added to database.<br>";
+                    // Utiliser la procédure stockée pour insérer les données
+                    $table_name = "pages";
+                    $column_names = "id, title, creator, broadcast, genres, episodes, studio, img, category, description, style, background_color, border_color, title_color, label_color, text_color";
+                    
+                    // Échapper correctement les valeurs pour éviter les problèmes avec les apostrophes
+                    $title = str_replace("'", "''", $title);
+                    $creator = str_replace("'", "''", $creator);
+                    $broadcast = str_replace("'", "''", $broadcast);
+                    $genres = str_replace("'", "''", $genres);
+                    $studio = str_replace("'", "''", $studio);
+                    $img = str_replace("'", "''", $img);
+                    $synopsis = str_replace("'", "''", $synopsis);
+                    $style = str_replace("'", "''", $style);
+                    
+                    $values = "$id, '$title', '$creator', '$broadcast', '$genres', $episodes, '$studio', '$img', '$category', '$synopsis', '$style', '$background_color', '$border_color', '$title_color', '$label_color', '$text_color'";
+                    
+                    $callStmt = $conn->prepare("CALL insert_data_admin_only(?, ?, ?, ?)");
+                    $callStmt->bind_param("isss", $user_id, $table_name, $column_names, $values);
+                    $callStmt->execute();
+                    
+                    // Récupérer le résultat de la procédure
+                    $result = $callStmt->get_result();
+                    $response = $result->fetch_assoc();
+                    
+                    if ($response['success']) {
+                        echo "✅ Anime '$title' added to database.<br>";
+                    } else {
+                        echo "❌ Error: " . $response['message'] . "<br>";
+                    }
+                    $callStmt->close();
                 }
                 $stmt->close();
 
@@ -240,14 +271,17 @@ function insertAnime($url, $category, $conn) {
     }
 }
 
+// Récupérer l'ID de l'utilisateur de la session
+$user_id = $_SESSION['id'];
+
 // 🔥 Fetch trending anime
-insertAnime("https://api.jikan.moe/v4/top/anime?page=$page", "trending", $conn);
+insertAnime("https://api.jikan.moe/v4/top/anime?page=$page", "trending", $conn, $user_id);
 
 // 📅 Fetch upcoming anime
-insertAnime("https://api.jikan.moe/v4/seasons/upcoming?page=$page", "upcoming", $conn);
+insertAnime("https://api.jikan.moe/v4/seasons/upcoming?page=$page", "upcoming", $conn, $user_id);
 
 // 🔍 Fetch general anime (non-categorized)
-insertAnime("https://api.jikan.moe/v4/anime?page=$page", "none", $conn);
+insertAnime("https://api.jikan.moe/v4/anime?page=$page", "none", $conn, $user_id);
 
 // Close database connection
 $conn->close();

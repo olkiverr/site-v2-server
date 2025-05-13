@@ -1,5 +1,6 @@
 <?php
-session_start();
+// Remplacer session_start() par l'inclusion de la configuration
+include 'session_config.php';
 include 'db.php';
 
 ini_set('display_errors', 1); // Afficher toutes les erreurs PHP

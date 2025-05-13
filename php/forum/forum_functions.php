@@ -157,9 +157,13 @@ function getTopic($topic_id) {
         $topic['community_slug'] = 'unknown';
         
         // Maintenant, récupérer les informations supplémentaires
-        $sql = "SELECT t.*, u.username, u.profile_picture 
+        $sql = "SELECT t.*, u.username, c.name as community_name, c.slug as community_slug, 
+                (SELECT COUNT(*) FROM forum_views WHERE topic_id = t.id) as views,
+                COALESCE((SELECT SUM(vote_type) FROM forum_votes WHERE reference_id = t.id AND reference_type = 'topic'), 0) AS vote_score,
+                t.image_url
                 FROM forum_topics t
                 LEFT JOIN users u ON t.user_id = u.id
+                LEFT JOIN forum_communities c ON t.community_id = c.id
                 WHERE t.id = ?";
                 
         $stmt = $conn->prepare($sql);
@@ -359,10 +363,10 @@ function createTopic($community_id, $user_id, $title, $content) {
     global $conn;
     
     try {
-        $stmt = $conn->prepare("INSERT INTO forum_topics (community_id, user_id, title, content) VALUES (?, ?, ?, ?)");
+        $stmt = $conn->prepare("CALL InsertForumTopic(?, ?, ?, ?)");
         $stmt->bind_param("iiss", $community_id, $user_id, $title, $content);
-        $success = $stmt->execute();
-        $topic_id = $success ? $conn->insert_id : 0;
+        $stmt->execute();
+        $topic_id = $conn->insert_id;
         $stmt->close();
         
         return $topic_id;
@@ -502,7 +506,8 @@ function getTrendingTopics($limit = 5) {
     try {
         $sql = "SELECT t.*, u.username, c.name as community_name, c.slug as community_slug,
                 (SELECT COUNT(*) FROM forum_comments WHERE topic_id = t.id) AS comment_count,
-                COALESCE((SELECT SUM(vote_type) FROM forum_votes WHERE reference_id = t.id AND reference_type = 'topic'), 0) AS vote_score
+                COALESCE((SELECT SUM(vote_type) FROM forum_votes WHERE reference_id = t.id AND reference_type = 'topic'), 0) AS vote_score,
+                t.image_url
                 FROM forum_topics t
                 LEFT JOIN users u ON t.user_id = u.id
                 LEFT JOIN forum_communities c ON t.community_id = c.id
@@ -534,8 +539,7 @@ function formatTimestamp($timestamp) {
     $date = new DateTime($timestamp);
     $now = new DateTime();
     $diff = $now->diff($date);
-    
-    if ($diff->y > 0) {
+      if ($diff->y > 0) {
         return $date->format('j M Y');
     } elseif ($diff->m > 0) {
         return 'il y a ' . $diff->m . ' mois';
@@ -547,6 +551,8 @@ function formatTimestamp($timestamp) {
         return 'il y a ' . $diff->h . ' heure' . ($diff->h > 1 ? 's' : '');
     } elseif ($diff->i > 0) {
         return 'il y a ' . $diff->i . ' minute' . ($diff->i > 1 ? 's' : '');
+    } elseif ($diff->s > 30) {
+        return 'il y a ' . $diff->s . ' secondes';
     } else {
         return 'à l\'instant';
     }
@@ -669,4 +675,4 @@ function updateTopic($topic_id, $title, $content, $user_id, $is_admin = false) {
         return false;
     }
 }
-?> 
+?>

@@ -1,5 +1,6 @@
 <?php
-session_start();
+// Remplacer session_start() par l'inclusion de la configuration
+include 'session_config.php';
 // Vider toutes les variables de session
 $_SESSION = array();
 // Détruire la session

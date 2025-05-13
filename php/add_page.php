@@ -1,5 +1,12 @@
 <?php
 include 'db.php';
+include 'session_config.php'; // Ajout pour accéder à $_SESSION
+
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION['id'])) {
+    echo "Erreur: Vous devez être connecté pour ajouter une page.";
+    exit();
+}
 
 // Get form data
 $title = mysqli_real_escape_string($conn, $_POST['title']);
@@ -69,17 +76,32 @@ $style = "
     background-color: $background_color;
 }";
 
-// Insert into database
-$sql = "INSERT INTO pages (title, creator, broadcast, genres, episodes, studio, description, img, category, style, 
-        title_color, label_color, text_color, border_color, background_color) 
-        VALUES ('$title', '$creator', '$broadcast', '$genres', '$episodes', '$studio', '$description', '$img', 
-                '$category', '$style', '$title_color', '$label_color', '$text_color', '$border_color', '$background_color')";
+// Récupérer l'ID de l'utilisateur
+$user_id = $_SESSION['id'];
 
-if ($conn->query($sql) === TRUE) {
+// Préparer les noms de colonnes et les valeurs pour la procédure stockée
+$column_names = "title, creator, broadcast, genres, episodes, studio, description, img, category, style, title_color, label_color, text_color, border_color, background_color";
+
+$values = "'" . $title . "', '" . $creator . "', '" . $broadcast . "', '" . $genres . "', '" . $episodes . "', '" . 
+          $studio . "', '" . $description . "', '" . $img . "', '" . $category . "', '" . $style . "', '" . 
+          $title_color . "', '" . $label_color . "', '" . $text_color . "', '" . $border_color . "', '" . $background_color . "'";
+
+// Utiliser la procédure stockée pour insérer les données
+$stmt = $conn->prepare("CALL insert_data_admin_only(?, ?, ?, ?)");
+$stmt->bind_param("isss", $user_id, $table_name, $column_names, $values);
+$table_name = "pages";
+$stmt->execute();
+
+// Récupérer le résultat de la procédure
+$result = $stmt->get_result();
+$response = $result->fetch_assoc();
+
+if ($response['success']) {
     header("Location: ../pages/admin_panel.php?tab=pages");
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "Erreur: " . $response['message'] . "<br>";
 }
 
+$stmt->close();
 $conn->close();
 ?>

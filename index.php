@@ -1,5 +1,6 @@
 <?php
-session_start();
+// Remplacer session_start() par l'inclusion de la configuration
+include 'php/session_config.php';
 
 $is_admin = isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1;
 
@@ -82,7 +83,9 @@ $conn->close();
                 <div class="<?php echo $category; ?>-slider-container">
                     <p><?php echo ucfirst($category); ?> <?php echo $category === 'trending' ? '🔥' : '⌛'; ?></p>
                     <div class="<?php echo $category; ?>-slider">
-                        <button class="slider-button left">&#9664;</button>
+                        <button class="slider-button left" aria-label="Slide left">
+                            <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                        </button>
                         <?php foreach ($category_images[$category] as $image): ?>
                         <div class="<?php echo $category; ?>-item" data-id="<?php echo $image['id']; ?>">
                         <?php if ($user_id): ?>
@@ -101,7 +104,9 @@ $conn->close();
                         <p><?php echo $image['title']; ?></p>
                     </div>
                 <?php endforeach; ?>
-                        <button class="slider-button right">&#9654;</button>
+                        <button class="slider-button right" aria-label="Slide right">
+                            <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>
             <?php endif; ?>

@@ -7,7 +7,8 @@ require_once '../phpmailer/src/Exception.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-session_start();
+// Remplacer session_start() par l'inclusion de la configuration
+include 'session_config.php';
 include '../php/db.php';
 
 // Vérification de la méthode de requête POST

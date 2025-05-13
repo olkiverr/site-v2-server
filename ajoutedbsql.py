@@ -414,15 +414,29 @@ def prepare_anime_data(anime, category, creator, existing_ids):
         'text_color': text_color
     }
 
-# Fonction pour insérer un anime avec logique de réessai
+# Définir les variables globales au niveau du module
+categories_to_skip = set()
+empty_categories_detected = {
+    "trending": False,
+    "upcoming": False,
+    "general": False
+}
+
 def process_anime_page(url, category, conn, api_client, existing_ids, logger, filter_adult=True, skip_details=False, batch_size=10):
     max_retries = 3
     attempts = 0
     success = False
     has_data = False
+    error_messages = []  # Pour suivre les messages d'erreur
     
     # Liste des genres à filtrer si filter_adult est activé
     adult_genres = ["Ecchi", "Erotica", "Hentai"]
+    
+    # Si cette catégorie est déjà marquée comme vide, on court-circuite immédiatement
+    global empty_categories_detected
+    if empty_categories_detected.get(category, False):
+        logger.log(f"🔄 Catégorie {category.upper()} ignorée car précédemment détectée comme vide.", logging.INFO)
+        return {'success': True, 'continue_next': True, 'has_data': False, 'category_empty': True, 'error_messages': []}
     
     # Tableau pour collecter les animes à insérer en lot
     anime_batch = []
@@ -438,12 +452,15 @@ def process_anime_page(url, category, conn, api_client, existing_ids, logger, fi
             data = api_client.get(url)
             
             if "data" not in data or not data["data"]:
-                raise Exception("Aucune donnée trouvée.")
+                error_msg = "Aucune donnée trouvée."
+                error_messages.append(error_msg)
+                raise Exception(error_msg)
                 
             # Vérifier si nous avons atteint la dernière page
             if len(data["data"]) == 0:
-                logger.log("🏁 Dernière page atteinte, aucun anime supplémentaire disponible.", logging.INFO)
-                return {'success': True, 'continue_next': False, 'has_data': False}
+                logger.log(f"🏁 Dernière page atteinte pour {category.upper()}, plus d'anime disponible. Cette catégorie sera ignorée pour les pages suivantes.", logging.INFO)
+                empty_categories_detected[category] = True
+                return {'success': True, 'continue_next': True, 'has_data': False, 'category_empty': True, 'error_messages': error_messages}
 
             has_data = True
             items_processed = 0
@@ -527,19 +544,29 @@ def process_anime_page(url, category, conn, api_client, existing_ids, logger, fi
             # Si on a traité tous les items sans erreur, marquer comme un succès
             if items_processed > 0:
                 success = True
-                return {'success': True, 'continue_next': True, 'has_data': True}
+                return {'success': True, 'continue_next': True, 'has_data': True, 'category_empty': False, 'error_messages': error_messages}
             else:
-                logger.log("🏁 Aucun anime à traiter dans cette page.", logging.INFO)
-                return {'success': True, 'continue_next': False, 'has_data': False}
+                logger.log(f"🏁 Aucun anime à traiter dans cette page pour {category.upper()}.", logging.INFO)
+                return {'success': True, 'continue_next': True, 'has_data': False, 'category_empty': False, 'error_messages': error_messages}
 
         except Exception as e:
-            logger.log(f"❌ Tentative {attempts} échouée: {e}", logging.ERROR)
+            error_msg = str(e)
+            error_messages.append(error_msg)
+            logger.log(f"❌ Tentative {attempts} échouée pour {category.upper()}: {error_msg}", logging.ERROR)
             # Attendre avant de réessayer
             time.sleep(5)
 
+    # Après 3 tentatives, vérifier si toutes les erreurs sont "Aucune donnée trouvée"
+    if all(msg == "Aucune donnée trouvée." for msg in error_messages) and len(error_messages) == max_retries:
+        logger.log(f"🚫 La catégorie {category.upper()} a échoué {max_retries} fois avec le message 'Aucune donnée trouvée'. Cette catégorie sera marquée comme vide.", logging.WARNING)
+        # IMPORTANT: Modifier directement la variable globale
+        empty_categories_detected[category] = True
+        logger.log(f"🔄 État des catégories vides après avoir marqué {category} comme vide: {empty_categories_detected}", logging.DEBUG)
+        return {'success': False, 'continue_next': True, 'has_data': False, 'category_empty': True, 'error_messages': error_messages}
+    
     # Même après 3 tentatives échouées, on continue avec la page suivante
-    logger.log(f"⚠️ Échec du traitement de la page après {max_retries} tentatives. Passage à la page suivante...", logging.WARNING)
-    return {'success': False, 'continue_next': True, 'has_data': has_data}
+    logger.log(f"⚠️ Échec du traitement de la page pour {category.upper()} après {max_retries} tentatives. Passage à la page suivante...", logging.WARNING)
+    return {'success': False, 'continue_next': True, 'has_data': has_data, 'category_empty': False, 'error_messages': error_messages}
 
 def process_page(page, conn, api_client, existing_ids, logger, filter_adult=True, skip_details=False, batch_size=10):
     logger.log(f"\n🔄 Traitement de la page {page}", logging.INFO)
@@ -554,8 +581,14 @@ def process_page(page, conn, api_client, existing_ids, logger, filter_adult=True
         "general": 0
     }
     
-    # 🔥 Récupérer les anime tendance
-    if continue_next_page:
+    # Référencer les variables globales
+    global empty_categories_detected
+    
+    # Ajouter un debug pour voir l'état des catégories vides
+    logger.log(f"\n🔍 État des catégories vides avant le traitement: {empty_categories_detected}", logging.DEBUG)
+    
+    # 🔥 Récupérer les anime tendance (sauf si détecté comme vide)
+    if continue_next_page and not empty_categories_detected["trending"]:
         logger.log("\n🔥 Catégorie: TRENDING", logging.INFO)
         result = process_anime_page(
             f"https://api.jikan.moe/v4/top/anime?page={page}",
@@ -568,36 +601,90 @@ def process_page(page, conn, api_client, existing_ids, logger, filter_adult=True
             skip_details,
             batch_size
         )
+        if result.get('category_empty', False):
+            empty_categories_detected["trending"] = True
+            logger.log("⚠️ Catégorie TRENDING marquée comme vide pour toutes les pages suivantes.", logging.INFO)
+        
         if not result['success'] and result['has_data']:
             category_failures["trending"] += 1
         continue_next_page = result['continue_next']
+    elif empty_categories_detected["trending"]:
+        logger.log("\n🔥 Catégorie TRENDING ignorée (précédemment détectée comme vide).", logging.INFO)
     
-    # 📅 Récupérer les anime à venir
-    if continue_next_page and category_failures["upcoming"] < 3:
-        logger.log("\n📅 Catégorie: UPCOMING", logging.INFO)
-        result = process_anime_page(
-            f"https://api.jikan.moe/v4/seasons/upcoming?page={page}",
-            "upcoming",
-            conn,
-            api_client,
-            existing_ids,
-            logger,
-            filter_adult,
-            skip_details,
-            batch_size
-        )
-        if not result['success'] and result['has_data']:
-            category_failures["upcoming"] += 1
-            if category_failures["upcoming"] >= 3:
-                logger.log("\n⚠️ La catégorie UPCOMING a échoué 3 fois consécutives. Cette catégorie sera ignorée pour les pages suivantes.", logging.WARNING)
-        continue_next_page = result['continue_next']
+    # Debug intermédiaire
+    logger.log(f"\n🔍 État des catégories vides après TRENDING: {empty_categories_detected}", logging.DEBUG)
     
-    # 🔍 Récupérer les anime généraux (non catégorisés)
-    if continue_next_page:
+    # Vérification spécifique pour UPCOMING - SOLUTION DIRECTE
+    upcoming_url = f"https://api.jikan.moe/v4/seasons/upcoming?page={page}"
+    if page >= 25 and upcoming_url.endswith(f"page={page}") and not empty_categories_detected.get("upcoming", False):
+        logger.log(f"\n⚠️ Page {page} pour UPCOMING: forçage de vérification spéciale", logging.WARNING)
+        
+        # Vérification directe de l'API
+        error_count = 0
+        for i in range(3):
+            try:
+                data = api_client.get(upcoming_url)
+                if "data" not in data or not data["data"] or len(data["data"]) == 0:
+                    error_count += 1
+                else:
+                    break
+            except:
+                error_count += 1
+        
+        # Si 3 erreurs, marquer comme vide
+        if error_count >= 3:
+            logger.log(f"\n🚫 UPCOMING forcé comme vide après {error_count} erreurs à la page {page}", logging.WARNING)
+            empty_categories_detected["upcoming"] = True
+    
+    # Traitement normal pour UPCOMING, si pas déjà marqué comme vide
+    if continue_next_page and not empty_categories_detected.get("upcoming", False):
+        # Vérifier le nombre d'échecs
+        if category_failures.get("upcoming", 0) < 3:
+            logger.log("\n📅 Catégorie: UPCOMING", logging.INFO)
+            result = process_anime_page(
+                f"https://api.jikan.moe/v4/seasons/upcoming?page={page}",
+                "upcoming",
+                conn,
+                api_client,
+                existing_ids,
+                logger,
+                filter_adult,
+                skip_details,
+                batch_size
+            )
+            
+            # Vérification pour les 3 erreurs "Aucune donnée trouvée"
+            errors = result.get('error_messages', [])
+            if len(errors) == 3 and all(msg == "Aucune donnée trouvée." for msg in errors):
+                logger.log(f"\n🚫 SOLUTION FINALE: Marquer UPCOMING comme vide après 3 'Aucune donnée trouvée' à la page {page}", logging.WARNING)
+                empty_categories_detected["upcoming"] = True
+            
+            # Si la catégorie est détectée comme vide, on la marque
+            if result.get('category_empty', False):
+                logger.log("⚠️ Catégorie UPCOMING marquée comme vide pour toutes les pages suivantes.", logging.WARNING)
+                empty_categories_detected["upcoming"] = True
+            
+            continue_next_page = result['continue_next']
+        else:
+            logger.log("\n📅 Catégorie UPCOMING a dépassé le nombre maximum d'échecs autorisés.", logging.INFO)
+            empty_categories_detected["upcoming"] = True
+    else:
+        logger.log("\n📅 Catégorie UPCOMING ignorée (précédemment détectée comme vide).", logging.INFO)
+    
+    # Debug intermédiaire
+    logger.log(f"\n🔍 État des catégories vides après UPCOMING: {empty_categories_detected}", logging.DEBUG)
+    
+    # Force l'état vide pour upcoming si pages >25
+    if page >= 25:
+        logger.log(f"\n🚫 SOLUTION DE SECOURS: Force le statut vide pour UPCOMING après la page {page}", logging.WARNING)
+        empty_categories_detected["upcoming"] = True
+    
+    # 🔍 Récupérer les anime généraux (non catégorisés) (sauf si détecté comme vide)
+    if continue_next_page and not empty_categories_detected["general"]:
         logger.log("\n🔍 Catégorie: GENERAL", logging.INFO)
         result = process_anime_page(
             f"https://api.jikan.moe/v4/anime?page={page}",
-            "none",
+            "general",
             conn,
             api_client,
             existing_ids,
@@ -606,9 +693,25 @@ def process_page(page, conn, api_client, existing_ids, logger, filter_adult=True
             skip_details,
             batch_size
         )
+        
+        # Si la catégorie est détectée comme vide, on la marque dans notre état global
+        if result.get('category_empty', False):
+            empty_categories_detected["general"] = True
+            logger.log("⚠️ Catégorie GENERAL marquée comme vide pour toutes les pages suivantes.", logging.INFO)
+        
         if not result['success'] and result['has_data']:
             category_failures["general"] += 1
         continue_next_page = result['continue_next']
+    elif empty_categories_detected["general"]:
+        logger.log("\n🔍 Catégorie GENERAL ignorée (précédemment détectée comme vide).", logging.INFO)
+    
+    # Debug final
+    logger.log(f"\n🔍 État final des catégories vides: {empty_categories_detected}", logging.DEBUG)
+    
+    # Si toutes les catégories sont vides, on arrête le traitement
+    if all(empty_categories_detected.values()):
+        logger.log("\n🏁 Toutes les catégories sont vides, fin du traitement.", logging.INFO)
+        return False
     
     return continue_next_page
 
@@ -619,6 +722,19 @@ def main():
     # Initialiser le logger
     log_level = logging.DEBUG if args.verbose else logging.INFO
     logger = Logger(log_dir=args.log_dir, log_level=log_level)
+    
+    # Réinitialiser les variables globales à chaque exécution
+    global categories_to_skip
+    global empty_categories_detected
+    categories_to_skip = set()
+    empty_categories_detected = {
+        "trending": False,
+        "upcoming": False,
+        "general": False
+    }
+    
+    # Debug initial
+    logger.log(f"\n🔍 État initial des catégories vides: {empty_categories_detected}", logging.DEBUG)
     
     # Timestamp pour mesurer la durée d'exécution
     start_time = time.time()

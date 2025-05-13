@@ -1,5 +1,6 @@
 <?php
-session_start();
+// Remplacer session_start() par l'inclusion de la configuration
+include 'session_config.php';
 include 'db.php';
 
 header('Content-Type: application/json'); // Forcer le type de contenu en JSON
@@ -32,21 +33,16 @@ try {
         $row = $result->fetch_assoc();
         $is_favorite = $type === 'favorite' ? !$row['is_favorite'] : $row['is_favorite'];
         $is_watched = $type === 'watched' ? !$row['is_watched'] : $row['is_watched'];
-        
-        $update_sql = "UPDATE user_anime_status SET is_favorite = ?, is_watched = ? WHERE user_id = ? AND anime_id = ?";
-        $update_stmt = $conn->prepare($update_sql);
-        $update_stmt->bind_param("iiii", $is_favorite, $is_watched, $user_id, $anime_id);
-        $update_stmt->execute();
     } else {
         // Insérer un nouveau statut
         $is_favorite = $type === 'favorite' ? 1 : 0;
         $is_watched = $type === 'watched' ? 1 : 0;
-        
-        $insert_sql = "INSERT INTO user_anime_status (user_id, anime_id, is_favorite, is_watched) VALUES (?, ?, ?, ?)";
-        $insert_stmt = $conn->prepare($insert_sql);
-        $insert_stmt->bind_param("iiii", $user_id, $anime_id, $is_favorite, $is_watched);
-        $insert_stmt->execute();
     }
+
+    // Appeler la procédure stockée pour mettre à jour ou insérer le statut
+    $stmt = $conn->prepare("CALL UpdateUserAnimeStatus(?, ?, ?, ?)");
+    $stmt->bind_param("iiii", $user_id, $anime_id, $is_favorite, $is_watched);
+    $stmt->execute();
 
     echo json_encode(['success' => true, 'status' => $type === 'favorite' ? $is_favorite : $is_watched]);
 } catch (Exception $e) {
@@ -54,4 +50,4 @@ try {
 }
 
 $conn->close();
-?> 
+?>
